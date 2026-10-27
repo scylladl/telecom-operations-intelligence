@@ -1,0 +1,28 @@
+# Credentials and local configuration
+.env
+*.env
+.streamlit/secrets.toml
+config.local.*
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+
+# Generated data (rebuilt by the generator; never committed)
+data/generated/
+*.bak
+*.bacpac
+
+# Power BI: commit the PBIP project, not the binary file or local caches
+*.pbix
+**/.pbi/localSettings.json
+**/.pbi/cache.abf
+
+# Editors and OS
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store
