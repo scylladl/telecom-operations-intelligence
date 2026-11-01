@@ -165,12 +165,10 @@ def sla() -> None:
             ui.ranked_bars(kpis.restoration_by(d, f, ["Technology"]), "Technology", "SLA Compliance %",
                            "SLA compliance % by technology (lowest first)", "pct", lowest_first=True)
         section("The ten worst breaches restored this month")
-        ui.table(kpis.worst_breaches(d, f)[["TicketId", "CustomerName", "Region", "Tier", "PriorityCode",
+        ui.table(
+            kpis.worst_breaches(d, f)[["TicketId", "CustomerName", "Region", "Tier", "PriorityCode",
                                             "SlaTargetHours", "RestoreHours", "HoursOverTarget"]],
-                 TicketId="Ticket", CustomerName="Customer", PriorityCode="Priority",
-                 SlaTargetHours=st.column_config.NumberColumn("Target (h)", format="%.0f"),
-                 RestoreHours=st.column_config.NumberColumn("Restore (h)", format="%.1f"),
-                 HoursOverTarget=st.column_config.NumberColumn("Over target (h)", format="%.1f"))
+        )
 
 
 def repeat() -> None:
@@ -189,10 +187,10 @@ def repeat() -> None:
                            "Repeat rate % by technology (highest first)", "pct", lowest_first=False)
         section("Chronic circuits at month end")
         chronic = kpis.snapshot(kpis.scope(d["chronic"], f, by_priority=False), d, f)
-        ui.table(chronic.sort_values(["TicketsInWindow", "LastOpenedAt"], ascending=False)[
-                     ["CircuitId", "CustomerName", "Region", "Technology", "Tier", "TicketsInWindow"]],
-                 CircuitId="Circuit", CustomerName="Customer",
-                 TicketsInWindow=st.column_config.NumberColumn("Tickets in window", format="%d"))
+        ui.table(
+            chronic.sort_values(["TicketsInWindow", "LastOpenedAt"], ascending=False)[
+                ["CircuitId", "CustomerName", "Region", "Technology", "Tier", "TicketsInWindow"]],
+        )
 
 
 def backlog() -> None:
@@ -213,10 +211,9 @@ def backlog() -> None:
             ui.stacked_bars(aging, list(zip(buckets["AgeBucketCode"], buckets["AgeBucket"],
                                             THEME.ordinal + (THEME.critical,))), "Open backlog by region and age")
         section("Oldest open tickets")
-        ui.table(open_tickets.nlargest(10, "AgeDays")[["TicketId", "CustomerName", "Region", "PriorityCode",
-                                                       "AgeDays"]],
-                 TicketId="Ticket", CustomerName="Customer", PriorityCode="Priority",
-                 AgeDays=st.column_config.NumberColumn("Days open", format="%d"))
+        ui.table(
+            open_tickets.nlargest(10, "AgeDays")[["TicketId", "CustomerName", "Region", "PriorityCode", "AgeDays"]],
+        )
 
 
 def actions() -> None:
@@ -249,9 +246,7 @@ def data_quality() -> None:
               stat(str(int((checks["Result"] == "Fail").sum())), "failed checks"))
         ui.trend(t, f, "Duplicates", "Duplicate tickets (DPC) by month, last 13 months", "int", bars=True)
         section("Checks run by dq.usp_RunChecks")
-        ui.table(checks[["CheckCode", "CheckName", "Result", "AffectedRows", "Handling"]],
-                 CheckCode="Check", CheckName="Check name",
-                 AffectedRows=st.column_config.NumberColumn("Affected rows", format="%d"))
+        ui.table(checks[["CheckCode", "CheckName", "Result", "AffectedRows", "Handling"]])
 
 
 def circuit() -> None:
@@ -271,10 +266,7 @@ def circuit() -> None:
               stat(str(info["CustomerName"]), f"{info['Segment']} · {info['Tier']} tier"),
               stat(str(info["Technology"]), f"{info['Region']} ({info['Province']})"))
         section("Every ticket of the circuit, cancelled and duplicates included")
-        ui.table(kpis.circuit_history(d, circuit_id)[["TicketId", "IncidentClass", "PriorityCode", "RootCause",
+        ui.table(
+            kpis.circuit_history(d, circuit_id)[["TicketId", "IncidentClass", "PriorityCode", "RootCause",
                                                       "OpenedAt", "RestoreHours", "IsSlaMet", "IsRepeat"]],
-                 TicketId="Ticket", IncidentClass="Class", PriorityCode="Priority", RootCause="Root cause",
-                 OpenedAt=st.column_config.DatetimeColumn("Opened", format="DD MMM YYYY HH:mm"),
-                 RestoreHours=st.column_config.NumberColumn("Restore (h)", format="%.1f"),
-                 IsSlaMet=st.column_config.CheckboxColumn("SLA met"),
-                 IsRepeat=st.column_config.CheckboxColumn("Repeat"))
+        )

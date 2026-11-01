@@ -1,8 +1,10 @@
 """Shared page parts: data loading, the report filters, page header, KPI cards and chart styling."""
+import logging
 from dataclasses import dataclass
 
 import pandas as pd
 import plotly.graph_objects as go
+import sqlalchemy as sa
 import streamlit as st
 
 import db
@@ -46,8 +48,18 @@ def _engine():
 # The data changes once a day (database/refresh.ps1); a 15-minute cache keeps pages fast and still
 # picks up a new processing run without restarting the app.
 @st.cache_data(ttl=900, show_spinner="Loading data from SQL Server...")
-def load_data() -> dict:
+def _load_data() -> dict:
     return kpis.prepare(db.read_views(_engine()))
+
+
+def load_data() -> dict:
+    try:
+        return _load_data()
+    except sa.exc.DBAPIError:
+        logging.exception("Loading the rpt views failed")
+        st.error("The database is not reachable right now. Check that SQL Server is running and that the "
+                 "settings in app/.env are right; the server log has the details.")
+        st.stop()
 
 
 def filter_controls(d: dict, slots=None) -> kpis.Filters:
@@ -243,7 +255,49 @@ def net_effect_by(effect: pd.DataFrame, category: str) -> None:
     show(fig)
 
 
-def table(df: pd.DataFrame, **column_config) -> None:
+_DATETIME = "DD MMM YYYY HH:mm"
+_AVG_CONTROL = "Average incidents per control circuit"
+
+# Display name and format of every view column a page shows; a page overrides only what differs.
+COLUMNS = {
+    "TicketId": "Ticket",
+    "CircuitId": "Circuit",
+    "CustomerName": "Customer",
+    "AccountManager": "Account manager",
+    "PriorityCode": "Priority",
+    "IncidentClass": "Class",
+    "RootCause": "Root cause",
+    "OpenedAt": st.column_config.DatetimeColumn("Opened", format=_DATETIME),
+    "RestoredAt": st.column_config.DatetimeColumn("Restored", format=_DATETIME),
+    "LastOpenedAt": st.column_config.DatetimeColumn("Last incident opened", format=_DATETIME),
+    "SlaTargetHours": st.column_config.NumberColumn("Target (h)", format="%.0f"),
+    "RestoreHours": st.column_config.NumberColumn("Restore (h)", format="%.1f"),
+    "HoursOverTarget": st.column_config.NumberColumn("Over target (h)", format="%.1f"),
+    "IsSlaMet": st.column_config.CheckboxColumn("SLA met"),
+    "IsRepeat": st.column_config.CheckboxColumn("Repeat"),
+    "TicketsInWindow": st.column_config.NumberColumn("Tickets in window", format="%d"),
+    "AgeDays": st.column_config.NumberColumn("Days open", format="%d"),
+    "ActionId": "Action",
+    "ActionType": "Type",
+    "StartDate": st.column_config.DateColumn("Start", format="DD MMM YYYY"),
+    "CompletionDate": st.column_config.DateColumn("Completed", format="DD MMM YYYY"),
+    "IncidentsBefore": st.column_config.NumberColumn("Before", format="%d"),
+    "IncidentsAfter": st.column_config.NumberColumn("After", format="%d"),
+    "ControlCircuits": st.column_config.NumberColumn("Controls", format="%d"),
+    "ControlBefore": st.column_config.NumberColumn("Control before", format="%.2f", help=_AVG_CONTROL),
+    "ControlAfter": st.column_config.NumberColumn("Control after", format="%.2f", help=_AVG_CONTROL),
+    "CheckCode": "Check",
+    "CheckType": "Type",
+    "CheckName": "Check name",
+    "AffectedRows": st.column_config.NumberColumn("Affected rows", format="%d"),
+    "UnhandledRows": st.column_config.NumberColumn("Unhandled rows", format="%d"),
+    "ParameterCode": "Parameter",
+    "ParameterValue": "Value",
+}
+
+
+def table(df: pd.DataFrame, **overrides) -> None:
     """Short tables show every row without a scroll bar; long lists scroll inside a fixed height."""
     height = min(35 * (len(df) + 1) + 3, 423)
+    column_config = {c: COLUMNS[c] for c in df.columns if c in COLUMNS} | overrides
     st.dataframe(df, hide_index=True, width="stretch", height=height, column_config=column_config)

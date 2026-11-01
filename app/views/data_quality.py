@@ -22,10 +22,7 @@ ui.metric(failing, "Failed checks", failed, "int")
 ui.trend(t, f, "Duplicates", "Duplicate tickets (DPC) by month, last 13 months", "int", bars=True)
 
 st.subheader("Data quality checks (dq.usp_RunChecks)")
-ui.table(checks[["CheckCode", "CheckType", "CheckName", "Result", "AffectedRows", "UnhandledRows", "Handling"]],
-         CheckCode="Check", CheckType="Type", CheckName="Check name",
-         AffectedRows=st.column_config.NumberColumn("Affected rows", format="%d"),
-         UnhandledRows=st.column_config.NumberColumn("Unhandled rows", format="%d"))
+ui.table(checks[["CheckCode", "CheckType", "CheckName", "Result", "AffectedRows", "UnhandledRows", "Handling"]])
 
 st.subheader("KPI parameters used by the last processing run")
-ui.table(d["kpi_parameter"], ParameterCode="Parameter", ParameterValue="Value")
+ui.table(d["kpi_parameter"])

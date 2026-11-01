@@ -30,7 +30,4 @@ ui.table(
     chronic.sort_values(["TicketsInWindow", "LastOpenedAt"], ascending=False)[
         ["CircuitId", "CustomerName", "Region", "Technology", "Tier", "AccountManager", "TicketsInWindow",
          "LastOpenedAt"]],
-    CircuitId="Circuit", CustomerName="Customer", AccountManager="Account manager",
-    TicketsInWindow=st.column_config.NumberColumn("Tickets in window", format="%d"),
-    LastOpenedAt=st.column_config.DatetimeColumn("Last incident opened", format="DD MMM YYYY HH:mm"),
 )

@@ -37,9 +37,4 @@ worst = kpis.worst_breaches(d, f)
 ui.table(
     worst[["TicketId", "CircuitId", "CustomerName", "Region", "Tier", "PriorityCode", "RestoredAt",
            "SlaTargetHours", "RestoreHours", "HoursOverTarget"]],
-    TicketId="Ticket", CircuitId="Circuit", CustomerName="Customer", PriorityCode="Priority",
-    RestoredAt=st.column_config.DatetimeColumn("Restored", format="DD MMM YYYY HH:mm"),
-    SlaTargetHours=st.column_config.NumberColumn("Target (h)", format="%.0f"),
-    RestoreHours=st.column_config.NumberColumn("Restore (h)", format="%.1f"),
-    HoursOverTarget=st.column_config.NumberColumn("Over target (h)", format="%.1f"),
 )

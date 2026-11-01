@@ -29,14 +29,4 @@ ui.table(
     actions[actions["EvaluationStatus"] == "Evaluated"].sort_values("ActionId", ascending=False)[
         ["ActionId", "ActionType", "CircuitId", "Region", "StartDate", "CompletionDate",
          "IncidentsBefore", "IncidentsAfter", "ControlCircuits", "ControlBefore", "ControlAfter"]],
-    ActionId="Action", ActionType="Type", CircuitId="Circuit",
-    StartDate=st.column_config.DateColumn("Start", format="DD MMM YYYY"),
-    CompletionDate=st.column_config.DateColumn("Completed", format="DD MMM YYYY"),
-    IncidentsBefore=st.column_config.NumberColumn("Before", format="%d"),
-    IncidentsAfter=st.column_config.NumberColumn("After", format="%d"),
-    ControlCircuits=st.column_config.NumberColumn("Controls", format="%d"),
-    ControlBefore=st.column_config.NumberColumn("Control before", format="%.2f",
-                                                help="Average incidents per control circuit"),
-    ControlAfter=st.column_config.NumberColumn("Control after", format="%.2f",
-                                               help="Average incidents per control circuit"),
 )

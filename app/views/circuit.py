@@ -31,11 +31,4 @@ st.subheader("Incident history (all tickets, including cancelled and duplicates)
 ui.table(
     kpis.circuit_history(d, circuit_id)[["TicketId", "IncidentClass", "PriorityCode", "RootCause", "OpenedAt",
                                          "RestoredAt", "RestoreHours", "SlaTargetHours", "IsSlaMet", "IsRepeat"]],
-    TicketId="Ticket", IncidentClass="Class", PriorityCode="Priority", RootCause="Root cause",
-    OpenedAt=st.column_config.DatetimeColumn("Opened", format="DD MMM YYYY HH:mm"),
-    RestoredAt=st.column_config.DatetimeColumn("Restored", format="DD MMM YYYY HH:mm"),
-    RestoreHours=st.column_config.NumberColumn("Restore (h)", format="%.1f"),
-    SlaTargetHours=st.column_config.NumberColumn("Target (h)", format="%.0f"),
-    IsSlaMet=st.column_config.CheckboxColumn("SLA met"),
-    IsRepeat=st.column_config.CheckboxColumn("Repeat"),
 )

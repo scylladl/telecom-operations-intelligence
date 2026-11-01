@@ -34,6 +34,4 @@ st.subheader("Oldest open tickets at the end of the period")
 ui.table(
     open_tickets.nlargest(10, "AgeDays")[["TicketId", "CircuitId", "CustomerName", "Region", "Technology",
                                           "PriorityCode", "AgeDays"]],
-    TicketId="Ticket", CircuitId="Circuit", CustomerName="Customer", PriorityCode="Priority",
-    AgeDays=st.column_config.NumberColumn("Days open", format="%d"),
 )

@@ -127,12 +127,8 @@ def sla() -> None:
         st.markdown("**Worst 10 SLA breaches restored in the period**")
         worst = kpis.worst_breaches(d, f)
         ui.table(
-            worst[["TicketId", "CircuitId", "CustomerName", "Region", "Tier", "PriorityCode",
-                                       "RestoredAt", "SlaTargetHours", "RestoreHours", "HoursOverTarget"]],
-            TicketId="Ticket", CircuitId="Circuit", CustomerName="Customer", PriorityCode="Priority",
-            RestoredAt=st.column_config.DatetimeColumn("Restored", format="DD MMM YYYY HH:mm"),
-            SlaTargetHours=st.column_config.NumberColumn("Target (h)", format="%.0f"),
-            RestoreHours=st.column_config.NumberColumn("Restore (h)", format="%.1f"),
+            worst[["TicketId", "CircuitId", "CustomerName", "Region", "Tier", "PriorityCode", "RestoredAt",
+                   "SlaTargetHours", "RestoreHours", "HoursOverTarget"]],
             HoursOverTarget=st.column_config.ProgressColumn(
                 "Over target (h)", format="%.0f", min_value=0,
                 max_value=float(max(worst["HoursOverTarget"].max(), 1))),
@@ -158,9 +154,6 @@ def repeat() -> None:
             chronic.sort_values(["TicketsInWindow", "LastOpenedAt"], ascending=False)[
                 ["CircuitId", "CustomerName", "Region", "Technology", "Tier", "AccountManager", "TicketsInWindow",
                  "LastOpenedAt"]],
-            CircuitId="Circuit", CustomerName="Customer", AccountManager="Account manager",
-            TicketsInWindow=st.column_config.NumberColumn("Tickets in window", format="%d"),
-            LastOpenedAt=st.column_config.DatetimeColumn("Last incident opened", format="DD MMM YYYY HH:mm"),
         )
 
 
@@ -182,10 +175,10 @@ def backlog() -> None:
                                         THEME.ordinal + (THEME.critical,))), "Open backlog by region and age")
     with st.container(border=True):
         st.markdown("**Oldest open tickets at the end of the period**")
-        ui.table(open_tickets.nlargest(10, "AgeDays")[["TicketId", "CircuitId", "CustomerName", "Region",
-                                                       "Technology", "PriorityCode", "AgeDays"]],
-                 TicketId="Ticket", CircuitId="Circuit", CustomerName="Customer", PriorityCode="Priority",
-                 AgeDays=st.column_config.NumberColumn("Days open", format="%d"))
+        ui.table(
+            open_tickets.nlargest(10, "AgeDays")[["TicketId", "CircuitId", "CustomerName", "Region",
+                                                  "Technology", "PriorityCode", "AgeDays"]],
+        )
 
 
 def actions() -> None:
@@ -221,10 +214,11 @@ def data_quality() -> None:
         ui.trend(t, f, "Duplicates", "Duplicate tickets (DPC), last 13 months", "int", bars=True)
     with right, st.container(border=True):
         st.markdown("**Checks run by dq.usp_RunChecks**")
-        ui.table(checks[["CheckCode", "CheckName", "Result", "AffectedRows", "UnhandledRows"]],
-                 CheckCode="Check", CheckName="Check name",
-                 AffectedRows=st.column_config.NumberColumn("Affected", format="%d"),
-                 UnhandledRows=st.column_config.NumberColumn("Unhandled", format="%d"))
+        ui.table(
+            checks[["CheckCode", "CheckName", "Result", "AffectedRows", "UnhandledRows"]],
+            AffectedRows=st.column_config.NumberColumn("Affected", format="%d"),
+            UnhandledRows=st.column_config.NumberColumn("Unhandled", format="%d"),
+        )
 
 
 def circuit() -> None:
@@ -249,11 +243,4 @@ def circuit() -> None:
             kpis.circuit_history(d, circuit_id)[["TicketId", "IncidentClass", "PriorityCode", "RootCause", "OpenedAt",
                                                  "RestoredAt", "RestoreHours", "SlaTargetHours", "IsSlaMet",
                                                  "IsRepeat"]],
-            TicketId="Ticket", IncidentClass="Class", PriorityCode="Priority", RootCause="Root cause",
-            OpenedAt=st.column_config.DatetimeColumn("Opened", format="DD MMM YYYY HH:mm"),
-            RestoredAt=st.column_config.DatetimeColumn("Restored", format="DD MMM YYYY HH:mm"),
-            RestoreHours=st.column_config.NumberColumn("Restore (h)", format="%.1f"),
-            SlaTargetHours=st.column_config.NumberColumn("Target (h)", format="%.0f"),
-            IsSlaMet=st.column_config.CheckboxColumn("SLA met"),
-            IsRepeat=st.column_config.CheckboxColumn("Repeat"),
         )
