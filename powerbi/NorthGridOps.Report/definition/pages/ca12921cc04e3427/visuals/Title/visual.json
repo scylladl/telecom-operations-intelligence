@@ -3,9 +3,9 @@
   "name": "2d2079805a8f94ba",
   "position": {
     "x": 24,
-    "y": 4,
-    "width": 420,
-    "height": 56,
+    "y": 0,
+    "width": 560,
+    "height": 62,
     "z": 0
   },
   "visual": {
@@ -64,6 +64,40 @@
               "expr": {
                 "Literal": {
                   "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "padding": [
+        {
+          "properties": {
+            "top": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "bottom": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "left": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "right": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
                 }
               }
             }

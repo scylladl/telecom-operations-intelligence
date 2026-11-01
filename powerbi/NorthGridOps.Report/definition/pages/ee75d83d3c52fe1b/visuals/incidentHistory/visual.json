@@ -1,5 +1,14 @@
 {
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "incidentHistory",
+  "position": {
+    "x": 24,
+    "y": 220,
+    "width": 1232,
+    "height": 476,
+    "z": 0,
+    "tabOrder": 0
+  },
   "visual": {
     "visualType": "tableEx",
     "query": {
@@ -7,7 +16,6 @@
         "Values": {
           "projections": [
             {
-              "queryRef": "Incident.Ticket Id",
               "field": {
                 "Column": {
                   "Expression": {
@@ -18,10 +26,10 @@
                   "Property": "Ticket Id"
                 }
               },
+              "queryRef": "Incident.Ticket Id",
               "nativeQueryRef": "Ticket Id"
             },
             {
-              "queryRef": "Incident.Opened At",
               "field": {
                 "Column": {
                   "Expression": {
@@ -32,10 +40,10 @@
                   "Property": "Opened At"
                 }
               },
+              "queryRef": "Incident.Opened At",
               "nativeQueryRef": "Opened At"
             },
             {
-              "queryRef": "Incident.Restored At",
               "field": {
                 "Column": {
                   "Expression": {
@@ -46,10 +54,10 @@
                   "Property": "Restored At"
                 }
               },
+              "queryRef": "Incident.Restored At",
               "nativeQueryRef": "Restored At"
             },
             {
-              "queryRef": "Priority.Priority Code",
               "field": {
                 "Column": {
                   "Expression": {
@@ -60,10 +68,10 @@
                   "Property": "Priority Code"
                 }
               },
+              "queryRef": "Priority.Priority Code",
               "nativeQueryRef": "Priority Code"
             },
             {
-              "queryRef": "Root Cause.Root Cause",
               "field": {
                 "Column": {
                   "Expression": {
@@ -74,10 +82,10 @@
                   "Property": "Root Cause"
                 }
               },
+              "queryRef": "Root Cause.Root Cause",
               "nativeQueryRef": "Root Cause"
             },
             {
-              "queryRef": "Incident.Restore Hours",
               "field": {
                 "Column": {
                   "Expression": {
@@ -88,10 +96,10 @@
                   "Property": "Restore Hours"
                 }
               },
+              "queryRef": "Incident.Restore Hours",
               "nativeQueryRef": "Restore Hours"
             },
             {
-              "queryRef": "Incident.SLA Target Hours",
               "field": {
                 "Column": {
                   "Expression": {
@@ -102,10 +110,10 @@
                   "Property": "SLA Target Hours"
                 }
               },
+              "queryRef": "Incident.SLA Target Hours",
               "nativeQueryRef": "SLA Target Hours"
             },
             {
-              "queryRef": "Incident.Incident Class",
               "field": {
                 "Column": {
                   "Expression": {
@@ -116,10 +124,10 @@
                   "Property": "Incident Class"
                 }
               },
+              "queryRef": "Incident.Incident Class",
               "nativeQueryRef": "Incident Class"
             },
             {
-              "queryRef": "Incident.Status",
               "field": {
                 "Column": {
                   "Expression": {
@@ -130,10 +138,10 @@
                   "Property": "Status"
                 }
               },
+              "queryRef": "Incident.Status",
               "nativeQueryRef": "Status"
             },
             {
-              "queryRef": "Incident.Responsible Team",
               "field": {
                 "Column": {
                   "Expression": {
@@ -144,6 +152,7 @@
                   "Property": "Responsible Team"
                 }
               },
+              "queryRef": "Incident.Responsible Team",
               "nativeQueryRef": "Responsible Team"
             }
           ]
@@ -168,8 +177,6 @@
         "isDefaultSort": true
       }
     },
-    "objects": {},
-    "drillFilterOtherVisuals": true,
     "visualContainerObjects": {
       "title": [
         {
@@ -217,15 +224,22 @@
           }
         }
       ]
+    },
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "total": [
+        {
+          "properties": {
+            "totals": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
     }
-  },
-  "position": {
-    "x": 24,
-    "y": 220,
-    "width": 1232,
-    "height": 476,
-    "z": 0,
-    "tabOrder": 0
-  },
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json"
+  }
 }

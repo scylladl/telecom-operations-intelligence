@@ -1,87 +1,21 @@
 {
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "scorecard",
+  "position": {
+    "x": 24,
+    "y": 220,
+    "width": 608,
+    "height": 236,
+    "z": 0,
+    "tabOrder": 0
+  },
   "visual": {
     "visualType": "pivotTable",
     "query": {
       "queryState": {
-        "Values": {
-          "projections": [
-            {
-              "queryRef": "_Measures.Incidents",
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Incidents"
-                }
-              },
-              "nativeQueryRef": "Incidents"
-            },
-            {
-              "queryRef": "_Measures.Incidents per 100 Circuits",
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Incidents per 100 Circuits"
-                }
-              },
-              "nativeQueryRef": "Incidents per 100 Circuits"
-            },
-            {
-              "queryRef": "_Measures.MTTR (h)",
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "MTTR (h)"
-                }
-              },
-              "nativeQueryRef": "MTTR (h)"
-            },
-            {
-              "queryRef": "_Measures.SLA Compliance %",
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "SLA Compliance %"
-                }
-              },
-              "nativeQueryRef": "SLA Compliance %"
-            },
-            {
-              "queryRef": "_Measures.Repeat Rate %",
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Repeat Rate %"
-                }
-              },
-              "nativeQueryRef": "Repeat Rate %"
-            }
-          ]
-        },
         "Columns": {
           "projections": [
             {
-              "queryRef": "Time Comparison.Comparison",
               "field": {
                 "Column": {
                   "Expression": {
@@ -92,7 +26,83 @@
                   "Property": "Comparison"
                 }
               },
-              "nativeQueryRef": "Comparison"
+              "queryRef": "Time Comparison.Comparison",
+              "nativeQueryRef": "Comparison",
+              "active": true
+            }
+          ]
+        },
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Incidents"
+                }
+              },
+              "queryRef": "_Measures.Incidents",
+              "nativeQueryRef": "Incidents"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Incidents per 100 Circuits"
+                }
+              },
+              "queryRef": "_Measures.Incidents per 100 Circuits",
+              "nativeQueryRef": "Incidents per 100 Circuits"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "MTTR (h)"
+                }
+              },
+              "queryRef": "_Measures.MTTR (h)",
+              "nativeQueryRef": "MTTR (h)"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "SLA Compliance %"
+                }
+              },
+              "queryRef": "_Measures.SLA Compliance %",
+              "nativeQueryRef": "SLA Compliance %"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Repeat Rate %"
+                }
+              },
+              "queryRef": "_Measures.Repeat Rate %",
+              "nativeQueryRef": "Repeat Rate %"
             }
           ]
         }
@@ -101,16 +111,16 @@
         "sort": [
           {
             "field": {
-              "Measure": {
+              "Column": {
                 "Expression": {
                   "SourceRef": {
-                    "Entity": "_Measures"
+                    "Entity": "Time Comparison"
                   }
                 },
-                "Property": "Incidents"
+                "Property": "Comparison"
               }
             },
-            "direction": "Descending"
+            "direction": "Ascending"
           }
         ],
         "isDefaultSort": true
@@ -129,9 +139,48 @@
             }
           }
         }
+      ],
+      "grid": [
+        {
+          "properties": {
+            "rowPadding": {
+              "expr": {
+                "Literal": {
+                  "Value": "2D"
+                }
+              }
+            },
+            "imageHeight": {
+              "expr": {
+                "Literal": {
+                  "Value": "32D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "columnHeaders": [
+        {
+          "properties": {
+            "autoSizeColumnWidth": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "columnAdjustment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'fitToContent'"
+                }
+              }
+            }
+          }
+        }
       ]
     },
-    "drillFilterOtherVisuals": true,
     "visualContainerObjects": {
       "title": [
         {
@@ -179,15 +228,7 @@
           }
         }
       ]
-    }
-  },
-  "position": {
-    "x": 24,
-    "y": 220,
-    "width": 608,
-    "height": 228,
-    "z": 0,
-    "tabOrder": 0
-  },
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json"
+    },
+    "drillFilterOtherVisuals": true
+  }
 }

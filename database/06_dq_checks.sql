@@ -113,7 +113,7 @@ BEGIN
           WHERE IsRestored = 1 AND (RestoreHours IS NULL OR RestoreHours < 0 OR RestoredDateKey IS NULL)) AS x;
 
     INSERT INTO @r
-    SELECT 'INT-03', 'Integrity', N'KPI flags are consistent (met in scope, in scope restored, restored counted)',
+    SELECT 'INT-03', 'Integrity', N'KPI flags are mutually consistent',
            x.n, x.n, N'K3/K4 inputs'
     FROM (SELECT n = COUNT(*) FROM dw.FactIncident
           WHERE (IsSlaMet = 1 AND IsSlaInScope = 0) OR (IsSlaInScope = 1 AND IsRestored = 0)

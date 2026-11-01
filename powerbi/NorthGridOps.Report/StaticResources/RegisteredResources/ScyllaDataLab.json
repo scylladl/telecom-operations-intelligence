@@ -1122,7 +1122,7 @@
               }
             },
             "fontFamily": "Segoe UI",
-            "fontSize": 16,
+            "fontSize": 11,
             "preserveWhitespace": false,
             "bold": false,
             "italic": false,
@@ -1138,7 +1138,7 @@
               }
             },
             "fontFamily": "Segoe UI Semibold",
-            "fontSize": 36,
+            "fontSize": 22,
             "labelPrecision": 1,
             "preserveWhitespace": false,
             "bold": false,

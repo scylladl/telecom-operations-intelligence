@@ -1,5 +1,14 @@
 {
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "trendRepeat",
+  "position": {
+    "x": 24,
+    "y": 220,
+    "width": 608,
+    "height": 236,
+    "z": 0,
+    "tabOrder": 0
+  },
   "visual": {
     "visualType": "lineChart",
     "query": {
@@ -7,7 +16,6 @@
         "Category": {
           "projections": [
             {
-              "queryRef": "Trend Month.Trend Month",
               "field": {
                 "Column": {
                   "Expression": {
@@ -18,14 +26,15 @@
                   "Property": "Trend Month"
                 }
               },
-              "nativeQueryRef": "Trend Month"
+              "queryRef": "Trend Month.Trend Month",
+              "nativeQueryRef": "Trend Month",
+              "active": true
             }
           ]
         },
         "Y": {
           "projections": [
             {
-              "queryRef": "_Measures.Repeat Rate %",
               "field": {
                 "Measure": {
                   "Expression": {
@@ -36,6 +45,7 @@
                   "Property": "Repeat Rate %"
                 }
               },
+              "queryRef": "_Measures.Repeat Rate %",
               "nativeQueryRef": "Repeat Rate %"
             }
           ]
@@ -45,23 +55,21 @@
         "sort": [
           {
             "field": {
-              "Measure": {
+              "Column": {
                 "Expression": {
                   "SourceRef": {
-                    "Entity": "_Measures"
+                    "Entity": "Trend Month"
                   }
                 },
-                "Property": "Repeat Rate %"
+                "Property": "Trend Month"
               }
             },
-            "direction": "Descending"
+            "direction": "Ascending"
           }
         ],
         "isDefaultSort": true
       }
     },
-    "objects": {},
-    "drillFilterOtherVisuals": true,
     "visualContainerObjects": {
       "title": [
         {
@@ -109,17 +117,9 @@
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": true
   },
-  "position": {
-    "x": 24,
-    "y": 220,
-    "width": 608,
-    "height": 228,
-    "z": 0,
-    "tabOrder": 0
-  },
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
   "filterConfig": {
     "filters": [
       {
@@ -135,7 +135,6 @@
           }
         },
         "type": "Categorical",
-        "howCreated": "User",
         "filter": {
           "Version": 2,
           "From": [
@@ -174,7 +173,8 @@
               }
             }
           ]
-        }
+        },
+        "howCreated": "User"
       }
     ]
   }

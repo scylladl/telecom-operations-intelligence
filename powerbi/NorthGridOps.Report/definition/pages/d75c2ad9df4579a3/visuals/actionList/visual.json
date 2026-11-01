@@ -1,5 +1,14 @@
 {
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "actionList",
+  "position": {
+    "x": 24,
+    "y": 472,
+    "width": 1232,
+    "height": 224,
+    "z": 0,
+    "tabOrder": 0
+  },
   "visual": {
     "visualType": "tableEx",
     "query": {
@@ -7,7 +16,6 @@
         "Values": {
           "projections": [
             {
-              "queryRef": "Improvement Action.Action Id",
               "field": {
                 "Column": {
                   "Expression": {
@@ -18,10 +26,10 @@
                   "Property": "Action Id"
                 }
               },
+              "queryRef": "Improvement Action.Action Id",
               "nativeQueryRef": "Action Id"
             },
             {
-              "queryRef": "Action Type.Action Type",
               "field": {
                 "Column": {
                   "Expression": {
@@ -32,10 +40,10 @@
                   "Property": "Action Type"
                 }
               },
+              "queryRef": "Action Type.Action Type",
               "nativeQueryRef": "Action Type"
             },
             {
-              "queryRef": "Circuit.Circuit Id",
               "field": {
                 "Column": {
                   "Expression": {
@@ -46,10 +54,10 @@
                   "Property": "Circuit Id"
                 }
               },
+              "queryRef": "Circuit.Circuit Id",
               "nativeQueryRef": "Circuit Id"
             },
             {
-              "queryRef": "Circuit.Region",
               "field": {
                 "Column": {
                   "Expression": {
@@ -60,24 +68,10 @@
                   "Property": "Region"
                 }
               },
+              "queryRef": "Circuit.Region",
               "nativeQueryRef": "Region"
             },
             {
-              "queryRef": "Improvement Action.Start Date",
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "Improvement Action"
-                    }
-                  },
-                  "Property": "Start Date"
-                }
-              },
-              "nativeQueryRef": "Start Date"
-            },
-            {
-              "queryRef": "Improvement Action.Completion Date",
               "field": {
                 "Column": {
                   "Expression": {
@@ -88,10 +82,10 @@
                   "Property": "Completion Date"
                 }
               },
+              "queryRef": "Improvement Action.Completion Date",
               "nativeQueryRef": "Completion Date"
             },
             {
-              "queryRef": "Improvement Action.Incidents Before",
               "field": {
                 "Column": {
                   "Expression": {
@@ -102,10 +96,10 @@
                   "Property": "Incidents Before"
                 }
               },
+              "queryRef": "Improvement Action.Incidents Before",
               "nativeQueryRef": "Incidents Before"
             },
             {
-              "queryRef": "Improvement Action.Incidents After",
               "field": {
                 "Column": {
                   "Expression": {
@@ -116,10 +110,10 @@
                   "Property": "Incidents After"
                 }
               },
+              "queryRef": "Improvement Action.Incidents After",
               "nativeQueryRef": "Incidents After"
             },
             {
-              "queryRef": "Improvement Action.Control Circuits",
               "field": {
                 "Column": {
                   "Expression": {
@@ -130,10 +124,10 @@
                   "Property": "Control Circuits"
                 }
               },
+              "queryRef": "Improvement Action.Control Circuits",
               "nativeQueryRef": "Control Circuits"
             },
             {
-              "queryRef": "Improvement Action.Control Before",
               "field": {
                 "Column": {
                   "Expression": {
@@ -144,10 +138,10 @@
                   "Property": "Control Before"
                 }
               },
+              "queryRef": "Improvement Action.Control Before",
               "nativeQueryRef": "Control Before"
             },
             {
-              "queryRef": "Improvement Action.Control After",
               "field": {
                 "Column": {
                   "Expression": {
@@ -158,28 +152,31 @@
                   "Property": "Control After"
                 }
               },
+              "queryRef": "Improvement Action.Control After",
               "nativeQueryRef": "Control After"
-            },
-            {
-              "queryRef": "Improvement Action.Evaluation Status",
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "Improvement Action"
-                    }
-                  },
-                  "Property": "Evaluation Status"
-                }
-              },
-              "nativeQueryRef": "Evaluation Status"
             }
           ]
         }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Improvement Action"
+                  }
+                },
+                "Property": "Completion Date"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
       }
     },
-    "objects": {},
-    "drillFilterOtherVisuals": true,
     "visualContainerObjects": {
       "title": [
         {
@@ -194,7 +191,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Improvement actions with before and after incidents'"
+                  "Value": "'Evaluated improvement actions: incidents before and after, with the matched control group'"
                 }
               }
             }
@@ -227,15 +224,80 @@
           }
         }
       ]
+    },
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "total": [
+        {
+          "properties": {
+            "totals": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
     }
   },
-  "position": {
-    "x": 24,
-    "y": 464,
-    "width": 1232,
-    "height": 232,
-    "z": 0,
-    "tabOrder": 0
-  },
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json"
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "a396fe61359bb428cde9",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Improvement Action"
+              }
+            },
+            "Property": "Evaluation Status"
+          }
+        },
+        "type": "Categorical",
+        "howCreated": "User",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "d",
+              "Entity": "Improvement Action",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "In": {
+                  "Expressions": [
+                    {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Source": "d"
+                          }
+                        },
+                        "Property": "Evaluation Status"
+                      }
+                    }
+                  ],
+                  "Values": [
+                    [
+                      {
+                        "Literal": {
+                          "Value": "'Evaluated'"
+                        }
+                      }
+                    ]
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

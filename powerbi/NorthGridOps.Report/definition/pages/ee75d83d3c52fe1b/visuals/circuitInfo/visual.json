@@ -1,5 +1,14 @@
 {
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "circuitInfo",
+  "position": {
+    "x": 24,
+    "y": 116,
+    "width": 608,
+    "height": 88,
+    "z": 0,
+    "tabOrder": 0
+  },
   "visual": {
     "visualType": "multiRowCard",
     "query": {
@@ -7,7 +16,6 @@
         "Values": {
           "projections": [
             {
-              "queryRef": "Circuit.Circuit Id",
               "field": {
                 "Column": {
                   "Expression": {
@@ -18,10 +26,10 @@
                   "Property": "Circuit Id"
                 }
               },
+              "queryRef": "Circuit.Circuit Id",
               "nativeQueryRef": "Circuit Id"
             },
             {
-              "queryRef": "Circuit.Customer",
               "field": {
                 "Column": {
                   "Expression": {
@@ -32,10 +40,10 @@
                   "Property": "Customer"
                 }
               },
+              "queryRef": "Circuit.Customer",
               "nativeQueryRef": "Customer"
             },
             {
-              "queryRef": "Circuit.Technology",
               "field": {
                 "Column": {
                   "Expression": {
@@ -46,10 +54,10 @@
                   "Property": "Technology"
                 }
               },
+              "queryRef": "Circuit.Technology",
               "nativeQueryRef": "Technology"
             },
             {
-              "queryRef": "Circuit.Region",
               "field": {
                 "Column": {
                   "Expression": {
@@ -60,10 +68,10 @@
                   "Property": "Region"
                 }
               },
+              "queryRef": "Circuit.Region",
               "nativeQueryRef": "Region"
             },
             {
-              "queryRef": "Circuit.Tier",
               "field": {
                 "Column": {
                   "Expression": {
@@ -74,10 +82,10 @@
                   "Property": "Tier"
                 }
               },
+              "queryRef": "Circuit.Tier",
               "nativeQueryRef": "Tier"
             },
             {
-              "queryRef": "Circuit.Install Date",
               "field": {
                 "Column": {
                   "Expression": {
@@ -88,22 +96,13 @@
                   "Property": "Install Date"
                 }
               },
+              "queryRef": "Circuit.Install Date",
               "nativeQueryRef": "Install Date"
             }
           ]
         }
       }
     },
-    "objects": {},
     "drillFilterOtherVisuals": true
-  },
-  "position": {
-    "x": 24,
-    "y": 96,
-    "width": 608,
-    "height": 108,
-    "z": 0,
-    "tabOrder": 0
-  },
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json"
+  }
 }

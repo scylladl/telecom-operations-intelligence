@@ -171,9 +171,10 @@ BEGIN
                 YEAR(d),
                 CONCAT(YEAR(d), '-Q', DATEPART(quarter, d)),
                 MONTH(d),
-                DATENAME(month, d),
+                -- explicit culture: DATENAME follows the login language (Portuguese on this server)
+                FORMAT(d, 'MMMM', 'en-US'),
                 CONVERT(char(7), d, 126),
-                CONCAT(LEFT(DATENAME(month, d), 3), ' ', YEAR(d)),
+                FORMAT(d, 'MMM yyyy', 'en-US'),
                 DATEFROMPARTS(YEAR(d), MONTH(d), 1),
                 EOMONTH(d),
                 DATEDIFF(month, @DataStart, d),
@@ -245,7 +246,8 @@ BEGIN
                 CASE WHEN m.IsRestored = 1 THEN h.RestoreHours END,
                 sla.RestoreTargetHours,
                 m.IsSlaInScope,
-                CASE WHEN m.IsSlaInScope = 1 AND h.RestoreHours <= sla.RestoreTargetHours THEN 1 ELSE 0 END,
+                -- compared in exact seconds: the rounded hours could flip a ticket restored on the limit
+                CASE WHEN m.IsSlaInScope = 1 AND h.RestoreSeconds <= sla.RestoreTargetHours * 3600 THEN 1 ELSE 0 END,
                 CASE WHEN m.IsSlaInScope = 1 THEN h.RestoreHours - sla.RestoreTargetHours END,
                 CASE WHEN m.IsCounted = 1 AND EXISTS (
                         SELECT 1
@@ -260,7 +262,8 @@ BEGIN
         JOIN dw.DimCircuit AS dc ON dc.CircuitId = t.CircuitId
         LEFT JOIN ref.RootCause AS rc ON rc.RootCauseCode = t.RootCauseCode
         LEFT JOIN ref.SlaTarget AS sla ON sla.TierCode = dc.TierCode AND sla.PriorityCode = t.PriorityCode
-        CROSS APPLY (SELECT RestoreHours = CAST(DATEDIFF(second, t.OpenedAt, t.RestoredAt) / 3600.0 AS decimal(9,2))) AS h
+        CROSS APPLY (SELECT RestoreSeconds = DATEDIFF(second, t.OpenedAt, t.RestoredAt)) AS s
+        CROSS APPLY (SELECT s.RestoreSeconds, RestoreHours = CAST(s.RestoreSeconds / 3600.0 AS decimal(9,2))) AS h
         CROSS APPLY (SELECT IsCounted  = CASE WHEN t.IncidentClass = 'Valid' THEN 1 ELSE 0 END,
                             IsRestored = CASE WHEN t.IncidentClass = 'Valid' AND t.RestoredAt IS NOT NULL
                                                AND t.HasTimestampIssue = 0 THEN 1 ELSE 0 END) AS m0

@@ -1,5 +1,14 @@
 {
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "repeatTechnology",
+  "position": {
+    "x": 648,
+    "y": 220,
+    "width": 608,
+    "height": 236,
+    "z": 0,
+    "tabOrder": 0
+  },
   "visual": {
     "visualType": "clusteredBarChart",
     "query": {
@@ -7,7 +16,6 @@
         "Category": {
           "projections": [
             {
-              "queryRef": "Circuit.Technology",
               "field": {
                 "Column": {
                   "Expression": {
@@ -18,32 +26,15 @@
                   "Property": "Technology"
                 }
               },
-              "nativeQueryRef": "Technology"
-            }
-          ]
-        },
-        "Y": {
-          "projections": [
-            {
-              "queryRef": "_Measures.Repeat Rate %",
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Repeat Rate %"
-                }
-              },
-              "nativeQueryRef": "Repeat Rate %"
+              "queryRef": "Circuit.Technology",
+              "nativeQueryRef": "Technology",
+              "active": true
             }
           ]
         },
         "Tooltips": {
           "projections": [
             {
-              "queryRef": "_Measures.Repeat Incidents",
               "field": {
                 "Measure": {
                   "Expression": {
@@ -54,7 +45,26 @@
                   "Property": "Repeat Incidents"
                 }
               },
+              "queryRef": "_Measures.Repeat Incidents",
               "nativeQueryRef": "Repeat Incidents"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Repeat Rate %"
+                }
+              },
+              "queryRef": "_Measures.Repeat Rate %",
+              "nativeQueryRef": "Repeat Rate %"
             }
           ]
         }
@@ -78,8 +88,6 @@
         "isDefaultSort": true
       }
     },
-    "objects": {},
-    "drillFilterOtherVisuals": true,
     "visualContainerObjects": {
       "title": [
         {
@@ -127,15 +135,22 @@
           }
         }
       ]
+    },
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "categoryAxis": [
+        {
+          "properties": {
+            "innerPadding": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            }
+          }
+        }
+      ]
     }
-  },
-  "position": {
-    "x": 648,
-    "y": 220,
-    "width": 608,
-    "height": 228,
-    "z": 0,
-    "tabOrder": 0
-  },
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json"
+  }
 }

@@ -1,7 +1,7 @@
 {
   "name": "rootCauseRegion",
   "visual": {
-    "visualType": "hundredPercentStackedBarChart",
+    "visualType": "hundredPercentStackedColumnChart",
     "query": {
       "queryState": {
         "Category": {
@@ -63,16 +63,16 @@
         "sort": [
           {
             "field": {
-              "Measure": {
+              "Column": {
                 "Expression": {
                   "SourceRef": {
-                    "Entity": "_Measures"
+                    "Entity": "Circuit"
                   }
                 },
-                "Property": "Incidents"
+                "Property": "Region"
               }
             },
-            "direction": "Descending"
+            "direction": "Ascending"
           }
         ],
         "isDefaultSort": true
@@ -120,7 +120,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'100 percent stacked bar chart of incident root causes by region'"
+                  "Value": "'100 percent stacked column chart of incident root causes by region'"
                 }
               }
             }
@@ -131,9 +131,9 @@
   },
   "position": {
     "x": 648,
-    "y": 464,
+    "y": 472,
     "width": 608,
-    "height": 232,
+    "height": 224,
     "z": 0,
     "tabOrder": 0
   },
@@ -141,7 +141,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "f1750de907e395ec0a54",
+        "name": "a8aa1648abfde450eea6",
         "field": {
           "Column": {
             "Expression": {

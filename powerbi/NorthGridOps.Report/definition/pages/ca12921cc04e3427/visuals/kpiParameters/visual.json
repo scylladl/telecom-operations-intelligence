@@ -1,5 +1,14 @@
 {
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "kpiParameters",
+  "position": {
+    "x": 648,
+    "y": 472,
+    "width": 608,
+    "height": 224,
+    "z": 0,
+    "tabOrder": 0
+  },
   "visual": {
     "visualType": "tableEx",
     "query": {
@@ -7,7 +16,6 @@
         "Values": {
           "projections": [
             {
-              "queryRef": "KPI Parameter.Parameter Code",
               "field": {
                 "Column": {
                   "Expression": {
@@ -18,10 +26,10 @@
                   "Property": "Parameter Code"
                 }
               },
+              "queryRef": "KPI Parameter.Parameter Code",
               "nativeQueryRef": "Parameter Code"
             },
             {
-              "queryRef": "KPI Parameter.Parameter Value",
               "field": {
                 "Column": {
                   "Expression": {
@@ -32,10 +40,10 @@
                   "Property": "Parameter Value"
                 }
               },
+              "queryRef": "KPI Parameter.Parameter Value",
               "nativeQueryRef": "Parameter Value"
             },
             {
-              "queryRef": "KPI Parameter.Unit",
               "field": {
                 "Column": {
                   "Expression": {
@@ -46,28 +54,13 @@
                   "Property": "Unit"
                 }
               },
+              "queryRef": "KPI Parameter.Unit",
               "nativeQueryRef": "Unit"
-            },
-            {
-              "queryRef": "KPI Parameter.Parameter Description",
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "KPI Parameter"
-                    }
-                  },
-                  "Property": "Parameter Description"
-                }
-              },
-              "nativeQueryRef": "Parameter Description"
             }
           ]
         }
       }
     },
-    "objects": {},
-    "drillFilterOtherVisuals": true,
     "visualContainerObjects": {
       "title": [
         {
@@ -115,15 +108,69 @@
           }
         }
       ]
+    },
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "total": [
+        {
+          "properties": {
+            "totals": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "grid": [
+        {
+          "properties": {
+            "rowPadding": {
+              "expr": {
+                "Literal": {
+                  "Value": "2D"
+                }
+              }
+            },
+            "imageHeight": {
+              "expr": {
+                "Literal": {
+                  "Value": "32D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "columnHeaders": [
+        {
+          "properties": {
+            "autoSizeColumnWidth": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "customColumnWidth": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "columnAdjustment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'growToFit'"
+                }
+              }
+            }
+          }
+        }
+      ]
     }
-  },
-  "position": {
-    "x": 648,
-    "y": 220,
-    "width": 608,
-    "height": 228,
-    "z": 0,
-    "tabOrder": 0
-  },
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json"
+  }
 }

@@ -55,20 +55,6 @@
                 }
               },
               "nativeQueryRef": "SLA Compliance %"
-            },
-            {
-              "queryRef": "_Measures.MTTR (h)",
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "MTTR (h)"
-                }
-              },
-              "nativeQueryRef": "MTTR (h)"
             }
           ]
         }
@@ -77,22 +63,83 @@
         "sort": [
           {
             "field": {
-              "Measure": {
+              "Column": {
                 "Expression": {
                   "SourceRef": {
-                    "Entity": "_Measures"
+                    "Entity": "Circuit"
                   }
                 },
-                "Property": "SLA Compliance %"
+                "Property": "Tier"
               }
             },
-            "direction": "Descending"
+            "direction": "Ascending"
           }
         ],
         "isDefaultSort": true
       }
     },
-    "objects": {},
+    "objects": {
+      "grid": [
+        {
+          "properties": {
+            "rowPadding": {
+              "expr": {
+                "Literal": {
+                  "Value": "2D"
+                }
+              }
+            },
+            "imageHeight": {
+              "expr": {
+                "Literal": {
+                  "Value": "32D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "columnHeaders": [
+        {
+          "properties": {
+            "autoSizeColumnWidth": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "customColumnWidth": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "columnAdjustment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'growToFit'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTotals": [
+        {
+          "properties": {
+            "columnSubtotals": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
     "drillFilterOtherVisuals": true,
     "visualContainerObjects": {
       "title": [
@@ -108,7 +155,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'SLA compliance % and MTTR (h) by tier and priority'"
+                  "Value": "'SLA compliance % by tier and priority'"
                 }
               }
             }
@@ -127,27 +174,14 @@
             }
           }
         }
-      ],
-      "general": [
-        {
-          "properties": {
-            "altText": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Matrix of SLA compliance and MTTR by customer tier and ticket priority'"
-                }
-              }
-            }
-          }
-        }
       ]
     }
   },
   "position": {
-    "x": 856,
+    "x": 648,
     "y": 220,
-    "width": 400,
-    "height": 228,
+    "width": 296,
+    "height": 236,
     "z": 0,
     "tabOrder": 0
   },

@@ -1,5 +1,14 @@
 {
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "chronicList",
+  "position": {
+    "x": 24,
+    "y": 472,
+    "width": 1232,
+    "height": 224,
+    "z": 0,
+    "tabOrder": 0
+  },
   "visual": {
     "visualType": "tableEx",
     "query": {
@@ -7,7 +16,6 @@
         "Values": {
           "projections": [
             {
-              "queryRef": "Circuit.Circuit Id",
               "field": {
                 "Column": {
                   "Expression": {
@@ -18,10 +26,10 @@
                   "Property": "Circuit Id"
                 }
               },
+              "queryRef": "Circuit.Circuit Id",
               "nativeQueryRef": "Circuit Id"
             },
             {
-              "queryRef": "Circuit.Customer",
               "field": {
                 "Column": {
                   "Expression": {
@@ -32,10 +40,10 @@
                   "Property": "Customer"
                 }
               },
+              "queryRef": "Circuit.Customer",
               "nativeQueryRef": "Customer"
             },
             {
-              "queryRef": "Circuit.Account Manager",
               "field": {
                 "Column": {
                   "Expression": {
@@ -46,10 +54,10 @@
                   "Property": "Account Manager"
                 }
               },
+              "queryRef": "Circuit.Account Manager",
               "nativeQueryRef": "Account Manager"
             },
             {
-              "queryRef": "Circuit.Technology",
               "field": {
                 "Column": {
                   "Expression": {
@@ -60,10 +68,10 @@
                   "Property": "Technology"
                 }
               },
+              "queryRef": "Circuit.Technology",
               "nativeQueryRef": "Technology"
             },
             {
-              "queryRef": "Circuit.Region",
               "field": {
                 "Column": {
                   "Expression": {
@@ -74,10 +82,10 @@
                   "Property": "Region"
                 }
               },
+              "queryRef": "Circuit.Region",
               "nativeQueryRef": "Region"
             },
             {
-              "queryRef": "Circuit.Tier",
               "field": {
                 "Column": {
                   "Expression": {
@@ -88,10 +96,10 @@
                   "Property": "Tier"
                 }
               },
+              "queryRef": "Circuit.Tier",
               "nativeQueryRef": "Tier"
             },
             {
-              "queryRef": "_Measures.Tickets In Chronic Window",
               "field": {
                 "Measure": {
                   "Expression": {
@@ -102,10 +110,10 @@
                   "Property": "Tickets In Chronic Window"
                 }
               },
+              "queryRef": "_Measures.Tickets In Chronic Window",
               "nativeQueryRef": "Tickets In Chronic Window"
             },
             {
-              "queryRef": "_Measures.Last Incident Opened",
               "field": {
                 "Measure": {
                   "Expression": {
@@ -116,6 +124,7 @@
                   "Property": "Last Incident Opened"
                 }
               },
+              "queryRef": "_Measures.Last Incident Opened",
               "nativeQueryRef": "Last Incident Opened"
             }
           ]
@@ -140,8 +149,6 @@
         "isDefaultSort": true
       }
     },
-    "objects": {},
-    "drillFilterOtherVisuals": true,
     "visualContainerObjects": {
       "title": [
         {
@@ -189,15 +196,22 @@
           }
         }
       ]
+    },
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "total": [
+        {
+          "properties": {
+            "totals": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
     }
-  },
-  "position": {
-    "x": 24,
-    "y": 464,
-    "width": 1232,
-    "height": 232,
-    "z": 0,
-    "tabOrder": 0
-  },
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json"
+  }
 }

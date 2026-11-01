@@ -1,5 +1,14 @@
 {
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "dqChecks",
+  "position": {
+    "x": 24,
+    "y": 220,
+    "width": 608,
+    "height": 476,
+    "z": 0,
+    "tabOrder": 0
+  },
   "visual": {
     "visualType": "tableEx",
     "query": {
@@ -7,7 +16,6 @@
         "Values": {
           "projections": [
             {
-              "queryRef": "Data Quality Check.Check Code",
               "field": {
                 "Column": {
                   "Expression": {
@@ -18,24 +26,10 @@
                   "Property": "Check Code"
                 }
               },
+              "queryRef": "Data Quality Check.Check Code",
               "nativeQueryRef": "Check Code"
             },
             {
-              "queryRef": "Data Quality Check.Check Type",
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "Data Quality Check"
-                    }
-                  },
-                  "Property": "Check Type"
-                }
-              },
-              "nativeQueryRef": "Check Type"
-            },
-            {
-              "queryRef": "Data Quality Check.Check",
               "field": {
                 "Column": {
                   "Expression": {
@@ -46,10 +40,10 @@
                   "Property": "Check"
                 }
               },
+              "queryRef": "Data Quality Check.Check",
               "nativeQueryRef": "Check"
             },
             {
-              "queryRef": "Data Quality Check.Affected Rows",
               "field": {
                 "Column": {
                   "Expression": {
@@ -60,24 +54,10 @@
                   "Property": "Affected Rows"
                 }
               },
+              "queryRef": "Data Quality Check.Affected Rows",
               "nativeQueryRef": "Affected Rows"
             },
             {
-              "queryRef": "Data Quality Check.Unhandled Rows",
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "Data Quality Check"
-                    }
-                  },
-                  "Property": "Unhandled Rows"
-                }
-              },
-              "nativeQueryRef": "Unhandled Rows"
-            },
-            {
-              "queryRef": "Data Quality Check.Result",
               "field": {
                 "Column": {
                   "Expression": {
@@ -88,28 +68,13 @@
                   "Property": "Result"
                 }
               },
+              "queryRef": "Data Quality Check.Result",
               "nativeQueryRef": "Result"
-            },
-            {
-              "queryRef": "Data Quality Check.Handling",
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "Data Quality Check"
-                    }
-                  },
-                  "Property": "Handling"
-                }
-              },
-              "nativeQueryRef": "Handling"
             }
           ]
         }
       }
     },
-    "objects": {},
-    "drillFilterOtherVisuals": true,
     "visualContainerObjects": {
       "title": [
         {
@@ -157,15 +122,75 @@
           }
         }
       ]
+    },
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "total": [
+        {
+          "properties": {
+            "totals": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "grid": [
+        {
+          "properties": {
+            "rowPadding": {
+              "expr": {
+                "Literal": {
+                  "Value": "2D"
+                }
+              }
+            },
+            "imageHeight": {
+              "expr": {
+                "Literal": {
+                  "Value": "32D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "columnHeaders": [
+        {
+          "properties": {
+            "autoSizeColumnWidth": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "columnAdjustment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'fitToContent'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "values": [
+        {
+          "properties": {
+            "wordWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
     }
-  },
-  "position": {
-    "x": 24,
-    "y": 464,
-    "width": 1232,
-    "height": 232,
-    "z": 0,
-    "tabOrder": 0
-  },
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json"
+  }
 }

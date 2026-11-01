@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "NorthGridOps"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "973eb645-4fe5-4c34-b044-0aad35742c70"
+  }
+}

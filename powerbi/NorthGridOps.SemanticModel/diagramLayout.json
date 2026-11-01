@@ -1,0 +1,243 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 1520.0277857993819,
+            "y": 405.92722912232978
+          },
+          "nodeIndex": "_Measures",
+          "nodeLineageTag": "24e446cb-3bbf-50f7-be4d-f2650986b318",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1286.0277857993822,
+            "y": 933.85445824465955
+          },
+          "nodeIndex": "Action Type",
+          "nodeLineageTag": "3349422e-2721-5356-87ff-5fc62cac0043",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 798.97160132595809,
+            "y": -16.082660801622751
+          },
+          "nodeIndex": "Age Bucket",
+          "nodeLineageTag": "c537bbe3-1e73-503f-983d-1bd6e68fd6d2",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 481.7962201422306,
+            "y": -50
+          },
+          "nodeIndex": "Backlog Snapshot",
+          "nodeLineageTag": "2ebf2bea-3bc9-555e-a5c8-6b6569a5d5a9",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1029.9600386869197,
+            "y": 212.57141395079384
+          },
+          "nodeIndex": "Chronic Snapshot",
+          "nodeLineageTag": "bf4abab7-bef8-5e4a-b5bf-62f281fb0889",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 742.9430044379767,
+            "y": 227.30953041329326
+          },
+          "nodeIndex": "Circuit",
+          "nodeLineageTag": "05880d25-9ba9-5c30-bd2c-9e8a2f547c60",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1804.0277857993819,
+            "y": 419.92722912232978
+          },
+          "nodeIndex": "Data Quality Check",
+          "nodeLineageTag": "9a044fa6-30f1-56d8-873c-493664b869e1",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 495.8255357914361,
+            "y": 580.8753998914957
+          },
+          "nodeIndex": "Date",
+          "nodeLineageTag": "ecd50c95-14e7-5f1b-8f53-b95a5df68886",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1009.3234419888577,
+            "y": 581.0318768602051
+          },
+          "nodeIndex": "Improvement Action",
+          "nodeLineageTag": "6e2761ce-3d90-5665-babb-92f7f0548de5",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 337.03936979956279,
+            "y": 228.41558633691795
+          },
+          "nodeIndex": "Incident",
+          "nodeLineageTag": "dd77af8d-0b65-5711-93c3-18108cfbc0fc",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2088.0277857993819,
+            "y": 467.92722912232978
+          },
+          "nodeIndex": "KPI Parameter",
+          "nodeLineageTag": "76f04416-b987-517d-80f3-cb9d750ebbab",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 147.8870010124449,
+            "y": 23.466663988197297
+          },
+          "nodeIndex": "Priority",
+          "nodeLineageTag": "2be28734-2399-5cec-9bf3-2840f8a33e89",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2372.0277857993819,
+            "y": 443.92722912232978
+          },
+          "nodeIndex": "Processing Status",
+          "nodeLineageTag": "6a9abd04-16bc-565c-a009-cf81f0c99740",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 50,
+            "y": 569.39289324621427
+          },
+          "nodeIndex": "Root Cause",
+          "nodeLineageTag": "fb3ecb90-1169-5222-bd19-69f90d790d95",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2656.0277857993819,
+            "y": 491.92722912232978
+          },
+          "nodeIndex": "Time Comparison",
+          "nodeLineageTag": "f3993092-a2ce-5c1f-969b-f86ca7b96716",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2940.0277857993819,
+            "y": 491.92722912232978
+          },
+          "nodeIndex": "Trend Month",
+          "nodeLineageTag": "508f3d04-48ca-5fd5-acf1-897586195a6d",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3224.0277857993819,
+            "y": 491.92722912232978
+          },
+          "nodeIndex": "Trend Window",
+          "nodeLineageTag": "609b2da8-d8c1-567c-a444-fd001b4e1d35",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Todas as tabelas",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "Todas as tabelas",
+  "defaultDiagram": "Todas as tabelas"
+}

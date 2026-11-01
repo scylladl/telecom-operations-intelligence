@@ -182,20 +182,20 @@ table _Measures
 
 	/// Incident change on treated circuits, matched actions only.
 	measure 'Treated Change % (Matched)' =
-			VAR Before = CALCULATE ( [Incidents Before Action], KEEPFILTERS ( 'Improvement Action'[Has Control] = 1 ) )
-			VAR After = CALCULATE ( [Incidents After Action], KEEPFILTERS ( 'Improvement Action'[Has Control] = 1 ) )
+			VAR BeforeCount = CALCULATE ( [Incidents Before Action], KEEPFILTERS ( 'Improvement Action'[Has Control] = 1 ) )
+			VAR AfterCount = CALCULATE ( [Incidents After Action], KEEPFILTERS ( 'Improvement Action'[Has Control] = 1 ) )
 			RETURN
-			    DIVIDE ( After - Before, Before )
+			    DIVIDE ( AfterCount - BeforeCount, BeforeCount )
 		formatString: +0.0%;-0.0%;0.0%
 		displayFolder: 5. Improvement Actions
 		lineageTag: d8549510-f861-5e11-a1b7-3a6b6f52b5c9
 
 	/// Incident change on matched untreated circuits over the same dates: what happens without any action.
 	measure 'Control Change %' =
-			VAR Before = CALCULATE ( SUM ( 'Improvement Action'[Control Before] ), KEEPFILTERS ( 'Improvement Action'[Has Control] = 1 ) )
-			VAR After = CALCULATE ( SUM ( 'Improvement Action'[Control After] ), KEEPFILTERS ( 'Improvement Action'[Has Control] = 1 ) )
+			VAR BeforeCount = CALCULATE ( SUM ( 'Improvement Action'[Control Before] ), KEEPFILTERS ( 'Improvement Action'[Has Control] = 1 ) )
+			VAR AfterCount = CALCULATE ( SUM ( 'Improvement Action'[Control After] ), KEEPFILTERS ( 'Improvement Action'[Has Control] = 1 ) )
 			RETURN
-			    DIVIDE ( After - Before, Before )
+			    DIVIDE ( AfterCount - BeforeCount, BeforeCount )
 		formatString: +0.0%;-0.0%;0.0%
 		displayFolder: 5. Improvement Actions
 		lineageTag: d26d0321-633f-5e35-89b2-3396dfd730f7
@@ -256,7 +256,7 @@ table _Measures
 			VAR TechnologyText =
 			    IF ( ISFILTERED ( 'Circuit'[Technology] ), CONCATENATEX ( VALUES ( 'Circuit'[Technology] ), 'Circuit'[Technology], ", ", 'Circuit'[Technology] ), "All technologies" )
 			VAR TierText =
-			    IF ( ISFILTERED ( 'Circuit'[Tier] ), CONCATENATEX ( VALUES ( 'Circuit'[Tier] ), 'Circuit'[Tier], ", ", 'Circuit'[Tier Sort] ), "All tiers" )
+			    IF ( ISFILTERED ( 'Circuit'[Tier] ), CONCATENATEX ( VALUES ( 'Circuit'[Tier] ), 'Circuit'[Tier], ", ", 'Circuit'[Tier] ), "All tiers" )
 			VAR PriorityText =
 			    IF ( ISFILTERED ( 'Priority'[Priority Code] ), CONCATENATEX ( VALUES ( 'Priority'[Priority Code] ), 'Priority'[Priority Code], ", ", 'Priority'[Priority Code] ), "All priorities" )
 			RETURN

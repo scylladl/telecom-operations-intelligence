@@ -5,11 +5,13 @@ table 'Time Comparison'
 	calculationGroup
 		precedence: 10
 
-		calculationItem Current = SELECTEDMEASURE ()
+		calculationItem 'Selected Month' = SELECTEDMEASURE ()
+			ordinal: 0
 
-		calculationItem 'Previous Month' = CALCULATE ( SELECTEDMEASURE (), DATEADD ( 'Date'[Date], -1, MONTH ) )
+		calculationItem 'Prior Month' = CALCULATE ( SELECTEDMEASURE (), DATEADD ( 'Date'[Date], -1, MONTH ) )
+			ordinal: 1
 
-		calculationItem 'vs Previous Month' =
+		calculationItem MoM =
 				VAR CurrentValue = SELECTEDMEASURE ()
 				VAR PriorValue = CALCULATE ( SELECTEDMEASURE (), DATEADD ( 'Date'[Date], -1, MONTH ) )
 				RETURN
@@ -18,11 +20,14 @@ table 'Time Comparison'
 				        IF ( ISSELECTEDMEASURE ( [SLA Compliance %], [Repeat Rate %] ), ( CurrentValue - PriorValue ) * 100, DIVIDE ( CurrentValue - PriorValue, PriorValue ) )
 				    )
 
+			ordinal: 2
+
 			formatStringDefinition = IF ( ISSELECTEDMEASURE ( [SLA Compliance %], [Repeat Rate %] ), "+0.0 pp;-0.0 pp;0.0 pp", "+0.0%;-0.0%;0.0%" )
 
-		calculationItem 'Same Month Last Year' = CALCULATE ( SELECTEDMEASURE (), SAMEPERIODLASTYEAR ( 'Date'[Date] ) )
+		calculationItem 'Same Month LY' = CALCULATE ( SELECTEDMEASURE (), SAMEPERIODLASTYEAR ( 'Date'[Date] ) )
+			ordinal: 3
 
-		calculationItem 'vs Last Year' =
+		calculationItem YoY =
 				VAR CurrentValue = SELECTEDMEASURE ()
 				VAR PriorValue = CALCULATE ( SELECTEDMEASURE (), SAMEPERIODLASTYEAR ( 'Date'[Date] ) )
 				RETURN
@@ -30,6 +35,8 @@ table 'Time Comparison'
 				        NOT ISBLANK ( CurrentValue ) && NOT ISBLANK ( PriorValue ),
 				        IF ( ISSELECTEDMEASURE ( [SLA Compliance %], [Repeat Rate %] ), ( CurrentValue - PriorValue ) * 100, DIVIDE ( CurrentValue - PriorValue, PriorValue ) )
 				    )
+
+			ordinal: 4
 
 			formatStringDefinition = IF ( ISSELECTEDMEASURE ( [SLA Compliance %], [Repeat Rate %] ), "+0.0 pp;-0.0 pp;0.0 pp", "+0.0%;-0.0%;0.0%" )
 

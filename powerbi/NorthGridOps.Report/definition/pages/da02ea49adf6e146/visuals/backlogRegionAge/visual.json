@@ -1,5 +1,14 @@
 {
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "backlogRegionAge",
+  "position": {
+    "x": 648,
+    "y": 220,
+    "width": 608,
+    "height": 236,
+    "z": 0,
+    "tabOrder": 0
+  },
   "visual": {
     "visualType": "barChart",
     "query": {
@@ -7,7 +16,6 @@
         "Category": {
           "projections": [
             {
-              "queryRef": "Circuit.Region",
               "field": {
                 "Column": {
                   "Expression": {
@@ -18,32 +26,15 @@
                   "Property": "Region"
                 }
               },
-              "nativeQueryRef": "Region"
-            }
-          ]
-        },
-        "Y": {
-          "projections": [
-            {
-              "queryRef": "_Measures.Open Backlog",
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Open Backlog"
-                }
-              },
-              "nativeQueryRef": "Open Backlog"
+              "queryRef": "Circuit.Region",
+              "nativeQueryRef": "Region",
+              "active": true
             }
           ]
         },
         "Series": {
           "projections": [
             {
-              "queryRef": "Age Bucket.Age Bucket",
               "field": {
                 "Column": {
                   "Expression": {
@@ -54,7 +45,26 @@
                   "Property": "Age Bucket"
                 }
               },
+              "queryRef": "Age Bucket.Age Bucket",
               "nativeQueryRef": "Age Bucket"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Open Backlog"
+                }
+              },
+              "queryRef": "_Measures.Open Backlog",
+              "nativeQueryRef": "Open Backlog"
             }
           ]
         }
@@ -78,8 +88,6 @@
         "isDefaultSort": true
       }
     },
-    "objects": {},
-    "drillFilterOtherVisuals": true,
     "visualContainerObjects": {
       "title": [
         {
@@ -127,15 +135,7 @@
           }
         }
       ]
-    }
-  },
-  "position": {
-    "x": 648,
-    "y": 220,
-    "width": 608,
-    "height": 228,
-    "z": 0,
-    "tabOrder": 0
-  },
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json"
+    },
+    "drillFilterOtherVisuals": true
+  }
 }

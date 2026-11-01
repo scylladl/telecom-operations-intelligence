@@ -1,5 +1,14 @@
 {
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "effectType",
+  "position": {
+    "x": 24,
+    "y": 220,
+    "width": 608,
+    "height": 236,
+    "z": 0,
+    "tabOrder": 0
+  },
   "visual": {
     "visualType": "clusteredBarChart",
     "query": {
@@ -7,7 +16,6 @@
         "Category": {
           "projections": [
             {
-              "queryRef": "Action Type.Action Type",
               "field": {
                 "Column": {
                   "Expression": {
@@ -18,14 +26,15 @@
                   "Property": "Action Type"
                 }
               },
-              "nativeQueryRef": "Action Type"
+              "queryRef": "Action Type.Action Type",
+              "nativeQueryRef": "Action Type",
+              "active": true
             }
           ]
         },
         "Y": {
           "projections": [
             {
-              "queryRef": "_Measures.Treated Change % (Matched)",
               "field": {
                 "Measure": {
                   "Expression": {
@@ -36,10 +45,10 @@
                   "Property": "Treated Change % (Matched)"
                 }
               },
+              "queryRef": "_Measures.Treated Change % (Matched)",
               "nativeQueryRef": "Treated Change % (Matched)"
             },
             {
-              "queryRef": "_Measures.Control Change %",
               "field": {
                 "Measure": {
                   "Expression": {
@@ -50,6 +59,7 @@
                   "Property": "Control Change %"
                 }
               },
+              "queryRef": "_Measures.Control Change %",
               "nativeQueryRef": "Control Change %"
             }
           ]
@@ -74,8 +84,6 @@
         "isDefaultSort": true
       }
     },
-    "objects": {},
-    "drillFilterOtherVisuals": true,
     "visualContainerObjects": {
       "title": [
         {
@@ -123,15 +131,7 @@
           }
         }
       ]
-    }
-  },
-  "position": {
-    "x": 24,
-    "y": 220,
-    "width": 608,
-    "height": 228,
-    "z": 0,
-    "tabOrder": 0
-  },
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json"
+    },
+    "drillFilterOtherVisuals": true
+  }
 }

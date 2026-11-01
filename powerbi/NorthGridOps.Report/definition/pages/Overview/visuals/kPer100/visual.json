@@ -1,5 +1,14 @@
 {
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "kPer100",
+  "position": {
+    "x": 274,
+    "y": 116,
+    "width": 234,
+    "height": 88,
+    "z": 0,
+    "tabOrder": 0
+  },
   "visual": {
     "visualType": "card",
     "query": {
@@ -7,7 +16,6 @@
         "Values": {
           "projections": [
             {
-              "queryRef": "_Measures.Incidents per 100 Circuits",
               "field": {
                 "Measure": {
                   "Expression": {
@@ -18,6 +26,7 @@
                   "Property": "Incidents per 100 Circuits"
                 }
               },
+              "queryRef": "_Measures.Incidents per 100 Circuits",
               "nativeQueryRef": "Incidents per 100 Circuits"
             }
           ]
@@ -42,16 +51,6 @@
         "isDefaultSort": true
       }
     },
-    "objects": {},
     "drillFilterOtherVisuals": true
-  },
-  "position": {
-    "x": 274,
-    "y": 96,
-    "width": 234,
-    "height": 108,
-    "z": 0,
-    "tabOrder": 0
-  },
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json"
+  }
 }

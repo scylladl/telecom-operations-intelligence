@@ -1,5 +1,14 @@
 {
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "worstBreaches",
+  "position": {
+    "x": 24,
+    "y": 472,
+    "width": 1232,
+    "height": 224,
+    "z": 0,
+    "tabOrder": 0
+  },
   "visual": {
     "visualType": "tableEx",
     "query": {
@@ -7,7 +16,6 @@
         "Values": {
           "projections": [
             {
-              "queryRef": "Incident.Ticket Id",
               "field": {
                 "Column": {
                   "Expression": {
@@ -18,10 +26,10 @@
                   "Property": "Ticket Id"
                 }
               },
+              "queryRef": "Incident.Ticket Id",
               "nativeQueryRef": "Ticket Id"
             },
             {
-              "queryRef": "Circuit.Circuit Id",
               "field": {
                 "Column": {
                   "Expression": {
@@ -32,10 +40,10 @@
                   "Property": "Circuit Id"
                 }
               },
+              "queryRef": "Circuit.Circuit Id",
               "nativeQueryRef": "Circuit Id"
             },
             {
-              "queryRef": "Circuit.Customer",
               "field": {
                 "Column": {
                   "Expression": {
@@ -46,10 +54,10 @@
                   "Property": "Customer"
                 }
               },
+              "queryRef": "Circuit.Customer",
               "nativeQueryRef": "Customer"
             },
             {
-              "queryRef": "Circuit.Region",
               "field": {
                 "Column": {
                   "Expression": {
@@ -60,10 +68,10 @@
                   "Property": "Region"
                 }
               },
+              "queryRef": "Circuit.Region",
               "nativeQueryRef": "Region"
             },
             {
-              "queryRef": "Circuit.Tier",
               "field": {
                 "Column": {
                   "Expression": {
@@ -74,10 +82,10 @@
                   "Property": "Tier"
                 }
               },
+              "queryRef": "Circuit.Tier",
               "nativeQueryRef": "Tier"
             },
             {
-              "queryRef": "Priority.Priority Code",
               "field": {
                 "Column": {
                   "Expression": {
@@ -88,10 +96,10 @@
                   "Property": "Priority Code"
                 }
               },
+              "queryRef": "Priority.Priority Code",
               "nativeQueryRef": "Priority Code"
             },
             {
-              "queryRef": "Incident.Opened At",
               "field": {
                 "Column": {
                   "Expression": {
@@ -102,10 +110,10 @@
                   "Property": "Opened At"
                 }
               },
+              "queryRef": "Incident.Opened At",
               "nativeQueryRef": "Opened At"
             },
             {
-              "queryRef": "Incident.Restored At",
               "field": {
                 "Column": {
                   "Expression": {
@@ -116,10 +124,10 @@
                   "Property": "Restored At"
                 }
               },
+              "queryRef": "Incident.Restored At",
               "nativeQueryRef": "Restored At"
             },
             {
-              "queryRef": "Incident.Restore Hours",
               "field": {
                 "Column": {
                   "Expression": {
@@ -130,10 +138,10 @@
                   "Property": "Restore Hours"
                 }
               },
+              "queryRef": "Incident.Restore Hours",
               "nativeQueryRef": "Restore Hours"
             },
             {
-              "queryRef": "Incident.SLA Target Hours",
               "field": {
                 "Column": {
                   "Expression": {
@@ -144,10 +152,10 @@
                   "Property": "SLA Target Hours"
                 }
               },
+              "queryRef": "Incident.SLA Target Hours",
               "nativeQueryRef": "SLA Target Hours"
             },
             {
-              "queryRef": "_Measures.Max Hours Over Target",
               "field": {
                 "Measure": {
                   "Expression": {
@@ -158,6 +166,7 @@
                   "Property": "Max Hours Over Target"
                 }
               },
+              "queryRef": "_Measures.Max Hours Over Target",
               "nativeQueryRef": "Max Hours Over Target"
             }
           ]
@@ -182,8 +191,6 @@
         "isDefaultSort": true
       }
     },
-    "objects": {},
-    "drillFilterOtherVisuals": true,
     "visualContainerObjects": {
       "title": [
         {
@@ -231,17 +238,24 @@
           }
         }
       ]
+    },
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "total": [
+        {
+          "properties": {
+            "totals": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
     }
   },
-  "position": {
-    "x": 24,
-    "y": 464,
-    "width": 1232,
-    "height": 232,
-    "z": 0,
-    "tabOrder": 0
-  },
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
   "filterConfig": {
     "filters": [
       {
@@ -257,7 +271,6 @@
           }
         },
         "type": "TopN",
-        "howCreated": "User",
         "filter": {
           "Version": 2,
           "From": [
@@ -344,7 +357,8 @@
               }
             }
           ]
-        }
+        },
+        "howCreated": "User"
       }
     ]
   }

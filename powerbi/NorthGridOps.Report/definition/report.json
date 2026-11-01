@@ -11,23 +11,6 @@
       "type": "RegisteredResources"
     }
   },
-  "settings": {
-    "useStylableVisualContainerHeader": true,
-    "defaultDrillFilterOtherVisuals": true
-  },
-  "resourcePackages": [
-    {
-      "name": "RegisteredResources",
-      "type": "RegisteredResources",
-      "items": [
-        {
-          "name": "ScyllaDataLab.json",
-          "path": "ScyllaDataLab.json",
-          "type": "CustomTheme"
-        }
-      ]
-    }
-  ],
   "filterConfig": {
     "filters": [
       {
@@ -43,7 +26,6 @@
           }
         },
         "type": "Categorical",
-        "howCreated": "User",
         "filter": {
           "Version": 2,
           "From": [
@@ -82,7 +64,8 @@
               }
             }
           ]
-        }
+        },
+        "howCreated": "User"
       },
       {
         "name": "896c7e51455130a36257",
@@ -145,5 +128,23 @@
         "howCreated": "User"
       }
     ]
+  },
+  "resourcePackages": [
+    {
+      "name": "RegisteredResources",
+      "type": "RegisteredResources",
+      "items": [
+        {
+          "name": "ScyllaDataLab.json",
+          "path": "ScyllaDataLab.json",
+          "type": "CustomTheme"
+        }
+      ]
+    }
+  ],
+  "settings": {
+    "useStylableVisualContainerHeader": true,
+    "defaultDrillFilterOtherVisuals": true,
+    "useEnhancedTooltips": false
   }
 }

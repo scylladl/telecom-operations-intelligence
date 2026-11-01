@@ -1,5 +1,14 @@
 {
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "effectRegion",
+  "position": {
+    "x": 648,
+    "y": 220,
+    "width": 608,
+    "height": 236,
+    "z": 0,
+    "tabOrder": 0
+  },
   "visual": {
     "visualType": "clusteredBarChart",
     "query": {
@@ -7,7 +16,6 @@
         "Category": {
           "projections": [
             {
-              "queryRef": "Circuit.Region",
               "field": {
                 "Column": {
                   "Expression": {
@@ -18,32 +26,15 @@
                   "Property": "Region"
                 }
               },
-              "nativeQueryRef": "Region"
-            }
-          ]
-        },
-        "Y": {
-          "projections": [
-            {
-              "queryRef": "_Measures.Net Action Effect (pp)",
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Net Action Effect (pp)"
-                }
-              },
-              "nativeQueryRef": "Net Action Effect (pp)"
+              "queryRef": "Circuit.Region",
+              "nativeQueryRef": "Region",
+              "active": true
             }
           ]
         },
         "Tooltips": {
           "projections": [
             {
-              "queryRef": "_Measures.Matched Actions",
               "field": {
                 "Measure": {
                   "Expression": {
@@ -54,7 +45,26 @@
                   "Property": "Matched Actions"
                 }
               },
+              "queryRef": "_Measures.Matched Actions",
               "nativeQueryRef": "Matched Actions"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Net Action Effect (pp)"
+                }
+              },
+              "queryRef": "_Measures.Net Action Effect (pp)",
+              "nativeQueryRef": "Net Action Effect (pp)"
             }
           ]
         }
@@ -78,8 +88,6 @@
         "isDefaultSort": true
       }
     },
-    "objects": {},
-    "drillFilterOtherVisuals": true,
     "visualContainerObjects": {
       "title": [
         {
@@ -127,15 +135,22 @@
           }
         }
       ]
+    },
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "categoryAxis": [
+        {
+          "properties": {
+            "innerPadding": {
+              "expr": {
+                "Literal": {
+                  "Value": "5D"
+                }
+              }
+            }
+          }
+        }
+      ]
     }
-  },
-  "position": {
-    "x": 648,
-    "y": 220,
-    "width": 608,
-    "height": 228,
-    "z": 0,
-    "tabOrder": 0
-  },
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json"
+  }
 }
