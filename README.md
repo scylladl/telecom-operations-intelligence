@@ -115,6 +115,9 @@ Requirements: Windows, SQL Server 2019 or later with Windows authentication, Pyt
    powershell -ExecutionPolicy Bypass -File validation\run_validation.ps1
    ```
 
+Deploy SQL changes with `database\deploy.ps1`. With `sqlcmd`, add `-I`: without it the procedure is created with
+`QUOTED_IDENTIFIER OFF`, and its filtered index fails at run time.
+
 Daily processing (before the Power BI refresh): `database\refresh.ps1`. A PBIX can be produced from the
 project with File → Save as in Power BI Desktop.
 
