@@ -160,6 +160,12 @@ documented but not implemented (out of scope); more in `docs/05-validation-resul
 
 Code under the MIT License (`LICENSE`). The data is synthetic and the company is fictional.
 
+## Contact
+
+Gustavo Silveira · [LinkedIn](https://www.linkedin.com/in/gustavo-d-silveira-72b9b9218/) ·
+[scylla.datalab@outlook.com](mailto:scylla.datalab@outlook.com). Available for Power BI, SQL Server and Python
+projects, remote or in Spain.
+
 ## Resumen en español
 
 Solución de BI para las operaciones de red B2B de un operador ficticio en España: volumen de incidencias,
