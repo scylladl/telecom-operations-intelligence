@@ -116,10 +116,12 @@ Taken from each report open in Power BI Desktop after its data was refreshed:
   their reference label, but not coloured: `pbir` writes conditional formatting on new cards with a generic
   selector that Power BI ignores (tested on the reference value, the detail line and the accent bar), and the
   project rules forbid editing the JSON by hand. The sign carries the direction; the colour measures
-  (`<KPI> MoM Color`) are ready. Editorial cards still show the prior-month value.
-- Editorial: the small multiples (SLA by region, repeat rate by technology) still show a thin horizontal scroll
-  bar per panel. Midnight fixed it with a continuous axis on `Trend Month Index` (labels hidden); the same
-  change applies to Editorial.
+  (`<KPI> MoM Color`) are ready. The same applies to Editorial.
+
+### Editorial refinement (second round)
+KPI cards with the month-over-month change in a tabular reference label (`MoM −0,3 pp`), short month labels on
+the 13-month columns, small multiples on a continuous month axis (no scroll bars) without the Unknown member,
+headlines that fit, data quality table without horizontal scroll.
 
 ### Midnight refinement (second round)
 Month-over-month change on the KPI cards, short month labels (`Dec 24`) on every 13-month axis, brand block on
