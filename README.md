@@ -36,7 +36,7 @@ flowchart LR
   cancelled tickets, SLA scope, repeat window, daily backlog and chronic snapshots, action effectiveness) and
   stores the results as 1/0 components in a star schema. It is safe to run on a schedule: it skips unchanged
   source data, refuses concurrent runs, rebuilds in one transaction and logs every run.
-- **Power BI stays light.** Import model, no calculated columns, 34 short measures that add and divide the SQL
+- **Power BI stays light.** Import model, no calculated columns, 34 short KPI measures (plus 21 for the design variants) that add and divide the SQL
   components, so every rate is correct under any filter. Two calculation groups handle month-over-month and
   year-over-year comparisons and 13-month trends.
 - **Data quality is part of the product.** Twelve automated checks; source defects are handled by documented

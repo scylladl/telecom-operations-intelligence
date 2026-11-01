@@ -25,7 +25,7 @@ flowchart LR
     end
     subgraph PBI["Power BI (PBIP, Import)"]
         PQ["Power Query<br/>one query per rpt view,<br/>type normalization"]
-        SM["Semantic model (TMDL)<br/>34 measures,<br/>2 calculation groups"]
+        SM["Semantic model (TMDL)<br/>55 measures,<br/>2 calculation groups"]
         REP["Report (PBIR)<br/>6 pages + drill-through<br/>+ tooltip"]
         PQ --> SM --> REP
     end

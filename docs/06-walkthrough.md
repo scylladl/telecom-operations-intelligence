@@ -74,6 +74,6 @@ A short guided tour for a BI developer reviewing the project. Decisions and trad
    in the filter pane and watch both react.
 2. **Improvement Actions page**: the requested before/after (−84.6%) next to the control group (−83.3%).
 3. **`database/05_dw_refresh.sql`**: all business rules in one procedure.
-4. **`powerbi/NorthGridOps.SemanticModel/definition/tables/_Measures.tmdl`**: 34 short measures.
+4. **`powerbi/NorthGridOps.SemanticModel/definition/tables/_Measures.tmdl`**: 34 short KPI measures, plus 21 that only the design variants use (folder 8. Design Support).
 5. **`validation/run_validation.ps1`**: run it with the report open to reproduce the 21 checks.
 6. **`docs/05-validation-results.md`**: what was checked, what was found, what is still open.
