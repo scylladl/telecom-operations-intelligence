@@ -7,7 +7,7 @@
 
 | ID | Criterion | Status | Evidence |
 |---|---|---|---|
-| AC-01 | One command rebuilds the database and loads the data from zero | **Partly verified** | `build.ps1` = deploy → generate → load → `refresh.ps1 -Force`. Steps 1–3 were verified when the source was delivered; the full chain including step 4 has not been run end to end, because it deletes and reloads the `ops` tables and needs the owner's go-ahead. Steps 1 and 4 were run separately (`deploy.ps1`, `refresh.ps1`) |
+| AC-01 | One command rebuilds the database and loads the data from zero | **Passed** | `build.ps1` (deploy → generate → load → `refresh.ps1 -Force`) ran end to end in 23.8 s with all checks passing. Row counts and `CHECKSUM_AGG` of the 4 source tables and the 4 fact tables were identical before and after the rebuild, and the 21 SQL vs Power BI checks still matched |
 | AC-02 | All data quality checks pass | **Passed** | 12 of 12 checks pass (table below) |
 | AC-03 | K1, K3, K4, K5, K7, K9 match SQL for three cases each | **Passed** | 21 of 21 comparisons match (table below) |
 | AC-04 | Changing a KPI parameter changes results without editing code | **Passed** | Repeat window 30 → 15 days, inside a rolled-back transaction: repeat incidents 3,859 → 2,375, repeat rate 21.47% → 13.22%; back to 30 days and 21.47% after the rollback |
