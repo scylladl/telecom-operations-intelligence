@@ -26,3 +26,7 @@ data/generated/
 .idea/
 Thumbs.db
 .DS_Store
+
+# Streamlit app: users and local test login
+app/auth.yaml
+app/.demo-login.txt

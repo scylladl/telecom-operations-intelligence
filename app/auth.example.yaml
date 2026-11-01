@@ -1,0 +1,8 @@
+# Structure of auth.yaml (not committed). Create users with manage_users.py, which stores bcrypt hashes.
+credentials:
+  usernames:
+    jdoe:
+      email: jdoe@example.com
+      first_name: Jane
+      last_name: Doe
+      password: <bcrypt hash written by manage_users.py>

@@ -74,6 +74,12 @@ from a design repertoire collected for the project (`docs/design/DESIGN_REPERTOI
 | Dark operations-room design: left navigation rail, KPI cards against the prior month, volume + SLA combo, SLA heatmap by tier and priority | Light narrative design: headline sentence per page, selected month highlighted in trends, small multiples, one accent colour |
 | ![Midnight](docs/screenshots/variants/midnight/01-overview.png) | ![Editorial](docs/screenshots/variants/editorial/01-overview.png) |
 
+### Streamlit version
+
+`app/` is a web version of the same report, with a login. It reads the same `rpt` views and applies the same KPI
+rules in pandas, and its KPIs are tested against the independent SQL validation queries (21 of 21 match).
+Setup and design notes: `app/README.md`.
+
 ## Validation
 
 - K1, K3, K4, K5, K7 and K9 compared between Power BI and SQL queries written independently from the source
@@ -86,7 +92,7 @@ Details, findings and known limitations: `docs/05-validation-results.md`.
 ## How to run
 
 Requirements: Windows, SQL Server 2019 or later with Windows authentication, Python 3.10 or later
-(standard library only), Power BI Desktop.
+(standard library only for the build), Power BI Desktop. The Streamlit app has its own requirements (`app/README.md`).
 
 1. Build the database, generate and load the data, and run the processing (rebuilds everything from zero):
 
@@ -123,6 +129,7 @@ project with File → Save as in Power BI Desktop.
 | `generator/` | Synthetic data generator (fixed seed) |
 | `powerbi/` | PBIP project: TMDL semantic model and PBIR report |
 | `validation/` | Independent SQL validation and the comparison runner |
+| `app/` | Streamlit version of the report, with login |
 
 ## Limitations
 

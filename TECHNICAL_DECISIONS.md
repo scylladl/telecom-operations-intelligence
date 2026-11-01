@@ -144,3 +144,19 @@ Pages, visuals, bindings, filters and formatting were created with the `pbir` CL
 The validation queries do **not** read the `dw` layer: they rewrite the rules from the source tables, so a bug
 in `dw.usp_Refresh` and in the measures would both show up. This caught one bug in the validation itself
 (NULL handling) and confirmed the two dw fixes (decisions 9 and 10).
+
+## Streamlit version
+
+### 24. Same views and same rules, computed in pandas
+The app reads the `rpt` views, the contract Power BI already uses, and does what the measures do: it sums the
+1/0 components and divides. It neither recomputes business rules nor reads `dw` tables. The data (about 90,000
+rows) is loaded once and cached for 15 minutes. Filtering in memory avoids a database round trip per filter change,
+and a new processing run still appears without a restart. The KPIs are tested against the
+independent validation queries, so the app, Power BI and the source rules are checked against one reference.
+
+### 25. Login with hashed local users
+`streamlit-authenticator` with bcrypt hashes in a file that is not committed, and a signed cookie whose key is in
+`.env`. The app uses Windows authentication to SQL Server, so no database secret exists. This is enough for one
+server. An organisation would use its identity provider through Streamlit's OpenID Connect support
+(`st.login`). Every user sees all data, and the server is bound to `localhost`: limitations are listed in
+`app/README.md`.
