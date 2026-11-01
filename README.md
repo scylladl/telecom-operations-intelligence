@@ -1,15 +1,24 @@
 # B2B Network Operations Intelligence
 
-> **Status: first complete version, under review.** Portfolio project by Scylla Data Lab.
+> Portfolio project by Gustavo Silveira, Senior Data & BI Analyst · Scylla Data Lab.
 > **Simulated scenario:** NorthGrid Telecom, its customers, data and every result shown are fictional.
 
 A business intelligence solution for the B2B network operations of a (fictional) Spanish connectivity
 provider: incident volume, restoration time and SLA compliance, repeat incidents and chronic circuits,
 backlog aging, and whether improvement actions actually reduce failures.
 
-Built with **SQL Server (T-SQL)**, **Power BI (PBIP: TMDL + PBIR)**, PowerShell and Python.
+Built with **SQL Server (T-SQL)**, **Power BI (PBIP: TMDL + PBIR)**, **Python (Streamlit)** and PowerShell.
 
-![Overview page](docs/screenshots/01-overview.png)
+![Tour of the Power BI report: the six pages, then the Midnight and Editorial designs](docs/screenshots/powerbi-tour.gif)
+
+## In 30 seconds
+
+| | |
+|---|---|
+| **The problem** | Each region reported backlog with its own definition, customers noticed repeat failures before operations did, and nobody could say whether improvement actions worked. |
+| **What was delivered** | One SQL Server processing job that holds every business rule, a Power BI report in three designs, and a web app with login, all showing the same numbers. |
+| **Why the numbers can be trusted** | The main KPIs were recomputed by independent SQL straight from the source tables: 21 of 21 match in Power BI and 21 of 21 in the web app. Twelve automated data quality checks run after every refresh. |
+| **How the work was done** | Requirements and change requests are written down (`docs/`). Duplicate tickets were handled by a rule agreed with the client before it changed any KPI. The report shows an uncomfortable result openly: most of the apparent effect of the improvement actions is regression to the mean. |
 
 ## The business problem
 
@@ -84,6 +93,8 @@ It comes in three designs, built from a Streamlit design repertoire (`docs/desig
 |---|---|---|
 | ![Classic](docs/screenshots/streamlit/classic-overview.jpg) | ![Midnight](docs/screenshots/streamlit/midnight-overview.jpg) | ![Editorial](docs/screenshots/streamlit/editorial-overview.jpg) |
 
+![Tour of the Streamlit app in its three designs](docs/screenshots/streamlit/streamlit-tour.gif)
+
 Setup and design notes: `app/README.md`.
 
 ## Validation
@@ -145,12 +156,16 @@ project with File → Save as in Power BI Desktop.
 Simulated data; the report formats dates and numbers with the viewer's locale; refresh orchestration is
 documented but not implemented (out of scope); more in `docs/05-validation-results.md`.
 
+## License
+
+Code under the MIT License (`LICENSE`). The data is synthetic and the company is fictional.
+
 ## Resumen en español
 
 Solución de BI para las operaciones de red B2B de un operador ficticio en España: volumen de incidencias,
 tiempo de restablecimiento, cumplimiento de SLA, incidencias repetidas, circuitos crónicos, backlog y eficacia
 de las acciones de mejora. Las reglas de negocio se calculan en SQL Server (procedimiento con detección de
 cambios, bloqueo y registro de ejecuciones) y Power BI solo suma y divide componentes, de modo que los
-porcentajes son correctos con cualquier filtro. Las medidas principales se validaron contra consultas SQL
+porcentajes son correctos con cualquier filtro. Incluye también una aplicación web en Streamlit con inicio de sesión que muestra las mismas cifras. Las medidas principales se validaron contra consultas SQL
 independientes (21 de 21 coinciden). Un grupo de control muestra que la mayor parte de la mejora tras las
 acciones es regresión a la media. Todos los datos y resultados son simulados.
