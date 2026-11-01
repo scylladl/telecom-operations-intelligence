@@ -63,7 +63,49 @@ when no row breaks it.
 | Repeat lookup (K5) without / with the filtered index on the temp table | about 38 ms / 34 ms (3 runs each, `MAXDOP 1`) |
 | Power BI full model refresh | 4.4 s |
 | Model size in memory (cache.abf) | 1.6 MB |
-| Page load (< 5 s requirement) | Not measured with a tool. Pages rendered within the 7-second wait used for screenshots |
+| Page queries (< 5 s requirement), cold cache | See the next table |
+
+### Page query times
+
+`validation/measure_page_performance.ps1` clears the engine cache before each page and runs the DAX query of
+every data visual (extracted with `pbir visuals query`) one after another against the model open in
+Power BI Desktop. Desktop runs them in parallel, so the sequential total is an upper bound of query time;
+rendering time is not included.
+
+| Page | Visuals measured | Total (ms) | Slowest visual (ms) |
+|---|---|---|---|
+| Overview | 11 | 152 | 85 |
+| SLA and Restoration | 8 | 51 | 15 |
+| Repeat and Chronic | 7 | 31 | 6 |
+| Backlog and Aging | 7 | 51 | 22 |
+| Improvement Actions | 8 | 39 | 8 |
+| Data Quality | 7 | 41 | 14 |
+| Circuit Detail | 6 | 41 | 21 |
+
+The extractor produces invalid DAX for tables with Top N and for matrices with subtotals on both axes, so those
+visuals were timed with equivalent hand-written queries (cold cache): chronic circuit list 33 ms, worst breaches
+17 ms, SLA by tier and priority 15 ms, full incident history 53 ms. Every page stays far below 5 seconds of
+query time.
+
+## Report best practices (`pbir bpa run`)
+
+| Result | Count | Action |
+|---|---|---|
+| Errors | 0 | — |
+| Drop shadows (accessibility) | 68 → 0 | Disabled in the theme |
+| Visuals without alt text | 54 → 0 | Alt text added to every visual |
+| Utility page exposed | 1 → 0 | Tooltip page hidden |
+| Card without title, card size heuristics, fields per table, visual-level filters | 127 (warnings and info) | Kept on purpose: the card category label names the KPI; detail tables need their columns; visual filters implement the 13-month window, the Top N lists and the root-cause scope |
+| Hard-coded colours | 8 | Kept on purpose: sequential blue scale for backlog aging (orange only for more than 30 days) and the grey status line |
+
+`pbir validate --all`: passed.
+
+## Model checks
+
+Done by inspection against the semantic-model review categories (the Tabular Editor BPA was not available):
+no bidirectional or many-to-many relationships, no calculated columns, auto date/time disabled, date table
+marked, implicit measures discouraged, every measure with a description, format string and display folder, keys
+and technical flags hidden, all Power Query steps folding, every measure in `Ready` state after load.
 
 The index gain is small at this volume (about 10%); it is kept because the lookup is the one query whose cost
 grows with tickets per circuit, and it costs nothing at this size.
@@ -91,8 +133,10 @@ grows with tickets per circuit, and it costs nothing at this size.
   cached results after the SQL data changed; only the Desktop's own Refresh button read fresh data. Validation
   was run after a Desktop refresh.
 - **Date and number formats follow the viewer's locale** (for example "25 set 2025" on a Portuguese Windows).
-- **Two small horizontal scroll bars** remain in the KPI scorecard and in the data quality checks table at
-  100% zoom.
+- **Circuit Detail without drill-through context** shows the first circuit and every ticket; it is meant to be
+  opened by right-clicking a circuit (Drill through → Circuit Detail).
+- **Small tables** were resized and their fonts reduced; check names in `dq.CheckResult` were shortened. The
+  report shows the new names after the next Desktop refresh.
 - **PBIX.** Only the PBIP project is delivered. Open `powerbi/NorthGridOps.pbip` and use File → Save as →
   Power BI file (.pbix) if a single file is needed.
 - **Export to Excel** from a visual is limited by Power BI (about 150,000 rows to .xlsx); this data stays far

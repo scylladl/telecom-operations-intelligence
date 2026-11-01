@@ -116,6 +116,19 @@
             }
           }
         }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Data date and time of the last successful processing run'"
+                }
+              }
+            }
+          }
+        }
       ]
     }
   },

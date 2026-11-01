@@ -3,9 +3,9 @@
   "name": "incidentHistory",
   "position": {
     "x": 24,
-    "y": 220,
+    "y": 256,
     "width": 1232,
-    "height": 476,
+    "height": 440,
     "z": 0,
     "tabOrder": 0
   },

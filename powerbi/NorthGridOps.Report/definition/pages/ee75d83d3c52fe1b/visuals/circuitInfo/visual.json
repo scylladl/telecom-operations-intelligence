@@ -5,7 +5,7 @@
     "x": 24,
     "y": 116,
     "width": 608,
-    "height": 88,
+    "height": 124,
     "z": 0,
     "tabOrder": 0
   },
@@ -84,25 +84,26 @@
               },
               "queryRef": "Circuit.Tier",
               "nativeQueryRef": "Tier"
-            },
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "Circuit"
-                    }
-                  },
-                  "Property": "Install Date"
-                }
-              },
-              "queryRef": "Circuit.Install Date",
-              "nativeQueryRef": "Install Date"
             }
           ]
         }
       }
     },
-    "drillFilterOtherVisuals": true
+    "drillFilterOtherVisuals": true,
+    "visualContainerObjects": {
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Circuit id, customer, technology, region and tier of the selected circuit'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
   }
 }

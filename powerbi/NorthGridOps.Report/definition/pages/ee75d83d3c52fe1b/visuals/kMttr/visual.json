@@ -5,7 +5,7 @@
     "x": 1064,
     "y": 116,
     "width": 192,
-    "height": 88,
+    "height": 124,
     "z": 0,
     "tabOrder": 0
   },
@@ -51,6 +51,21 @@
         "isDefaultSort": true
       }
     },
-    "drillFilterOtherVisuals": true
+    "drillFilterOtherVisuals": true,
+    "visualContainerObjects": {
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Card showing MTTR (h) for the filters in context'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
   }
 }

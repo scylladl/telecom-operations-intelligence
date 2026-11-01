@@ -70,7 +70,7 @@ BEGIN
            N'Classified as Duplicate with root cause DPC; excluded from every KPI (CR-001)';
 
     INSERT INTO @r
-    SELECT 'SRC-02', 'Source', N'Overlapping tickets on one circuit, not marked as duplicate',
+    SELECT 'SRC-02', 'Source', N'Overlapping tickets not marked as duplicate',
            (SELECT COUNT(*) FROM dq.vw_UnmarkedOverlap), 0,
            N'Kept as valid tickets and listed in dq.vw_UnmarkedOverlap until a rule is agreed with the client';
 
@@ -81,7 +81,7 @@ BEGIN
            N'Counted in volume and repeat KPIs; excluded from MTTR, SLA and backlog';
 
     INSERT INTO @r
-    SELECT 'SRC-04', 'Source', N'Tickets on circuits missing from the network inventory',
+    SELECT 'SRC-04', 'Source', N'Tickets on circuits missing from inventory',
            (SELECT COUNT(*) FROM ops.Incident AS i
              WHERE NOT EXISTS (SELECT 1 FROM ops.Circuit AS c WHERE c.CircuitId = i.CircuitId)),
            (SELECT COUNT(*) FROM dw.FactIncident AS f JOIN dw.DimCircuit AS c ON c.CircuitKey = f.CircuitKey
@@ -103,12 +103,12 @@ BEGIN
 
     /* ---------- integrity checks ---------- */
     INSERT INTO @r
-    SELECT 'INT-01', 'Integrity', N'Every source ticket is in the incident fact exactly once', x.n, x.n,
+    SELECT 'INT-01', 'Integrity', N'Each source ticket loaded exactly once', x.n, x.n,
            N'Row count reconciliation'
     FROM (SELECT n = ABS((SELECT COUNT(*) FROM ops.Incident) - (SELECT COUNT(*) FROM dw.FactIncident))) AS x;
 
     INSERT INTO @r
-    SELECT 'INT-02', 'Integrity', N'Restored tickets have a non-negative restoration time', x.n, x.n, N'MTTR input'
+    SELECT 'INT-02', 'Integrity', N'Restoration time is never negative', x.n, x.n, N'MTTR input'
     FROM (SELECT n = COUNT(*) FROM dw.FactIncident
           WHERE IsRestored = 1 AND (RestoreHours IS NULL OR RestoreHours < 0 OR RestoredDateKey IS NULL)) AS x;
 
@@ -120,14 +120,14 @@ BEGIN
              OR (IsRestored = 1 AND IsCounted = 0) OR (IsRepeat = 1 AND IsCounted = 0)) AS x;
 
     INSERT INTO @r
-    SELECT 'INT-04', 'Integrity', N'Backlog on the last day equals counted tickets not yet restored', x.n, x.n,
+    SELECT 'INT-04', 'Integrity', N'Last-day backlog equals open tickets', x.n, x.n,
            N'K7 reconciliation'
     FROM (SELECT n = ABS(
             (SELECT COUNT(*) FROM dw.FactBacklogDaily WHERE SnapshotDateKey = (SELECT MAX(DateKey) FROM dw.DimDate))
           - (SELECT COUNT(*) FROM dw.FactIncident WHERE IsCounted = 1 AND RestoredAt IS NULL))) AS x;
 
     INSERT INTO @r
-    SELECT 'INT-05', 'Integrity', N'Fact rows reference existing dimension members', x.n, x.n,
+    SELECT 'INT-05', 'Integrity', N'Facts reference existing dimension rows', x.n, x.n,
            N'Referential integrity of the star schema'
     FROM (SELECT n =
             (SELECT COUNT(*) FROM dw.FactIncident AS f WHERE NOT EXISTS (SELECT 1 FROM dw.DimDate AS d WHERE d.DateKey = f.OpenedDateKey))
@@ -139,7 +139,7 @@ BEGIN
           + (SELECT COUNT(*) FROM dw.FactActionEffect AS a WHERE NOT EXISTS (SELECT 1 FROM dw.DimCircuit AS c WHERE c.CircuitKey = a.CircuitKey))) AS x;
 
     INSERT INTO @r
-    SELECT 'INT-06', 'Integrity', N'Every improvement action is in the action fact', x.n, x.n,
+    SELECT 'INT-06', 'Integrity', N'Each improvement action loaded once', x.n, x.n,
            N'Row count reconciliation'
     FROM (SELECT n = ABS((SELECT COUNT(*) FROM ops.ImprovementAction) - (SELECT COUNT(*) FROM dw.FactActionEffect))) AS x;
 

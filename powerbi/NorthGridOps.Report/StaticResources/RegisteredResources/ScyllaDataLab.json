@@ -269,7 +269,7 @@
         ],
         "dropShadow": [
           {
-            "show": true,
+            "show": false,
             "preset": "Center",
             "angle": 0,
             "color": {
