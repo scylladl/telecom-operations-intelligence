@@ -1,0 +1,27 @@
+# Editorial: light narrative design on warm paper, one accent colour. Native theme first; style.css only adds
+# the HTML components (kicker, headline, stat line) and the page width.
+[theme]
+base = "light"
+primaryColor = "#009191"
+backgroundColor = "#F6F3EE"
+secondaryBackgroundColor = "#EFEAE2"
+textColor = "#1F2328"
+borderColor = "#E2DCD2"
+showWidgetBorder = false
+baseRadius = "0.25rem"
+font = "sans-serif"
+headingFontWeights = [800, 700, 700, 600, 600, 600]
+dataframeHeaderBackgroundColor = "#EFEAE2"
+dataframeBorderColor = "#E2DCD2"
+chartCategoricalColors = ["#009191", "#8A8F98", "#C2410C"]
+
+[client]
+toolbarMode = "minimal"
+
+[server]
+headless = true
+# Local only; change it deliberately before exposing the app on a network.
+address = "localhost"
+
+[browser]
+gatherUsageStats = false

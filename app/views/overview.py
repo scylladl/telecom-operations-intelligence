@@ -1,8 +1,8 @@
 import pandas as pd
-import plotly.graph_objects as go
 import streamlit as st
 
 import kpis
+import narrative
 import ui
 
 d = ui.load_data()
@@ -15,15 +15,7 @@ def value(name: str, month: int) -> float:
     return t[name].get(month, float("nan"))
 
 
-headline = (
-    f"{ui.month_label(d, f.month)}: {ui.fmt(value('Incidents', f.month), 'int')} incidents "
-    f"({ui.fmt(kpis.change(value('Incidents', f.month), value('Incidents', prior), 'relative'), 'signed_pct')} vs prior month), "
-    f"SLA compliance {ui.fmt(value('SLA Compliance %', f.month), 'pct')} "
-    f"({ui.fmt(kpis.change(value('SLA Compliance %', f.month), value('SLA Compliance %', prior), 'pp'), 'pp')}), "
-    f"repeat rate {ui.fmt(value('Repeat Rate %', f.month), 'pct')} "
-    f"({ui.fmt(kpis.change(value('Repeat Rate %', f.month), value('Repeat Rate %', prior), 'pp'), 'pp')})."
-)
-ui.header("Overview", d, f, headline)
+ui.header("Overview", d, f, narrative.overview(d, f, t))
 for column, name in zip(st.columns(len(kpis.KPI_POLARITY)), kpis.KPI_POLARITY):
     ui.kpi_card(column, t, f, name)
 
@@ -54,13 +46,6 @@ causes = (
     .pivot_table(index="Region", columns="RootCause", values="IsCounted", aggfunc="sum", fill_value=0)
 )
 # colour follows the root cause in its fixed sort order, so a filter never repaints the survivors
-colors = dict(zip(d["root_cause"].sort_values("SortOrder")["RootCause"], ui.CATEGORICAL))
-causes = causes.loc[causes.sum(axis=1).sort_values().index]
-fig = go.Figure([
-    go.Bar(y=causes.index, x=causes[cause], name=cause, orientation="h",
-           marker={"color": color, "line": {"color": "white", "width": 1}},
-           hovertemplate=f"%{{y}} · {cause}: %{{x:,.0f}}<extra></extra>")
-    for cause, color in colors.items() if cause in causes.columns
-])
-fig.update_layout(barmode="stack")
-ui.show(ui.style(fig, "Root cause of incidents by region", height=360))
+causes_in_order = d["root_cause"].sort_values("SortOrder")["RootCause"]
+ui.stacked_bars(causes, [(c, c, color) for c, color in zip(causes_in_order, ui.theme.categorical)],
+                "Root cause of incidents by region")

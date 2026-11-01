@@ -2,39 +2,18 @@
 
     streamlit run streamlit_app.py
 """
-import os
 from pathlib import Path
 
 import streamlit as st
-import streamlit_authenticator as stauth
-import yaml
 from dotenv import load_dotenv
 
-APP = Path(__file__).parent
-load_dotenv(APP / ".env")
+load_dotenv(Path(__file__).with_name(".env"))
 
-import ui  # noqa: E402  (db reads the connection settings loaded above)
+import auth  # noqa: E402  (auth and db read the settings loaded above)
+import ui  # noqa: E402
 
 st.set_page_config(page_title="NorthGrid Network Operations", page_icon=":material/cell_tower:", layout="wide")
-
-AUTH_FILE = APP / "auth.yaml"
-if not AUTH_FILE.exists():
-    st.error("No users yet. Create one with `python manage_users.py <username> --name \"First Last\" "
-             "--email <email>` (app/README.md).")
-    st.stop()
-
-# Credentials only: the cookie key stays in .env, not next to the password hashes.
-credentials = yaml.safe_load(AUTH_FILE.read_text(encoding="utf-8"))["credentials"]
-authenticator = stauth.Authenticate(credentials, cookie_name="northgrid_ops_auth",
-                                    cookie_key=os.environ["AUTH_COOKIE_KEY"], cookie_expiry_days=1,
-                                    auto_hash=False)
-authenticator.login(location="main", fields={"Form name": "NorthGrid Network Operations"})
-
-if not st.session_state.get("authentication_status"):
-    if st.session_state.get("authentication_status") is False:
-        st.error("Incorrect username or password.")
-    st.caption("Simulated scenario: NorthGrid Telecom and its data are fictional.")
-    st.stop()
+authenticator = auth.require_login()
 
 pages = st.navigation([
     st.Page("views/overview.py", title="Overview", icon=":material/dashboard:", default=True),
@@ -47,7 +26,7 @@ pages = st.navigation([
 ])
 
 data = ui.load_data()
-st.session_state["filters"] = ui.sidebar_filters(data)
+st.session_state["filters"] = ui.filter_controls(data)
 with st.sidebar:
     st.divider()
     st.caption(f"Signed in as {st.session_state['name']}")

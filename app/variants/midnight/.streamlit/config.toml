@@ -1,0 +1,30 @@
+# Midnight Ops: dark operations-room design. Native theme first; style.css only adds what the theme cannot.
+[theme]
+base = "dark"
+primaryColor = "#12A594"
+backgroundColor = "#0B1220"
+secondaryBackgroundColor = "#131C2E"
+textColor = "#E6EDF7"
+borderColor = "#24324A"
+showWidgetBorder = true
+baseRadius = "0.5rem"
+font = "sans-serif"
+headingFontWeights = [700, 600, 600, 600, 600, 600]
+dataframeHeaderBackgroundColor = "#182338"
+dataframeBorderColor = "#24324A"
+chartCategoricalColors = ["#3987e5", "#d95926", "#199e70", "#c98500", "#d55181", "#008300", "#9085e9", "#e66767"]
+
+[theme.sidebar]
+backgroundColor = "#0E1626"
+secondaryBackgroundColor = "#131C2E"
+
+[client]
+toolbarMode = "minimal"
+
+[server]
+headless = true
+# Local only; change it deliberately before exposing the app on a network.
+address = "localhost"
+
+[browser]
+gatherUsageStats = false

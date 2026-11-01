@@ -78,6 +78,12 @@ from a design repertoire collected for the project (`docs/design/DESIGN_REPERTOI
 
 `app/` is a web version of the same report, with a login. It reads the same `rpt` views and applies the same KPI
 rules in pandas, and its KPIs are tested against the independent SQL validation queries (21 of 21 match).
+It comes in three designs, built from a Streamlit design repertoire (`docs/design/STREAMLIT_DESIGN_REPERTOIRE.md`):
+
+| Classic | Midnight Ops | Editorial |
+|---|---|---|
+| ![Classic](docs/screenshots/streamlit/classic-overview.jpg) | ![Midnight](docs/screenshots/streamlit/midnight-overview.jpg) | ![Editorial](docs/screenshots/streamlit/editorial-overview.jpg) |
+
 Setup and design notes: `app/README.md`.
 
 ## Validation

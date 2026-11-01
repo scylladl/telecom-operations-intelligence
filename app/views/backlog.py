@@ -1,7 +1,7 @@
-import plotly.graph_objects as go
 import streamlit as st
 
 import kpis
+import narrative
 import ui
 
 d = ui.load_data()
@@ -10,11 +10,7 @@ t = kpis.monthly(d, f)
 month = t.loc[f.month]
 open_tickets = kpis.snapshot(kpis.scope(d["backlog"], f), d, f)
 
-headline = (
-    f"End of {ui.month_label(d, f.month)}: {ui.fmt(month['OpenBacklog'], 'int')} tickets open, the oldest for "
-    f"{ui.fmt(month['OldestDays'], 'int')} days; {ui.fmt(month['Backlog Over 30 Days %'], 'pct')} open for more than 30 days."
-)
-ui.header("Backlog and Aging", d, f, headline)
+ui.header("Backlog and Aging", d, f, narrative.backlog(d, f, t))
 
 backlog, oldest, over_30 = st.columns(3)
 prior = t["OpenBacklog"].get(kpis.shift_month(f.month, -1))
@@ -29,17 +25,10 @@ with left:
 with right:
     aging = open_tickets.pivot_table(index="Region", columns="AgeBucketCode", values="TicketId", aggfunc="size",
                                      fill_value=0)
-    aging = aging.loc[aging.sum(axis=1).sort_values().index]
     buckets = d["age_bucket"].sort_values("AgeBucketCode")
-    colors = dict(zip(buckets["AgeBucketCode"], ui.ORDINAL + [ui.CRITICAL]))
-    fig = go.Figure([
-        go.Bar(y=aging.index, x=aging[code], name=name, orientation="h",
-               marker={"color": colors[code], "line": {"color": "white", "width": 1}},
-               hovertemplate=f"%{{y}} · {name}: %{{x:,.0f}}<extra></extra>")
-        for code, name in zip(buckets["AgeBucketCode"], buckets["AgeBucket"]) if code in aging.columns
-    ])
-    fig.update_layout(barmode="stack")
-    ui.show(ui.style(fig, "Open backlog by region and age", height=max(320, 120 + 34 * len(aging))))
+    colors = ui.theme.ordinal + (ui.theme.critical,)
+    ui.stacked_bars(aging, list(zip(buckets["AgeBucketCode"], buckets["AgeBucket"], colors)),
+                    "Open backlog by region and age")
 
 st.subheader("Oldest open tickets at the end of the period")
 ui.table(

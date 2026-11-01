@@ -1,6 +1,7 @@
 import streamlit as st
 
 import kpis
+import narrative
 import ui
 
 d = ui.load_data()
@@ -10,12 +11,7 @@ month = t.loc[f.month]
 checks = d["dq_check"]
 failed = int((checks["Result"] == "Fail").sum())
 
-headline = (
-    f"{ui.month_label(d, f.month)}: {ui.fmt(month['Duplicates'], 'int')} duplicate tickets "
-    f"({ui.fmt(month['Duplicate Share %'], 'pct')}), excluded from every KPI. "
-    + ("All data quality checks pass." if failed == 0 else f"{failed} checks failing.")
-)
-ui.header("Data Quality", d, f, headline)
+ui.header("Data Quality", d, f, narrative.data_quality(d, f, t))
 
 duplicates, share, cancelled, failing = st.columns(4)
 ui.metric(duplicates, "Duplicate tickets", month["Duplicates"], "int")

@@ -1,21 +1,16 @@
 import streamlit as st
 
 import kpis
+import narrative
 import ui
 
 d = ui.load_data()
 f = st.session_state["filters"]
 t = kpis.monthly(d, f)
 month = t.loc[f.month]
-repeat_days = d["kpi_parameter"].set_index("ParameterCode").loc["REPEAT_WINDOW_DAYS", "ParameterValue"]
 
 chronic = kpis.snapshot(kpis.scope(d["chronic"], f, by_priority=False), d, f)
-headline = (
-    f"{ui.month_label(d, f.month)}: {ui.fmt(month['Repeat Rate %'], 'pct')} of incidents hit a circuit restored in the "
-    f"previous {repeat_days:.0f} days. {ui.fmt(month['Chronic Circuits'], 'int')} circuits are chronic at month end"
-)
-headline += f", most of them {chronic['Technology'].mode().iloc[0]}." if not chronic.empty else "."
-ui.header("Repeat and Chronic", d, f, headline)
+ui.header("Repeat and Chronic", d, f, narrative.repeat(d, f, t))
 
 repeat_rate, repeats, chronic_count = st.columns(3)
 ui.kpi_card(repeat_rate, t, f, "Repeat Rate %")

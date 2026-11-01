@@ -160,3 +160,11 @@ independent validation queries, so the app, Power BI and the source rules are ch
 server. An organisation would use its identity provider through Streamlit's OpenID Connect support
 (`st.login`). Every user sees all data, and the server is bound to `localhost`: limitations are listed in
 `app/README.md`.
+
+### 26. Three Streamlit designs on one set of modules
+The KPI functions, the headline sentences, the login and the chart helpers are shared. A design is a native
+theme (`config.toml`), a small stylesheet and its page layouts. Each design runs as its own server because the
+Streamlit theme is per server. The chart colours are a `ui.Theme` object that the design sets once at start-up.
+Custom HTML is limited to components Streamlit does not have (KPI tiles, stat lines, page headers). It goes
+through `st.html`, with database values escaped and JavaScript off. CSS targets only those components and keyed
+containers, not Streamlit's own classes, which change between releases.

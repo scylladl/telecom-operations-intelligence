@@ -188,6 +188,14 @@ def restoration_by(d: dict, f: Filters, dims: list[str]) -> pd.DataFrame:
     return add_rates(restored_in(d, f).groupby(dims).agg(**RESTORED_COMPONENTS)).reset_index()
 
 
+def tier_priority(d: dict, f: Filters, measure: str) -> pd.DataFrame:
+    """A restoration KPI by tier (rows, in tier order) and priority (columns), restored in the selected month."""
+    grid = restoration_by(d, f, ["TierSort", "Tier", "PriorityCode"]).pivot_table(
+        index=["TierSort", "Tier"], columns="PriorityCode", values=measure)
+    grid.index = grid.index.get_level_values("Tier")
+    return grid
+
+
 def repeat_by(d: dict, f: Filters, dims: list[str]) -> pd.DataFrame:
     return add_rates(opened_in(d, f).groupby(dims).agg(**OPENED_COMPONENTS)).reset_index()
 

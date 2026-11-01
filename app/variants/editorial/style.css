@@ -1,0 +1,32 @@
+/* Editorial. Only what config.toml cannot do: the HTML components below and the reading width of the page
+   (.st-key-* classes come from the key= of st.container). Streamlit's own class names are not targeted. */
+:root {
+  --ed-ink: #1F2328;
+  --ed-muted: #5F6368;
+  --ed-accent: #007A7A;   /* text-safe step of the accent (contrast 4.7:1 on the paper colour) */
+  --ed-rule: #D9D2C6;
+  --ed-up-bad: #B3400F;
+}
+
+.st-key-ed-page, .st-key-ed-filters { max-width: 1120px; margin-left: auto; margin-right: auto; }
+
+.ed-kicker { font-size: .78rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+             color: var(--ed-accent); margin-top: 8px; }
+.ed-headline { font-size: 2rem; line-height: 1.2; font-weight: 800; color: var(--ed-ink); margin: 6px 0 8px;
+               max-width: 44ch; }
+.ed-standfirst { font-size: .85rem; color: var(--ed-muted); border-bottom: 1px solid var(--ed-rule);
+                 padding-bottom: 12px; margin-bottom: 4px; }
+
+.ed-stats { display: flex; flex-wrap: wrap; gap: 0; margin: 14px 0 6px; }
+.ed-stat { padding: 2px 28px 2px 0; margin-right: 28px; border-right: 1px solid var(--ed-rule); }
+.ed-stat:last-child { border-right: none; }
+.ed-stat-value { font-size: 2.1rem; font-weight: 750; color: var(--ed-ink); line-height: 1.1;
+                 font-variant-numeric: tabular-nums; }
+.ed-stat-label { font-size: .82rem; color: var(--ed-muted); }
+.ed-stat-change { font-size: .82rem; color: var(--ed-muted); font-variant-numeric: tabular-nums; }
+.ed-stat-change.good { color: var(--ed-accent); }
+.ed-stat-change.bad { color: var(--ed-up-bad); }
+
+.ed-section { font-size: 1.05rem; font-weight: 700; color: var(--ed-ink); margin: 18px 0 0;
+              border-top: 2px solid var(--ed-ink); padding-top: 8px; }
+.ed-note { font-size: .85rem; color: var(--ed-muted); max-width: 75ch; }

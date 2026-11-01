@@ -29,9 +29,11 @@ Run it again with the same username to reset a password. `auth.yaml` and `.env` 
 |---|---|
 | `db.py` | One SQL query per `rpt` view, with explicit columns |
 | `kpis.py` | KPI rules: filters, sums the SQL components and divides (same approach as the DAX measures) |
-| `ui.py` | Data cache, sidebar filters, page header, KPI cards, chart styling |
-| `streamlit_app.py` | Login (`streamlit-authenticator`), navigation, filters |
-| `views/*.py` | One file per page |
+| `ui.py` | Data cache, filters, page header, KPI cards, chart theme and chart helpers |
+| `auth.py` | Login (`streamlit-authenticator`), shared by every design |
+| `narrative.py` | One headline sentence per page, built from the KPIs |
+| `streamlit_app.py`, `views/*.py` | Classic design: entry point and one file per page |
+| `variants/midnight/`, `variants/editorial/` | Two more designs on the same modules: theme, stylesheet, pages |
 
 - **Same numbers as Power BI by construction.** SQL Server already delivers 1/0 components per ticket and
   daily snapshots (`dw.usp_Refresh`), so the app only filters, sums and divides, exactly like the measures.
@@ -45,6 +47,18 @@ Run it again with the same username to reset a password. `auth.yaml` and `.env` 
   so a filter never repaints the others. Every change on a KPI card shows a sign and an arrow, so colour is never
   the only cue.
 
+## Designs
+
+Three designs show the same numbers. Each one runs as its own server, from its own folder, because the
+Streamlit theme is set per server. They share the users and `.env` of `app/`.
+
+```powershell
+cd app\variants\midnight;  ..\..\..\.venv\Scripts\streamlit run streamlit_app.py   # dark operations room
+cd app\variants\editorial; ..\..\..\.venv\Scripts\streamlit run streamlit_app.py   # light narrative report
+```
+
+Techniques, palettes and the comparison of the three: `docs/design/STREAMLIT_DESIGN_REPERTOIRE.md`.
+
 ## Validation
 
 ```powershell
@@ -55,8 +69,8 @@ cd app
 - `tests/test_kpis.py` compares K1, K3, K4, K5, K7 and K9 with `validation/validation_queries.sql`. Those queries
   recompute the KPIs from the source tables without the `dw` layer. The test uses the same three cases and
   tolerances as the Power BI validation: **21 of 21 match**.
-- `tests/test_pages.py` renders every page for the latest month and for a filtered slice (January 2024, South,
-  P1), the first month with no prior month.
+- `tests/test_pages.py` renders every page of the three designs (21 pages) for the latest month and for a
+  filtered slice (January 2024, South, P1), the first month with no prior month.
 - The pages were also checked in a browser: login with a wrong password and a valid one, every page at 1440 px
   width, the South filter (146 incidents, SLA 65.6%, as in the validation), and circuit NG-FWA-001453
   (22 incidents, MTTR 72.2 h, repeat rate 90.9%).

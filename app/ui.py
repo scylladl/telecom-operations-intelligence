@@ -1,4 +1,6 @@
 """Shared page parts: data loading, the report filters, page header, KPI cards and chart styling."""
+from dataclasses import dataclass
+
 import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
@@ -6,13 +8,34 @@ import streamlit as st
 import db
 import kpis
 
+@dataclass(frozen=True)
+class Theme:
+    """Chart colours of one design. Each design runs as its own Streamlit server, which sets its theme once."""
+    series: str  # the measure in focus
+    context: str  # everything else: other months, axis lines
+    ink: str
+    muted: str
+    grid: str
+    critical: str  # alert colour, only for the more-than-30-days backlog (project rule)
+    categorical: tuple[str, ...]
+    ordinal: tuple[str, ...]  # age buckets up to 30 days
+    heat: tuple[str, str]  # sequential scale, darker means a larger value
+    heat_text: str
+    surface: str  # chart background: gaps between stacked segments, hover labels
+
+
 # Reference palette of the dataviz method (validated for colour vision deficiency, adjacent pairs).
-CATEGORICAL = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4", "#008300", "#6250d6", "#e34948"]
-SERIES = CATEGORICAL[0]
-CONTEXT = "#c3c2b7"
-ORDINAL = ["#86b6ef", "#5598e7", "#2a78d6", "#1c5cab"]  # age buckets up to 30 days
-CRITICAL = "#d03b3b"  # alert colour, only for the more-than-30-days bucket (project rule)
-INK, MUTED, GRID = "#0b0b0b", "#52514e", "#e1e0d9"
+CLASSIC = Theme(
+    series="#2a78d6", context="#c3c2b7", ink="#0b0b0b", muted="#52514e", grid="#e1e0d9", critical="#d03b3b",
+    categorical=("#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4", "#008300", "#6250d6", "#e34948"),
+    ordinal=("#86b6ef", "#5598e7", "#2a78d6", "#1c5cab"), heat=("#cde2fb", "#5598e7"), heat_text="#0b0b0b", surface="white",
+)
+theme = CLASSIC
+
+
+def set_theme(new_theme: Theme) -> None:
+    global theme
+    theme = new_theme
 
 
 @st.cache_resource
@@ -27,18 +50,21 @@ def load_data() -> dict:
     return kpis.prepare(db.read_views(_engine()))
 
 
-def sidebar_filters(d: dict) -> kpis.Filters:
-    """The five report-level filters of the Power BI report, shared by every page."""
+def filter_controls(d: dict, slots=None) -> kpis.Filters:
+    """The five report-level filters of the Power BI report, shared by every page. slots holds one container
+    per control (month, region, technology, tier, priority); the sidebar by default."""
     months = d["months"]
     circuit = d["circuit"]
-    with st.sidebar:
-        month = st.selectbox("Month", months.index[::-1], format_func=lambda m: months.loc[m, "MonthLabel"],
-                             key="month")
-        regions = st.multiselect("Region", sorted(circuit["Region"].unique()), key="regions")
-        technologies = st.multiselect("Technology", sorted(circuit["Technology"].unique()), key="technologies")
-        tiers = st.multiselect("Tier", circuit.drop_duplicates("Tier").sort_values("TierSort")["Tier"], key="tiers")
-        priorities = st.multiselect("Priority", d["priority"].sort_values("SortOrder")["PriorityCode"],
-                                    key="priorities")
+    month_slot, region_slot, technology_slot, tier_slot, priority_slot = slots or [st.sidebar] * 5
+    month = month_slot.selectbox("Month", months.index[::-1], format_func=lambda m: months.loc[m, "MonthLabel"],
+                                 key="month")
+    regions = region_slot.multiselect("Region", sorted(circuit["Region"].unique()), key="regions")
+    technologies = technology_slot.multiselect("Technology", sorted(circuit["Technology"].unique()),
+                                               key="technologies")
+    tiers = tier_slot.multiselect("Tier", circuit.drop_duplicates("Tier").sort_values("TierSort")["Tier"],
+                                  key="tiers")
+    priorities = priority_slot.multiselect("Priority", d["priority"].sort_values("SortOrder")["PriorityCode"],
+                                           key="priorities")
     return kpis.Filters(int(month), tuple(regions), tuple(technologies), tuple(tiers), tuple(priorities))
 
 
@@ -105,16 +131,16 @@ def kpi_card(column, table: pd.DataFrame, f: kpis.Filters, name: str) -> None:
 
 def style(fig: go.Figure, title: str, height: int = 320, percent_axis: bool = False) -> go.Figure:
     fig.update_layout(
-        title={"text": title, "font": {"size": 15, "color": INK}, "x": 0, "xanchor": "left"},
+        title={"text": title, "font": {"size": 15, "color": theme.ink}, "x": 0, "xanchor": "left"},
         height=height, margin={"l": 8, "r": 8, "t": 48, "b": 8},
-        font={"family": 'system-ui, -apple-system, "Segoe UI", sans-serif', "size": 12, "color": MUTED},
+        font={"family": 'system-ui, -apple-system, "Segoe UI", sans-serif', "size": 12, "color": theme.muted},
         paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
-        hoverlabel={"bgcolor": "white", "font_color": INK},
+        hoverlabel={"bgcolor": theme.surface, "font_color": theme.ink},
         legend={"orientation": "h", "yanchor": "top", "y": -0.08, "x": 0, "title": None, "traceorder": "normal"},
         bargap=0.25,
     )
-    fig.update_xaxes(showgrid=False, linecolor=CONTEXT, ticks="", title=None, automargin=True)
-    fig.update_yaxes(gridcolor=GRID, zeroline=False, linecolor=CONTEXT, title=None, automargin=True,
+    fig.update_xaxes(showgrid=False, linecolor=theme.context, ticks="", title=None, automargin=True)
+    fig.update_yaxes(gridcolor=theme.grid, zeroline=False, linecolor=theme.context, title=None, automargin=True,
                      tickformat=".0%" if percent_axis else ",")
     return fig
 
@@ -129,16 +155,16 @@ def trend(table: pd.DataFrame, f: kpis.Filters, column: str, title: str, kind: s
     labels = window["MonthLabel"]
     text_format = {"int": "%{y:,.0f}", "pct": "%{y:.1%}", "dec1": "%{y:,.1f}"}[kind]
     if bars:
-        colors = [SERIES if m == f.month else CONTEXT for m in window.index]
+        colors = [theme.series if m == f.month else theme.context for m in window.index]
         fig = go.Figure(go.Bar(x=labels, y=window[column], marker={"color": colors, "cornerradius": 4},
                                hovertemplate=f"%{{x}}: {text_format}<extra></extra>"))
     else:
         fig = go.Figure(go.Scatter(x=labels, y=window[column], mode="lines+markers",
-                                   line={"color": SERIES, "width": 2}, marker={"size": 8, "color": SERIES},
+                                   line={"color": theme.series, "width": 2}, marker={"size": 8, "color": theme.series},
                                    hovertemplate=f"%{{x}}: {text_format}<extra></extra>"))
     last = window.iloc[-1]
     fig.add_annotation(x=last["MonthLabel"], y=last[column], text=fmt(last[column], kind), showarrow=False,
-                       yshift=14, font={"color": INK, "size": 12})
+                       yshift=14, font={"color": theme.ink, "size": 12})
     fig = style(fig, title, percent_axis=kind == "pct")
     fig.update_xaxes(tickangle=0, nticks=7)
     show(fig)
@@ -148,12 +174,72 @@ def ranked_bars(df: pd.DataFrame, category: str, value: str, title: str, kind: s
     """Horizontal bars, the category to look at first on top; every bar carries its value."""
     # plotly draws the first row at the bottom
     df = df.dropna(subset=[value]).sort_values(value, ascending=not lowest_first)
-    fig = go.Figure(go.Bar(y=df[category], x=df[value], orientation="h", marker={"color": SERIES, "cornerradius": 4},
+    fig = go.Figure(go.Bar(y=df[category], x=df[value], orientation="h", marker={"color": theme.series, "cornerradius": 4},
                            text=[fmt(v, kind) for v in df[value]], textposition="outside", cliponaxis=False,
                            hovertemplate="%{y}: %{text}<extra></extra>"))
     fig = style(fig, title, height=max(220, 60 + 34 * len(df)))
     fig.update_xaxes(showticklabels=False, showgrid=False, range=[0, df[value].max() * 1.15])  # room for labels
     fig.update_yaxes(showgrid=False)
+    show(fig)
+
+
+def stacked_bars(table: pd.DataFrame, series: list[tuple], title: str) -> None:
+    """Horizontal stacked bars, largest category on top. series: (column, label, colour) in stack order."""
+    table = table.loc[table.sum(axis=1).sort_values().index]
+    fig = go.Figure([
+        go.Bar(y=table.index, x=table[column], name=label, orientation="h",
+               marker={"color": color, "line": {"color": theme.surface, "width": 1}},
+               hovertemplate=f"%{{y}} · {label}: %{{x:,.0f}}<extra></extra>")
+        for column, label, color in series if column in table.columns
+    ])
+    fig.update_layout(barmode="stack")
+    show(style(fig, title, height=max(320, 120 + 34 * len(table))))
+
+
+def heatmap(grid: pd.DataFrame, title: str, kind: str) -> None:
+    """Values of a two-way table on a sequential scale, each cell labelled."""
+    fig = go.Figure(go.Heatmap(
+        z=grid.values, x=grid.columns, y=grid.index, colorscale=[[0, theme.heat[0]], [1, theme.heat[1]]],
+        showscale=False, xgap=2, ygap=2, text=[[fmt(v, kind) for v in row] for row in grid.values],
+        texttemplate="%{text}", textfont={"color": theme.heat_text},
+        hovertemplate="%{y} · %{x}: %{text}<extra></extra>",
+    ))
+    fig = style(fig, title, height=260)
+    fig.update_yaxes(autorange="reversed", showgrid=False)
+    show(fig)
+
+
+def treated_vs_control(by_type: pd.DataFrame) -> None:
+    """K9 by action type: incident change on treated circuits next to comparable untreated circuits."""
+    by_type = by_type.sort_values("Net Action Effect (pp)")
+    fig = go.Figure([
+        go.Bar(y=by_type["ActionType"], x=by_type[column], name=label, orientation="h",
+               marker={"color": color, "cornerradius": 4},
+               text=[fmt(v, "signed_pct") for v in by_type[column]], textposition="inside",
+               insidetextanchor="start", textfont={"color": "white"},
+               hovertemplate=f"%{{y}} · {label}: %{{text}}<extra></extra>")
+        for column, label, color in (("Treated Change % (Matched)", "Treated circuits", theme.categorical[0]),
+                                     ("Control Change %", "Comparable untreated circuits", theme.categorical[1]))
+    ])
+    fig.update_layout(barmode="group")
+    fig = style(fig, "Incident change after the action vs comparable circuits", height=360)
+    fig.update_xaxes(tickformat=".0%")
+    show(fig)
+
+
+def net_effect_by(effect: pd.DataFrame, category: str) -> None:
+    """Net action effect in percentage points; negative is good: incidents fell beyond the natural decline."""
+    effect = effect.dropna(subset=["Net Action Effect (pp)"]).sort_values("Net Action Effect (pp)", ascending=False)
+    values = effect["Net Action Effect (pp)"]
+    fig = go.Figure(go.Bar(
+        y=effect[category], x=values, orientation="h",
+        marker={"color": [theme.series if v < 0 else theme.critical for v in values], "cornerradius": 4},
+        text=[fmt(v, "pp") for v in values], textposition="outside", cliponaxis=False,
+        hovertemplate="%{y}: %{text}<extra></extra>",
+    ))
+    fig = style(fig, f"Net action effect (pp) by {category.lower()}, negative = fewer incidents", height=360)
+    spread = values.abs().max() * 1.35  # room for the labels on both sides
+    fig.update_xaxes(zeroline=True, zerolinecolor=theme.muted, range=[-spread, spread])
     show(fig)
 
 
