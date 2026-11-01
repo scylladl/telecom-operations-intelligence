@@ -264,6 +264,213 @@ table _Measures
 		displayFolder: 7. Report
 		lineageTag: 8aa3a563-a9de-5b20-8a66-21c3c6b81c59
 
+	/// Incidents in the previous month (explicit, for new-card reference labels).
+	measure 'Incidents PM' = CALCULATE ( [Incidents], DATEADD ( 'Date'[Date], -1, MONTH ) )
+		formatString: #,##0
+		displayFolder: 8. Design Support
+		lineageTag: 8ca7fb58-bfac-5eec-be98-77332e2624ce
+
+	/// Change of Incidents vs the previous month (relative).
+	measure 'Incidents MoM' =
+			VAR CurrentValue = [Incidents]
+			VAR PriorValue = [Incidents PM]
+			RETURN
+			    IF ( NOT ISBLANK ( CurrentValue ) && NOT ISBLANK ( PriorValue ), DIVIDE ( CurrentValue - PriorValue, PriorValue ) )
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: 8. Design Support
+		lineageTag: 1f7ef4d3-6ded-50e9-a3c4-b33788ad06d1
+
+	/// Colour of the change vs the previous month: teal when it improved (lower is better), orange when it worsened.
+	measure 'Incidents MoM Color' =
+			VAR Delta = [Incidents] - [Incidents PM]
+			RETURN
+			    SWITCH (
+			        TRUE (),
+			        ISBLANK ( [Incidents PM] ) || Delta = 0, "#8E99A8",
+			        Delta < 0, "#2BB3A3",
+			        "#F08C3A"
+			    )
+		displayFolder: 8. Design Support
+		lineageTag: b6af184f-8dbd-57f1-a976-84390e46aa08
+
+	/// Incidents per 100 Circuits in the previous month (explicit, for new-card reference labels).
+	measure 'Incidents per 100 Circuits PM' = CALCULATE ( [Incidents per 100 Circuits], DATEADD ( 'Date'[Date], -1, MONTH ) )
+		formatString: #,##0.00
+		displayFolder: 8. Design Support
+		lineageTag: 2b066f1d-bfb7-5291-9c4d-e71cac4dd86d
+
+	/// Change of Incidents per 100 Circuits vs the previous month (relative).
+	measure 'Incidents per 100 Circuits MoM' =
+			VAR CurrentValue = [Incidents per 100 Circuits]
+			VAR PriorValue = [Incidents per 100 Circuits PM]
+			RETURN
+			    IF ( NOT ISBLANK ( CurrentValue ) && NOT ISBLANK ( PriorValue ), DIVIDE ( CurrentValue - PriorValue, PriorValue ) )
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: 8. Design Support
+		lineageTag: e7736cc4-789e-5573-98a4-fbf76b5efbc5
+
+	/// Colour of the change vs the previous month: teal when it improved (lower is better), orange when it worsened.
+	measure 'Incidents per 100 Circuits MoM Color' =
+			VAR Delta = [Incidents per 100 Circuits] - [Incidents per 100 Circuits PM]
+			RETURN
+			    SWITCH (
+			        TRUE (),
+			        ISBLANK ( [Incidents per 100 Circuits PM] ) || Delta = 0, "#8E99A8",
+			        Delta < 0, "#2BB3A3",
+			        "#F08C3A"
+			    )
+		displayFolder: 8. Design Support
+		lineageTag: eba65a70-c3b2-5737-a940-c770bb1689d7
+
+	/// MTTR (h) in the previous month (explicit, for new-card reference labels).
+	measure 'MTTR (h) PM' = CALCULATE ( [MTTR (h)], DATEADD ( 'Date'[Date], -1, MONTH ) )
+		formatString: #,##0.0
+		displayFolder: 8. Design Support
+		lineageTag: dbc53586-250e-55df-94e9-cc7594d9b1b6
+
+	/// Change of MTTR (h) vs the previous month (relative).
+	measure 'MTTR (h) MoM' =
+			VAR CurrentValue = [MTTR (h)]
+			VAR PriorValue = [MTTR (h) PM]
+			RETURN
+			    IF ( NOT ISBLANK ( CurrentValue ) && NOT ISBLANK ( PriorValue ), DIVIDE ( CurrentValue - PriorValue, PriorValue ) )
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: 8. Design Support
+		lineageTag: 6e58d624-3be7-58e0-aa30-7ea299f49afa
+
+	/// Colour of the change vs the previous month: teal when it improved (lower is better), orange when it worsened.
+	measure 'MTTR (h) MoM Color' =
+			VAR Delta = [MTTR (h)] - [MTTR (h) PM]
+			RETURN
+			    SWITCH (
+			        TRUE (),
+			        ISBLANK ( [MTTR (h) PM] ) || Delta = 0, "#8E99A8",
+			        Delta < 0, "#2BB3A3",
+			        "#F08C3A"
+			    )
+		displayFolder: 8. Design Support
+		lineageTag: a5671648-ac5a-5f34-944f-b01687663cf8
+
+	/// SLA Compliance % in the previous month (explicit, for new-card reference labels).
+	measure 'SLA Compliance % PM' = CALCULATE ( [SLA Compliance %], DATEADD ( 'Date'[Date], -1, MONTH ) )
+		formatString: 0.0%
+		displayFolder: 8. Design Support
+		lineageTag: 030c9ff3-7d89-581f-afe5-146cb2387a38
+
+	/// Change of SLA Compliance % vs the previous month (percentage points).
+	measure 'SLA Compliance % MoM' =
+			VAR CurrentValue = [SLA Compliance %]
+			VAR PriorValue = [SLA Compliance % PM]
+			RETURN
+			    IF ( NOT ISBLANK ( CurrentValue ) && NOT ISBLANK ( PriorValue ), ( CurrentValue - PriorValue ) * 100 )
+		formatString: +0.0" pp";-0.0" pp";0.0" pp"
+		displayFolder: 8. Design Support
+		lineageTag: 9fea163e-2298-59b4-b72e-0ea341fc725e
+
+	/// Colour of the change vs the previous month: teal when it improved (higher is better), orange when it worsened.
+	measure 'SLA Compliance % MoM Color' =
+			VAR Delta = [SLA Compliance %] - [SLA Compliance % PM]
+			RETURN
+			    SWITCH (
+			        TRUE (),
+			        ISBLANK ( [SLA Compliance % PM] ) || Delta = 0, "#8E99A8",
+			        Delta > 0, "#2BB3A3",
+			        "#F08C3A"
+			    )
+		displayFolder: 8. Design Support
+		lineageTag: b303073f-5746-524c-8fb6-eac0e5120834
+
+	/// Repeat Rate % in the previous month (explicit, for new-card reference labels).
+	measure 'Repeat Rate % PM' = CALCULATE ( [Repeat Rate %], DATEADD ( 'Date'[Date], -1, MONTH ) )
+		formatString: 0.0%
+		displayFolder: 8. Design Support
+		lineageTag: 54876455-0c59-554c-a288-a1a0839eea31
+
+	/// Change of Repeat Rate % vs the previous month (percentage points).
+	measure 'Repeat Rate % MoM' =
+			VAR CurrentValue = [Repeat Rate %]
+			VAR PriorValue = [Repeat Rate % PM]
+			RETURN
+			    IF ( NOT ISBLANK ( CurrentValue ) && NOT ISBLANK ( PriorValue ), ( CurrentValue - PriorValue ) * 100 )
+		formatString: +0.0" pp";-0.0" pp";0.0" pp"
+		displayFolder: 8. Design Support
+		lineageTag: 03d559f4-111e-54ab-9458-df1f673c69e4
+
+	/// Colour of the change vs the previous month: teal when it improved (lower is better), orange when it worsened.
+	measure 'Repeat Rate % MoM Color' =
+			VAR Delta = [Repeat Rate %] - [Repeat Rate % PM]
+			RETURN
+			    SWITCH (
+			        TRUE (),
+			        ISBLANK ( [Repeat Rate % PM] ) || Delta = 0, "#8E99A8",
+			        Delta < 0, "#2BB3A3",
+			        "#F08C3A"
+			    )
+		displayFolder: 8. Design Support
+		lineageTag: 849f0267-3ff7-5163-9934-385c182004b8
+
+	/// One-sentence summary of the selected month for the page header.
+	measure 'Headline Overview' =
+			VAR MonthText = IF ( HASONEVALUE ( 'Date'[Month] ), VALUES ( 'Date'[Month] ), "the selected period" )
+			RETURN
+			    MonthText & ": " & FORMAT ( [Incidents], "#,##0" ) & " incidents ("
+			        & FORMAT ( [Incidents MoM], "+0.0%;-0.0%" ) & " vs prior month), SLA compliance "
+			        & FORMAT ( [SLA Compliance %], "0.0%" ) & " (" & FORMAT ( [SLA Compliance % MoM], "+0.0;-0.0" ) & " pp), repeat rate "
+			        & FORMAT ( [Repeat Rate %], "0.0%" ) & " (" & FORMAT ( [Repeat Rate % MoM], "+0.0;-0.0" ) & " pp)."
+		displayFolder: 8. Design Support
+		lineageTag: 681a58cc-a960-5faf-9a63-bd10f6a80ac0
+
+	/// SLA headline: compliance and the region with the lowest compliance.
+	measure 'Headline SLA' =
+			VAR MonthText = IF ( HASONEVALUE ( 'Date'[Month] ), VALUES ( 'Date'[Month] ), "the selected period" )
+			VAR Worst =
+			    TOPN ( 1, FILTER ( VALUES ( 'Circuit'[Region] ), 'Circuit'[Region] <> "Unknown" && NOT ISBLANK ( [SLA Compliance %] ) ), [SLA Compliance %], ASC )
+			VAR WorstRegion = MAXX ( Worst, 'Circuit'[Region] )
+			VAR WorstValue = MAXX ( Worst, [SLA Compliance %] )
+			RETURN
+			    MonthText & ": " & FORMAT ( [SLA Compliance %], "0.0%" ) & " of in-scope tickets restored within target ("
+			        & FORMAT ( [SLA Breaches], "#,##0" ) & " breaches). Lowest region: " & WorstRegion & " at " & FORMAT ( WorstValue, "0.0%" ) & "."
+		displayFolder: 8. Design Support
+		lineageTag: ff092c97-7580-5362-844e-fdedbc4d0ae7
+
+	/// Repeat headline: repeat rate, chronic circuits and the technology with most chronic circuits.
+	measure 'Headline Repeat' =
+			VAR MonthText = IF ( HASONEVALUE ( 'Date'[Month] ), VALUES ( 'Date'[Month] ), "the selected period" )
+			VAR TopTechnology =
+			    TOPN ( 1, FILTER ( VALUES ( 'Circuit'[Technology] ), NOT ISBLANK ( [Chronic Circuits] ) ), [Chronic Circuits], DESC )
+			RETURN
+			    MonthText & ": " & FORMAT ( [Repeat Rate %], "0.0%" ) & " of incidents hit a circuit restored in the previous 30 days. "
+			        & FORMAT ( [Chronic Circuits], "#,##0" ) & " circuits are chronic at month end, most of them "
+			        & MAXX ( TopTechnology, 'Circuit'[Technology] ) & "."
+		displayFolder: 8. Design Support
+		lineageTag: aada2bd8-0060-5184-a934-2c763747ccd3
+
+	/// Backlog headline: open tickets, oldest age and share over 30 days.
+	measure 'Headline Backlog' =
+			VAR MonthText = IF ( HASONEVALUE ( 'Date'[Month] ), VALUES ( 'Date'[Month] ), "the selected period" )
+			RETURN
+			    "End of " & MonthText & ": " & FORMAT ( [Open Backlog], "#,##0" ) & " tickets open, the oldest for "
+			        & FORMAT ( [Backlog Age (days)], "#,##0" ) & " days; " & FORMAT ( [Backlog Over 30 Days %], "0.0%" ) & " open for more than 30 days."
+		displayFolder: 8. Design Support
+		lineageTag: 635891c0-439e-5170-9a4c-e715325f9070
+
+	/// Improvement action headline: treated vs control change and the net effect.
+	measure 'Headline Actions' =
+			"Circuits with an action had " & FORMAT ( ABS ( [Treated Change % (Matched)] ), "0%" ) & " fewer incidents afterwards, but comparable untreated circuits also fell "
+			    & FORMAT ( ABS ( [Control Change %] ), "0%" ) & ". Net effect of the actions: " & FORMAT ( [Net Action Effect (pp)], "+0.0;-0.0" ) & " pp." 
+		displayFolder: 8. Design Support
+		lineageTag: 4fffdb88-8a7a-5dfb-9c7f-b69e6c851278
+
+	/// Data quality headline: duplicates in the period and check status.
+	measure 'Headline Data Quality' =
+			VAR MonthText = IF ( HASONEVALUE ( 'Date'[Month] ), VALUES ( 'Date'[Month] ), "the selected period" )
+			VAR Failed = [Failed Checks]
+			RETURN
+			    MonthText & ": " & FORMAT ( [Duplicate Tickets], "#,##0" ) & " duplicate tickets (" & FORMAT ( [Duplicate Share %], "0.0%" )
+			        & "), excluded from every KPI. " & IF ( Failed = 0, "All data quality checks pass.", FORMAT ( Failed, "0" ) & " checks failing." )
+		displayFolder: 8. Design Support
+		lineageTag: 29a4525e-735f-5e76-bcda-818ea6042e9f
+
 	column Value
 		dataType: int64
 		isHidden

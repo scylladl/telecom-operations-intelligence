@@ -1,0 +1,278 @@
+{
+  "name": "history",
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "queryRef": "Incident.Ticket Id",
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Incident"
+                    }
+                  },
+                  "Property": "Ticket Id"
+                }
+              },
+              "nativeQueryRef": "Ticket Id"
+            },
+            {
+              "queryRef": "Incident.Opened At",
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Incident"
+                    }
+                  },
+                  "Property": "Opened At"
+                }
+              },
+              "nativeQueryRef": "Opened At"
+            },
+            {
+              "queryRef": "Incident.Restored At",
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Incident"
+                    }
+                  },
+                  "Property": "Restored At"
+                }
+              },
+              "nativeQueryRef": "Restored At"
+            },
+            {
+              "queryRef": "Priority.Priority Code",
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Priority"
+                    }
+                  },
+                  "Property": "Priority Code"
+                }
+              },
+              "nativeQueryRef": "Priority Code"
+            },
+            {
+              "queryRef": "Root Cause.Root Cause",
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Root Cause"
+                    }
+                  },
+                  "Property": "Root Cause"
+                }
+              },
+              "nativeQueryRef": "Root Cause"
+            },
+            {
+              "queryRef": "Incident.Restore Hours",
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Incident"
+                    }
+                  },
+                  "Property": "Restore Hours"
+                }
+              },
+              "nativeQueryRef": "Restore Hours"
+            },
+            {
+              "queryRef": "Incident.SLA Target Hours",
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Incident"
+                    }
+                  },
+                  "Property": "SLA Target Hours"
+                }
+              },
+              "nativeQueryRef": "SLA Target Hours"
+            },
+            {
+              "queryRef": "Incident.Incident Class",
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Incident"
+                    }
+                  },
+                  "Property": "Incident Class"
+                }
+              },
+              "nativeQueryRef": "Incident Class"
+            },
+            {
+              "queryRef": "Incident.Status",
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Incident"
+                    }
+                  },
+                  "Property": "Status"
+                }
+              },
+              "nativeQueryRef": "Status"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Incident"
+                  }
+                },
+                "Property": "Opened At"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "objects": {
+      "total": [
+        {
+          "properties": {
+            "totals": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "grid": [
+        {
+          "properties": {
+            "rowPadding": {
+              "expr": {
+                "Literal": {
+                  "Value": "2D"
+                }
+              }
+            },
+            "imageHeight": {
+              "expr": {
+                "Literal": {
+                  "Value": "32D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "columnHeaders": [
+        {
+          "properties": {
+            "autoSizeColumnWidth": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "customColumnWidth": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "columnAdjustment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'growToFit'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true,
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Incident history of the circuit'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'tableEx history on the Circuit Detail page'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "position": {
+    "x": 184,
+    "y": 256,
+    "width": 1072,
+    "height": 448,
+    "z": 4,
+    "tabOrder": 0
+  },
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json"
+}

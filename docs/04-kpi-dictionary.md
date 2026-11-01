@@ -59,6 +59,15 @@ They dropped −83.3%. The net effect, −1.1 percentage points overall, is what
 | `Duplicate Tickets`, `Duplicate Share %`, `Cancelled Tickets`, `Failed Checks` | Data quality page (CR-001 condition 2) |
 | `Data Status`, `Filter Context` | Header of every page: data date, processing time, active filters (FR-09) |
 
+## Design support measures (folder *8. Design Support*)
+
+Used by the design variants only; same definitions as above, no new business rules.
+
+| Measures | Purpose |
+|---|---|
+| `<KPI> PM`, `<KPI> MoM`, `<KPI> MoM Color` for Incidents, Incidents per 100 Circuits, MTTR (h), SLA Compliance %, Repeat Rate % | Explicit prior-month value, change (relative or pp) and change colour for new-card reference labels, which cannot use a calculation group. Colour polarity: lower is better except SLA |
+| `Headline Overview`, `Headline SLA`, `Headline Repeat`, `Headline Backlog`, `Headline Actions`, `Headline Data Quality` | One sentence per page built from the same measures |
+
 ## Calculation groups
 
 | Group | Items | Used for |

@@ -64,6 +64,16 @@ flowchart LR
 
 Screenshots were taken from the report open in Power BI Desktop.
 
+### Design variants
+
+Two more reports use the **same semantic model and data** with different layouts, colours and visuals, built
+from a design repertoire collected for the project (`docs/design/DESIGN_REPERTOIRE.md`):
+
+| Midnight Ops (`powerbi/NorthGridOps-Midnight.pbip`) | Editorial (`powerbi/NorthGridOps-Editorial.pbip`) |
+|---|---|
+| Dark operations-room design: left navigation rail, KPI cards against the prior month, volume + SLA combo, SLA heatmap by tier and priority | Light narrative design: headline sentence per page, selected month highlighted in trends, small multiples, one accent colour |
+| ![Midnight](docs/screenshots/variants/midnight/01-overview.png) | ![Editorial](docs/screenshots/variants/editorial/01-overview.png) |
+
 ## Validation
 
 - K1, K3, K4, K5, K7 and K9 compared between Power BI and SQL queries written independently from the source

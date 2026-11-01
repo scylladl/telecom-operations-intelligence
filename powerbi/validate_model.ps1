@@ -26,6 +26,15 @@ catch {
     exit 1
 }
 
+# DAX keywords that parse in TMDL but break a measure when used as a variable name
+$reserved = "BEFORE|AFTER|TOP|START|END|ORDER|PARTITION|MATCHBY|WINDOW|INDEX|OFFSET|RANK|ROWNUMBER|ASC|DESC|DEFINE|EVALUATE|MEASURE|VAR|RETURN|TRUE|FALSE|NOT|IN"
+$badVars = Get-ChildItem -Path $folder -Recurse -Filter *.tmdl |
+    Select-String -Pattern "\bVAR\s+($reserved)\s*=" -CaseSensitive:$false
+if ($badVars) {
+    $badVars | ForEach-Object { Write-Host "Reserved word used as a DAX variable: $($_.Filename):$($_.LineNumber) $($_.Line.Trim())" -ForegroundColor Red }
+    exit 1
+}
+
 $model = $database.Model
 Write-Host ("Model OK: {0} tables, {1} measures, {2} relationships, compatibility level {3}" -f `
     $model.Tables.Count, ($model.Tables | ForEach-Object { $_.Measures.Count } | Measure-Object -Sum).Sum,

@@ -9,9 +9,12 @@ table 'Trend Window'
 				VAR SelectedMonth = MAX ( 'Date'[Month Index] )
 				VAR AxisMonth = SELECTEDVALUE ( 'Trend Month'[Trend Month Index] )
 				RETURN
-				    IF (
+				    SWITCH (
+				        TRUE (),
+				        -- colour measures (conditional formatting) compare the axis month with the selection themselves
+				        CONTAINSSTRING ( SELECTEDMEASURENAME (), "Color" ), SELECTEDMEASURE (),
 				        NOT ISBLANK ( AxisMonth ) && AxisMonth > SelectedMonth - 13 && AxisMonth <= SelectedMonth,
-				        CALCULATE ( SELECTEDMEASURE (), REMOVEFILTERS ( 'Date' ), 'Date'[Month Index] = AxisMonth )
+				            CALCULATE ( SELECTEDMEASURE (), REMOVEFILTERS ( 'Date' ), 'Date'[Month Index] = AxisMonth )
 				    )
 
 	column Window

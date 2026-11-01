@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "NorthGridOps-Editorial"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "e6a00063-c2bd-4272-84bd-fcac422e8635"
+  }
+}

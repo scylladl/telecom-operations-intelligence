@@ -1,0 +1,16 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/reportExtension/1.0.0/schema.json",
+  "name": "extension",
+  "entities": [
+    {
+      "name": "_Measures",
+      "measures": [
+        {
+          "name": "Trend Highlight Color",
+          "expression": "IF ( SELECTEDVALUE ( 'Trend Month'[Trend Month Index] ) = MAX ( 'Date'[Month Index] ), \"#2DD4BF\", \"#33435F\" )",
+          "dataType": "Text"
+        }
+      ]
+    }
+  ]
+}
