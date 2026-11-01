@@ -7,7 +7,7 @@
         "Category": {
           "projections": [
             {
-              "queryRef": "Trend Month.Trend Month",
+              "queryRef": "Trend Month.Trend Month Index",
               "field": {
                 "Column": {
                   "Expression": {
@@ -15,10 +15,10 @@
                       "Entity": "Trend Month"
                     }
                   },
-                  "Property": "Trend Month"
+                  "Property": "Trend Month Index"
                 }
               },
-              "nativeQueryRef": "Trend Month"
+              "nativeQueryRef": "Trend Month Index"
             }
           ]
         },
@@ -69,7 +69,7 @@
                     "Entity": "Trend Month"
                   }
                 },
-                "Property": "Trend Month"
+                "Property": "Trend Month Index"
               }
             },
             "direction": "Ascending"
@@ -92,7 +92,7 @@
             "columnCount": {
               "expr": {
                 "Literal": {
-                  "Value": "4D"
+                  "Value": "3D"
                 }
               }
             },
@@ -120,6 +120,13 @@
               "expr": {
                 "Literal": {
                   "Value": "1D"
+                }
+              }
+            },
+            "axisType": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Scalar'"
                 }
               }
             }
@@ -245,6 +252,95 @@
                       {
                         "Literal": {
                           "Value": "'Last 13 Months'"
+                        }
+                      }
+                    ]
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "9ee05757cf566e7cccac",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Circuit"
+              }
+            },
+            "Property": "Region"
+          }
+        },
+        "type": "Categorical",
+        "howCreated": "User",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "d",
+              "Entity": "Circuit",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "In": {
+                  "Expressions": [
+                    {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Source": "d"
+                          }
+                        },
+                        "Property": "Region"
+                      }
+                    }
+                  ],
+                  "Values": [
+                    [
+                      {
+                        "Literal": {
+                          "Value": "'Center'"
+                        }
+                      }
+                    ],
+                    [
+                      {
+                        "Literal": {
+                          "Value": "'East'"
+                        }
+                      }
+                    ],
+                    [
+                      {
+                        "Literal": {
+                          "Value": "'North'"
+                        }
+                      }
+                    ],
+                    [
+                      {
+                        "Literal": {
+                          "Value": "'Northeast'"
+                        }
+                      }
+                    ],
+                    [
+                      {
+                        "Literal": {
+                          "Value": "'Northwest'"
+                        }
+                      }
+                    ],
+                    [
+                      {
+                        "Literal": {
+                          "Value": "'South'"
                         }
                       }
                     ]

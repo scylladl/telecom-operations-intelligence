@@ -91,7 +91,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
             }
@@ -112,18 +112,6 @@
                       "Property": "Incidents MoM Color"
                     }
                   }
-                }
-              }
-            },
-            "detailValue": {
-              "expr": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Incidents MoM"
                 }
               }
             }
@@ -186,7 +174,14 @@
             "valueFontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "11D"
+                  "Value": "16D"
+                }
+              }
+            },
+            "valueBold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             }
@@ -223,7 +218,7 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Incidents PM"
+                  "Property": "Incidents MoM"
                 }
               }
             }

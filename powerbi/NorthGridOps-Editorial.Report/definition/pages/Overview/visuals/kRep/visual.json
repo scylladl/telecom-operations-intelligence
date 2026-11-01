@@ -43,36 +43,6 @@
       }
     },
     "objects": {
-      "referenceLabel": [
-        {
-          "properties": {
-            "value": {
-              "expr": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Repeat Rate % PM"
-                }
-              }
-            }
-          },
-          "selector": {
-            "metadata": "_Measures.Repeat Rate %",
-            "id": "field-f8384095-db0b-4462-ac2e-5b4cbf0c52b8",
-            "data": [
-              {
-                "dataViewWildcard": {
-                  "matchingOption": 0
-                }
-              }
-            ],
-            "order": 0
-          }
-        }
-      ],
       "referenceLabelTitle": [
         {
           "properties": {
@@ -121,7 +91,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
             }
@@ -129,18 +99,6 @@
         },
         {
           "properties": {
-            "detailValue": {
-              "expr": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Repeat Rate % MoM"
-                }
-              }
-            },
             "detailFontColor": {
               "solid": {
                 "color": {
@@ -216,7 +174,14 @@
             "valueFontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "11D"
+                  "Value": "16D"
+                }
+              }
+            },
+            "valueBold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             }
@@ -239,6 +204,36 @@
           },
           "selector": {
             "id": "default"
+          }
+        }
+      ],
+      "referenceLabel": [
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Repeat Rate % MoM"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.Repeat Rate %",
+            "id": "field-f8384095-db0b-4462-ac2e-5b4cbf0c52b8",
+            "data": [
+              {
+                "dataViewWildcard": {
+                  "matchingOption": 0
+                }
+              }
+            ],
+            "order": 0
           }
         }
       ]

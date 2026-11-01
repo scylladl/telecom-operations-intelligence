@@ -43,36 +43,6 @@
       }
     },
     "objects": {
-      "referenceLabel": [
-        {
-          "properties": {
-            "value": {
-              "expr": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "SLA Compliance % PM"
-                }
-              }
-            }
-          },
-          "selector": {
-            "metadata": "_Measures.SLA Compliance %",
-            "id": "field-2804d5fd-74a1-4d9d-bce1-4c472f6c562e",
-            "data": [
-              {
-                "dataViewWildcard": {
-                  "matchingOption": 0
-                }
-              }
-            ],
-            "order": 0
-          }
-        }
-      ],
       "referenceLabelTitle": [
         {
           "properties": {
@@ -121,7 +91,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
             }
@@ -129,18 +99,6 @@
         },
         {
           "properties": {
-            "detailValue": {
-              "expr": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "SLA Compliance % MoM"
-                }
-              }
-            },
             "detailFontColor": {
               "solid": {
                 "color": {
@@ -216,7 +174,14 @@
             "valueFontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "11D"
+                  "Value": "16D"
+                }
+              }
+            },
+            "valueBold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             }
@@ -239,6 +204,36 @@
           },
           "selector": {
             "id": "default"
+          }
+        }
+      ],
+      "referenceLabel": [
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "SLA Compliance % MoM"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.SLA Compliance %",
+            "id": "field-2804d5fd-74a1-4d9d-bce1-4c472f6c562e",
+            "data": [
+              {
+                "dataViewWildcard": {
+                  "matchingOption": 0
+                }
+              }
+            ],
+            "order": 0
           }
         }
       ]
