@@ -81,7 +81,22 @@
       }
     },
     "objects": {},
-    "drillFilterOtherVisuals": true
+    "drillFilterOtherVisuals": true,
+    "visualContainerObjects": {
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Circuit, customer, segment, tier, technology and region of the selected circuit'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
   },
   "position": {
     "x": 184,

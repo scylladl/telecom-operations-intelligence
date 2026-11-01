@@ -142,6 +142,19 @@
             }
           }
         }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Data date, SQL processing time and simulated-data notice'"
+                }
+              }
+            }
+          }
+        }
       ]
     }
   },

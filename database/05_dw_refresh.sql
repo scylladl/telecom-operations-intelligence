@@ -234,22 +234,22 @@ BEGIN
                 t.RestoredAt,
                 t.ClosedAt,
                 YEAR(t.OpenedAt) * 10000 + MONTH(t.OpenedAt) * 100 + DAY(t.OpenedAt),
-                CASE WHEN m.IsRestored = 1
+                CASE WHEN k.IsRestored = 1
                      THEN YEAR(t.RestoredAt) * 10000 + MONTH(t.RestoredAt) * 100 + DAY(t.RestoredAt) END,
                 t.Status,
                 t.ResponsibleTeam,
                 t.IncidentClass,
                 t.DuplicateOfTicketId,
                 t.HasTimestampIssue,
-                m.IsCounted,
-                m.IsRestored,
-                CASE WHEN m.IsRestored = 1 THEN h.RestoreHours END,
+                k.IsCounted,
+                k.IsRestored,
+                CASE WHEN k.IsRestored = 1 THEN h.RestoreHours END,
                 sla.RestoreTargetHours,
                 m.IsSlaInScope,
                 -- compared in exact seconds: the rounded hours could flip a ticket restored on the limit
-                CASE WHEN m.IsSlaInScope = 1 AND h.RestoreSeconds <= sla.RestoreTargetHours * 3600 THEN 1 ELSE 0 END,
+                CASE WHEN m.IsSlaInScope = 1 AND s.RestoreSeconds <= sla.RestoreTargetHours * 3600 THEN 1 ELSE 0 END,
                 CASE WHEN m.IsSlaInScope = 1 THEN h.RestoreHours - sla.RestoreTargetHours END,
-                CASE WHEN m.IsCounted = 1 AND EXISTS (
+                CASE WHEN k.IsCounted = 1 AND EXISTS (
                         SELECT 1
                         FROM #Ticket AS p
                         WHERE p.CircuitId = t.CircuitId
@@ -263,14 +263,12 @@ BEGIN
         LEFT JOIN ref.RootCause AS rc ON rc.RootCauseCode = t.RootCauseCode
         LEFT JOIN ref.SlaTarget AS sla ON sla.TierCode = dc.TierCode AND sla.PriorityCode = t.PriorityCode
         CROSS APPLY (SELECT RestoreSeconds = DATEDIFF(second, t.OpenedAt, t.RestoredAt)) AS s
-        CROSS APPLY (SELECT s.RestoreSeconds, RestoreHours = CAST(s.RestoreSeconds / 3600.0 AS decimal(9,2))) AS h
+        CROSS APPLY (SELECT RestoreHours = CAST(s.RestoreSeconds / 3600.0 AS decimal(9,2))) AS h
         CROSS APPLY (SELECT IsCounted  = CASE WHEN t.IncidentClass = 'Valid' THEN 1 ELSE 0 END,
                             IsRestored = CASE WHEN t.IncidentClass = 'Valid' AND t.RestoredAt IS NOT NULL
-                                               AND t.HasTimestampIssue = 0 THEN 1 ELSE 0 END) AS m0
-        CROSS APPLY (SELECT m0.IsCounted,
-                            m0.IsRestored,
-                            -- customer-premises tickets and circuits without a known tier have no SLA
-                            IsSlaInScope = CASE WHEN m0.IsRestored = 1 AND sla.RestoreTargetHours IS NOT NULL
+                                               AND t.HasTimestampIssue = 0 THEN 1 ELSE 0 END) AS k
+        -- customer-premises tickets and circuits without a known tier have no SLA
+        CROSS APPLY (SELECT IsSlaInScope = CASE WHEN k.IsRestored = 1 AND sla.RestoreTargetHours IS NOT NULL
                                                  AND COALESCE(rc.IsCustomerAttributable, 0) = 0 THEN 1 ELSE 0 END) AS m;
 
         /* ---------- backlog snapshot (K7, K8) ---------- */

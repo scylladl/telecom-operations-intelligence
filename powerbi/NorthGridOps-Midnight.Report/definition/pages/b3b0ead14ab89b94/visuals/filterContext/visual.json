@@ -142,6 +142,19 @@
             }
           }
         }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Month, region, technology, tier and priority filters in context'"
+                }
+              }
+            }
+          }
+        }
       ]
     }
   },

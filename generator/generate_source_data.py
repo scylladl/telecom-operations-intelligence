@@ -203,6 +203,7 @@ def restore_hours(rng, circuit, priority_median, root_cause, opened):
 
 
 def responsible_team(circuit, root_cause):
+    """The regional field team, unless the cause belongs to a specialist team (no cause yet: field team)."""
     if root_cause == "BB":
         return "Backbone Engineering"
     if root_cause == "CPE":
@@ -218,14 +219,14 @@ def simulate(rng, circuits):
     boost = defaultdict(float)
     recent = defaultdict(deque)  # circuit -> dates of incidents in the last 90 days
     last_action_start = {}
-    pending_effects = []  # (completion date, circuit, reduction)
+    pending_effects = defaultdict(list)  # completion date -> [(circuit, rate reduction)]
     priorities = [p[0] for p in PRIORITIES]
     priority_weights = [p[1] for p in PRIORITIES]
     priority_median = {p[0]: p[2] for p in PRIORITIES}
 
     day = START
     while day <= END:
-        for completion, circuit, reduction in [e for e in pending_effects if e[0] == day]:
+        for circuit, reduction in pending_effects.pop(day, []):
             circuit["rate_reduction"] = 1 - (1 - circuit["rate_reduction"]) * (1 - reduction)
 
         for circuit in circuits:
@@ -266,7 +267,7 @@ def simulate(rng, circuits):
                                 "completion": completion, "cancelled": cancelled})
                 last_action_start[circuit["CircuitId"]] = start
                 if not cancelled and completion <= END:
-                    pending_effects.append((completion, circuit, reduction))
+                    pending_effects[completion].append((circuit, reduction))
         day += timedelta(days=1)
     return incidents, actions
 
@@ -298,7 +299,7 @@ def build_ticket_rows(rng, incidents):
             "ClosedAt": closed,
             "Status": "Open" if restored is None else ("Closed" if closed else "Restored"),
             "RootCauseCode": root_cause,
-            "ResponsibleTeam": responsible_team(circuit, inc["root_cause"]) if root_cause else f"Field Ops {REGIONS[circuit['RegionCode']][0]}",
+            "ResponsibleTeam": responsible_team(circuit, root_cause),
             "IsCancelled": cancelled,
             "duplicate_of": None,
         }

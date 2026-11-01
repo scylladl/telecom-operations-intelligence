@@ -142,6 +142,19 @@
             }
           }
         }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'One-sentence summary of the page for the filters in context'"
+                }
+              }
+            }
+          }
+        }
       ]
     }
   },
