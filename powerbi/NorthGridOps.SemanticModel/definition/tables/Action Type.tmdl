@@ -1,0 +1,32 @@
+/// Types of improvement action.
+table 'Action Type'
+	lineageTag: 3349422e-2721-5356-87ff-5fc62cac0043
+
+	column 'Action Type Code'
+		dataType: string
+		isHidden
+		lineageTag: fd048c37-0aeb-5dd8-b07f-1fc5fea3e0d2
+		summarizeBy: none
+		sourceColumn: ActionTypeCode
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Action Type'
+		dataType: string
+		lineageTag: 9cb398d5-8827-51e0-9d8d-8d807201d5ec
+		summarizeBy: none
+		sourceColumn: ActionType
+
+		annotation SummarizationSetBy = Explicit
+
+	partition 'Action Type' = m
+		mode: import
+		queryGroup: Dimensions
+		source =
+				let
+				    Source = Sql.Database ( Server, Database ),
+				    Data = Source{[Schema = "rpt", Item = "vw_ActionType"]}[Data]
+				in
+				    Data
+
+	annotation PBI_ResultType = Table

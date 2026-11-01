@@ -1,0 +1,155 @@
+{
+  "name": "slaTierPriority",
+  "visual": {
+    "visualType": "pivotTable",
+    "query": {
+      "queryState": {
+        "Rows": {
+          "projections": [
+            {
+              "queryRef": "Circuit.Tier",
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Circuit"
+                    }
+                  },
+                  "Property": "Tier"
+                }
+              },
+              "nativeQueryRef": "Tier"
+            }
+          ]
+        },
+        "Columns": {
+          "projections": [
+            {
+              "queryRef": "Priority.Priority Code",
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Priority"
+                    }
+                  },
+                  "Property": "Priority Code"
+                }
+              },
+              "nativeQueryRef": "Priority Code"
+            }
+          ]
+        },
+        "Values": {
+          "projections": [
+            {
+              "queryRef": "_Measures.SLA Compliance %",
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "SLA Compliance %"
+                }
+              },
+              "nativeQueryRef": "SLA Compliance %"
+            },
+            {
+              "queryRef": "_Measures.MTTR (h)",
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "MTTR (h)"
+                }
+              },
+              "nativeQueryRef": "MTTR (h)"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "_Measures"
+                  }
+                },
+                "Property": "SLA Compliance %"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "objects": {},
+    "drillFilterOtherVisuals": true,
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'SLA compliance % and MTTR (h) by tier and priority'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Matrix of SLA compliance and MTTR by customer tier and ticket priority'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "position": {
+    "x": 856,
+    "y": 220,
+    "width": 400,
+    "height": 228,
+    "z": 0,
+    "tabOrder": 0
+  },
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json"
+}

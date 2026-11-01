@@ -1,0 +1,36 @@
+/// Shows any measure for the 13 months ending in the selected month, on the Trend Month axis.
+table 'Trend Window'
+	lineageTag: 609b2da8-d8c1-567c-a444-fd001b4e1d35
+
+	calculationGroup
+		precedence: 20
+
+		calculationItem 'Last 13 Months' =
+				VAR SelectedMonth = MAX ( 'Date'[Month Index] )
+				VAR AxisMonth = SELECTEDVALUE ( 'Trend Month'[Trend Month Index] )
+				RETURN
+				    IF (
+				        NOT ISBLANK ( AxisMonth ) && AxisMonth > SelectedMonth - 13 && AxisMonth <= SelectedMonth,
+				        CALCULATE ( SELECTEDMEASURE (), REMOVEFILTERS ( 'Date' ), 'Date'[Month Index] = AxisMonth )
+				    )
+
+	column Window
+		dataType: string
+		lineageTag: dea80387-251b-5651-941e-08233430b6f9
+		summarizeBy: none
+		sourceColumn: Name
+		sortByColumn: Ordinal
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ordinal
+		dataType: int64
+		isHidden
+		lineageTag: cc20d2f1-da29-5d23-b7bf-4579c972e34a
+		summarizeBy: none
+		sourceColumn: Ordinal
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Trend Window' = calculationGroup
+		mode: import

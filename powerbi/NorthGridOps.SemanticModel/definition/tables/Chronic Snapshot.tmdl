@@ -1,0 +1,52 @@
+/// K6: one row per circuit that is chronic at the end of each day (rule in KPI Parameter).
+table 'Chronic Snapshot'
+	lineageTag: bf4abab7-bef8-5e4a-b5bf-62f281fb0889
+
+	column 'Snapshot Date Key'
+		dataType: int64
+		isHidden
+		lineageTag: 08b1899e-8ead-57a6-b028-bc2a21f82def
+		summarizeBy: none
+		sourceColumn: SnapshotDateKey
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Circuit Key'
+		dataType: int64
+		isHidden
+		lineageTag: 139a690a-182d-5e22-a855-a600403161d8
+		summarizeBy: none
+		sourceColumn: CircuitKey
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Tickets In Window'
+		dataType: int64
+		formatString: #,##0
+		lineageTag: ee768859-8567-5729-a8a3-2d0a4d8c6a86
+		summarizeBy: none
+		sourceColumn: TicketsInWindow
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Last Opened At'
+		dataType: dateTime
+		formatString: dd mmm yyyy hh:nn
+		lineageTag: da8382d3-ff44-5d6e-9c8e-7cd953c4cbf3
+		summarizeBy: none
+		sourceColumn: LastOpenedAt
+
+		annotation SummarizationSetBy = Explicit
+
+	partition 'Chronic Snapshot' = m
+		mode: import
+		queryGroup: Facts
+		source =
+				let
+				    Source = Sql.Database ( Server, Database ),
+				    Data = Source{[Schema = "rpt", Item = "vw_ChronicDaily"]}[Data],
+				    Typed = Table.TransformColumnTypes ( Data, {{"SnapshotDateKey", Int64.Type}, {"CircuitKey", Int64.Type}, {"TicketsInWindow", Int64.Type}} )
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table

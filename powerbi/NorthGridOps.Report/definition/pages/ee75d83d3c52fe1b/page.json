@@ -1,0 +1,51 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "ee75d83d3c52fe1b",
+  "displayName": "Circuit Detail",
+  "width": 1280,
+  "height": 720,
+  "displayOption": "FitToPage",
+  "type": "Drillthrough",
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "3a7ef8721c4c936203a3",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Circuit"
+              }
+            },
+            "Property": "Circuit Id"
+          }
+        },
+        "type": "Categorical",
+        "howCreated": "Drillthrough"
+      }
+    ]
+  },
+  "pageBinding": {
+    "name": "6c3bbf11c5edd31d5c60",
+    "type": "Drillthrough",
+    "parameters": [
+      {
+        "name": "504194f4780d28e99a47",
+        "boundFilter": "3a7ef8721c4c936203a3",
+        "asAggregation": false,
+        "qnaSingleSelectRequired": false,
+        "fieldExpr": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Circuit"
+              }
+            },
+            "Property": "Circuit Id"
+          }
+        }
+      }
+    ]
+  },
+  "visibility": "HiddenInViewMode"
+}

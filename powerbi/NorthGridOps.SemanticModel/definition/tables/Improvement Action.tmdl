@@ -1,0 +1,149 @@
+/// K9: one row per improvement action with incidents before/after and a matched control group of untreated circuits.
+table 'Improvement Action'
+	lineageTag: 6e2761ce-3d90-5665-babb-92f7f0548de5
+
+	column 'Action Id'
+		dataType: int64
+		formatString: 0
+		lineageTag: 1bb01c07-785d-5429-9620-5cf429a2d336
+		summarizeBy: none
+		sourceColumn: ActionId
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Circuit Key'
+		dataType: int64
+		isHidden
+		lineageTag: 542b1400-14b0-5816-b7a8-1419454e106c
+		summarizeBy: none
+		sourceColumn: CircuitKey
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Action Type Code'
+		dataType: string
+		isHidden
+		lineageTag: 83969798-9077-50cb-baad-123f25e3eb5b
+		summarizeBy: none
+		sourceColumn: ActionTypeCode
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Action Status'
+		dataType: string
+		lineageTag: 279e0c67-5c59-5658-9b4b-27308eab5313
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Start Date'
+		dataType: dateTime
+		formatString: dd mmm yyyy
+		lineageTag: 4339e25b-ff3d-590e-bb04-ddd636591366
+		summarizeBy: none
+		sourceColumn: StartDate
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Completion Date'
+		dataType: dateTime
+		formatString: dd mmm yyyy
+		lineageTag: 46cc47c7-36b7-53be-a1f8-3c56157661c4
+		summarizeBy: none
+		sourceColumn: CompletionDate
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Completion Date Key'
+		dataType: int64
+		isHidden
+		lineageTag: ee0b627c-7c2c-5049-b7ee-824422f2d599
+		summarizeBy: none
+		sourceColumn: CompletionDateKey
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Is Evaluable'
+		dataType: int64
+		isHidden
+		lineageTag: a866cfac-ef65-55fd-9dc7-69d847e71707
+		summarizeBy: none
+		sourceColumn: IsEvaluable
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Evaluation Status'
+		dataType: string
+		lineageTag: abf503c5-749e-58b3-ac69-a04f4f5159ee
+		summarizeBy: none
+		sourceColumn: EvaluationStatus
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Incidents Before'
+		dataType: int64
+		formatString: #,##0
+		lineageTag: 34f61760-6fa2-531f-b96c-d29d3afae6cf
+		summarizeBy: none
+		sourceColumn: IncidentsBefore
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Incidents After'
+		dataType: int64
+		formatString: #,##0
+		lineageTag: 97289d50-f06d-55f7-9d63-01c7c577b794
+		summarizeBy: none
+		sourceColumn: IncidentsAfter
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Has Control'
+		dataType: int64
+		isHidden
+		lineageTag: 362ec2d2-f3d6-57c9-971b-2d41f7d62828
+		summarizeBy: none
+		sourceColumn: HasControl
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Control Circuits'
+		dataType: int64
+		formatString: #,##0
+		lineageTag: 379c3d5b-7c55-53ce-aa4b-9decf80a3aca
+		summarizeBy: none
+		sourceColumn: ControlCircuits
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Control Before'
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: 1351505f-ad1c-5d6a-b60f-77f3e6b7c763
+		summarizeBy: none
+		sourceColumn: ControlBefore
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Control After'
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: 5a517b77-0580-5596-b885-4a47048c85c4
+		summarizeBy: none
+		sourceColumn: ControlAfter
+
+		annotation SummarizationSetBy = Explicit
+
+	partition 'Improvement Action' = m
+		mode: import
+		queryGroup: Facts
+		source =
+				let
+				    Source = Sql.Database ( Server, Database ),
+				    Data = Source{[Schema = "rpt", Item = "vw_ActionEffect"]}[Data],
+				    Typed = Table.TransformColumnTypes ( Data, {{"ActionId", Int64.Type}, {"CircuitKey", Int64.Type}, {"CompletionDateKey", Int64.Type}, {"IsEvaluable", Int64.Type}, {"IncidentsBefore", Int64.Type}, {"IncidentsAfter", Int64.Type}, {"HasControl", Int64.Type}, {"ControlCircuits", Int64.Type}, {"ControlBefore", type number}, {"ControlAfter", type number}} )
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table

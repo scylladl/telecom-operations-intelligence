@@ -1,0 +1,203 @@
+{
+  "name": "chronicList",
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "queryRef": "Circuit.Circuit Id",
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Circuit"
+                    }
+                  },
+                  "Property": "Circuit Id"
+                }
+              },
+              "nativeQueryRef": "Circuit Id"
+            },
+            {
+              "queryRef": "Circuit.Customer",
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Circuit"
+                    }
+                  },
+                  "Property": "Customer"
+                }
+              },
+              "nativeQueryRef": "Customer"
+            },
+            {
+              "queryRef": "Circuit.Account Manager",
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Circuit"
+                    }
+                  },
+                  "Property": "Account Manager"
+                }
+              },
+              "nativeQueryRef": "Account Manager"
+            },
+            {
+              "queryRef": "Circuit.Technology",
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Circuit"
+                    }
+                  },
+                  "Property": "Technology"
+                }
+              },
+              "nativeQueryRef": "Technology"
+            },
+            {
+              "queryRef": "Circuit.Region",
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Circuit"
+                    }
+                  },
+                  "Property": "Region"
+                }
+              },
+              "nativeQueryRef": "Region"
+            },
+            {
+              "queryRef": "Circuit.Tier",
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Circuit"
+                    }
+                  },
+                  "Property": "Tier"
+                }
+              },
+              "nativeQueryRef": "Tier"
+            },
+            {
+              "queryRef": "_Measures.Tickets In Chronic Window",
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Tickets In Chronic Window"
+                }
+              },
+              "nativeQueryRef": "Tickets In Chronic Window"
+            },
+            {
+              "queryRef": "_Measures.Last Incident Opened",
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Last Incident Opened"
+                }
+              },
+              "nativeQueryRef": "Last Incident Opened"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "_Measures"
+                  }
+                },
+                "Property": "Tickets In Chronic Window"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "objects": {},
+    "drillFilterOtherVisuals": true,
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Chronic circuits at the end of the period (right-click a circuit to drill through to its history)'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Table of chronic circuits with customer, technology, region and tickets in the chronic window'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "position": {
+    "x": 24,
+    "y": 464,
+    "width": 1232,
+    "height": 232,
+    "z": 0,
+    "tabOrder": 0
+  },
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json"
+}

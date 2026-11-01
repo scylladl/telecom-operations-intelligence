@@ -1,0 +1,211 @@
+/// One row per source ticket, cancelled and duplicate tickets included. KPI components are prepared in SQL (dw.usp_Refresh); measures only add and divide them.
+table Incident
+	lineageTag: dd77af8d-0b65-5711-93c3-18108cfbc0fc
+
+	column 'Ticket Id'
+		dataType: string
+		lineageTag: 7581e880-182e-5b41-b1a9-127070d8af47
+		summarizeBy: none
+		sourceColumn: TicketId
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Circuit Key'
+		dataType: int64
+		isHidden
+		lineageTag: 18bd1924-929e-5df3-9f8f-21094f029379
+		summarizeBy: none
+		sourceColumn: CircuitKey
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Priority Code'
+		dataType: string
+		isHidden
+		lineageTag: bab819fa-03de-523f-8a56-2e97860fa27c
+		summarizeBy: none
+		sourceColumn: PriorityCode
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Root Cause Code'
+		dataType: string
+		isHidden
+		lineageTag: 374730e7-7e4d-510d-bb51-5bfd49d477c1
+		summarizeBy: none
+		sourceColumn: RootCauseCode
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Opened At'
+		dataType: dateTime
+		formatString: dd mmm yyyy hh:nn
+		lineageTag: 5d9e1f63-66fe-5782-b355-4f87326e163f
+		summarizeBy: none
+		sourceColumn: OpenedAt
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Restored At'
+		dataType: dateTime
+		formatString: dd mmm yyyy hh:nn
+		lineageTag: 33c25fa1-4ecd-5ca3-ab87-a3bedf5ab868
+		summarizeBy: none
+		sourceColumn: RestoredAt
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Closed At'
+		dataType: dateTime
+		formatString: dd mmm yyyy hh:nn
+		lineageTag: d2c2d73c-ecb2-5cf3-afa7-797a7ac23593
+		summarizeBy: none
+		sourceColumn: ClosedAt
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Opened Date Key'
+		dataType: int64
+		isHidden
+		lineageTag: 250a9201-9073-57c0-a3b4-cd9ac03b41e1
+		summarizeBy: none
+		sourceColumn: OpenedDateKey
+
+		annotation SummarizationSetBy = Explicit
+
+	/// Set only for tickets counted in restoration KPIs; inactive relationship to Date.
+	column 'Restored Date Key'
+		dataType: int64
+		isHidden
+		lineageTag: 17976c11-d58d-5fa1-be91-905d6295009e
+		summarizeBy: none
+		sourceColumn: RestoredDateKey
+
+		annotation SummarizationSetBy = Explicit
+
+	column Status
+		dataType: string
+		lineageTag: a9ef22a8-94a9-550c-8052-22ae8fe14a78
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Responsible Team'
+		dataType: string
+		lineageTag: 58e87e2b-5602-5f71-a4cb-a0b8f903ed5e
+		summarizeBy: none
+		sourceColumn: ResponsibleTeam
+
+		annotation SummarizationSetBy = Explicit
+
+	/// Valid, Duplicate or Cancelled. Only Valid tickets count in KPIs.
+	column 'Incident Class'
+		dataType: string
+		lineageTag: da58f123-0576-574f-84bf-d4dcc2e85531
+		summarizeBy: none
+		sourceColumn: IncidentClass
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Duplicate Of Ticket Id'
+		dataType: string
+		lineageTag: c50a656f-80d3-5241-a9d2-ec9f2b6888db
+		summarizeBy: none
+		sourceColumn: DuplicateOfTicketId
+
+		annotation SummarizationSetBy = Explicit
+
+	/// Restored before opened in the source; excluded from MTTR, SLA and backlog.
+	column 'Has Timestamp Issue'
+		dataType: boolean
+		lineageTag: c2e816c2-d663-5151-b96f-e9d46295a925
+		summarizeBy: none
+		sourceColumn: HasTimestampIssue
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Is Counted'
+		dataType: int64
+		isHidden
+		lineageTag: 7dc76639-d072-563c-81cb-ac724bb2bfab
+		summarizeBy: none
+		sourceColumn: IsCounted
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Is Restored'
+		dataType: int64
+		isHidden
+		lineageTag: 652480b0-9124-57ba-bb93-d6d4cbfc25e1
+		summarizeBy: none
+		sourceColumn: IsRestored
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Restore Hours'
+		dataType: double
+		formatString: #,##0.0
+		lineageTag: 16e1a49a-23b2-5eba-bc30-02ddccbdd647
+		summarizeBy: none
+		sourceColumn: RestoreHours
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'SLA Target Hours'
+		dataType: double
+		formatString: #,##0.0
+		lineageTag: 6a41d7ec-e822-5072-b231-3235c86ac1d3
+		summarizeBy: none
+		sourceColumn: SlaTargetHours
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Is SLA In Scope'
+		dataType: int64
+		isHidden
+		lineageTag: 92fd62f4-e750-58af-86f0-3fe18470d71d
+		summarizeBy: none
+		sourceColumn: IsSlaInScope
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Is SLA Met'
+		dataType: int64
+		isHidden
+		lineageTag: f3398c36-b946-5b4c-975c-12db58159932
+		summarizeBy: none
+		sourceColumn: IsSlaMet
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Hours Over Target'
+		dataType: double
+		formatString: #,##0.0
+		lineageTag: 45881244-b111-5f4f-a8ee-ed9659ddb075
+		summarizeBy: none
+		sourceColumn: HoursOverTarget
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Is Repeat'
+		dataType: int64
+		isHidden
+		lineageTag: 23245834-b8df-527c-9c26-21c5e578edad
+		summarizeBy: none
+		sourceColumn: IsRepeat
+
+		annotation SummarizationSetBy = Explicit
+
+	partition Incident = m
+		mode: import
+		queryGroup: Facts
+		source =
+				let
+				    Source = Sql.Database ( Server, Database ),
+				    Data = Source{[Schema = "rpt", Item = "vw_Incident"]}[Data],
+				    Typed = Table.TransformColumnTypes ( Data, {{"CircuitKey", Int64.Type}, {"OpenedDateKey", Int64.Type}, {"RestoredDateKey", Int64.Type}, {"IsCounted", Int64.Type}, {"IsRestored", Int64.Type}, {"IsSlaInScope", Int64.Type}, {"IsSlaMet", Int64.Type}, {"IsRepeat", Int64.Type}, {"RestoreHours", type number}, {"SlaTargetHours", type number}, {"HoursOverTarget", type number}} )
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table

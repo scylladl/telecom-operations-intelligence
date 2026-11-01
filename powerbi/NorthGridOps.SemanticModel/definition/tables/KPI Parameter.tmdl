@@ -1,0 +1,49 @@
+/// KPI windows used by the last successful SQL processing run (cfg.KpiParameter).
+table 'KPI Parameter'
+	lineageTag: 76f04416-b987-517d-80f3-cb9d750ebbab
+
+	column 'Parameter Code'
+		dataType: string
+		lineageTag: 87b4a396-9b5d-595c-869a-8c4417b882bb
+		summarizeBy: none
+		sourceColumn: ParameterCode
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Parameter Value'
+		dataType: int64
+		formatString: 0
+		lineageTag: 996fff63-bf81-573b-aa07-713a2ffa2f93
+		summarizeBy: none
+		sourceColumn: ParameterValue
+
+		annotation SummarizationSetBy = Explicit
+
+	column Unit
+		dataType: string
+		lineageTag: e0484357-9626-5944-a62f-7b34d491a5d4
+		summarizeBy: none
+		sourceColumn: Unit
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Parameter Description'
+		dataType: string
+		lineageTag: 20c7a541-cd1c-5a8b-aa75-b257ab346b6d
+		summarizeBy: none
+		sourceColumn: Description
+
+		annotation SummarizationSetBy = Explicit
+
+	partition 'KPI Parameter' = m
+		mode: import
+		queryGroup: Support
+		source =
+				let
+				    Source = Sql.Database ( Server, Database ),
+				    Data = Source{[Schema = "rpt", Item = "vw_KpiParameter"]}[Data],
+				    Typed = Table.TransformColumnTypes ( Data, {{"ParameterValue", Int64.Type}} )
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table

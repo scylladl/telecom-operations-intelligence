@@ -1,0 +1,57 @@
+relationship 33eebfcb-75aa-52e8-bf8c-70c3460b9303
+	fromColumn: Incident.'Opened Date Key'
+	toColumn: Date.'Date Key'
+
+relationship 75ea8877-3dbc-5cfa-8e10-b39d819af63c
+	isActive: false
+	fromColumn: Incident.'Restored Date Key'
+	toColumn: Date.'Date Key'
+
+relationship 67d3e2d1-361c-5cb4-be46-cd4c6b6c37b9
+	fromColumn: Incident.'Circuit Key'
+	toColumn: Circuit.'Circuit Key'
+
+relationship 23d5a658-a18e-517a-8711-cba2e6ef619c
+	fromColumn: Incident.'Priority Code'
+	toColumn: Priority.'Priority Code'
+
+relationship 79baeb73-7366-5a94-b2d6-c311bc008be2
+	fromColumn: Incident.'Root Cause Code'
+	toColumn: 'Root Cause'.'Root Cause Code'
+
+relationship 137fbd87-eebb-570c-abf5-113b36b8c73b
+	fromColumn: 'Backlog Snapshot'.'Snapshot Date Key'
+	toColumn: Date.'Date Key'
+
+relationship 368a6bb8-b2c0-52e4-bff1-57b792c68720
+	fromColumn: 'Backlog Snapshot'.'Circuit Key'
+	toColumn: Circuit.'Circuit Key'
+
+relationship fe5b47f4-9530-5fa3-8de7-19767358082c
+	fromColumn: 'Backlog Snapshot'.'Priority Code'
+	toColumn: Priority.'Priority Code'
+
+relationship 1de87ac7-a758-522b-88d0-64e08dfc25e5
+	fromColumn: 'Backlog Snapshot'.'Age Bucket Code'
+	toColumn: 'Age Bucket'.'Age Bucket Code'
+
+relationship 03d46c63-01b9-5462-8424-27ae4d85e8da
+	fromColumn: 'Chronic Snapshot'.'Snapshot Date Key'
+	toColumn: Date.'Date Key'
+
+relationship 025fb795-c86d-5414-96a4-052fa92c5a40
+	fromColumn: 'Chronic Snapshot'.'Circuit Key'
+	toColumn: Circuit.'Circuit Key'
+
+relationship aed7d90c-091b-5a68-9a11-98b5972a997d
+	isActive: false
+	fromColumn: 'Improvement Action'.'Completion Date Key'
+	toColumn: Date.'Date Key'
+
+relationship d1138063-ee0e-58d5-a58c-f588f7ce90bf
+	fromColumn: 'Improvement Action'.'Circuit Key'
+	toColumn: Circuit.'Circuit Key'
+
+relationship 269717da-aa59-5b6e-8ca8-e5938efda9f1
+	fromColumn: 'Improvement Action'.'Action Type Code'
+	toColumn: 'Action Type'.'Action Type Code'

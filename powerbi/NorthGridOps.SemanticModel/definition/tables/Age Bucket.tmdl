@@ -1,0 +1,52 @@
+/// Backlog aging buckets in days open (K8).
+table 'Age Bucket'
+	lineageTag: c537bbe3-1e73-503f-983d-1bd6e68fd6d2
+
+	column 'Age Bucket Code'
+		dataType: int64
+		isHidden
+		lineageTag: 4c4bd995-7a9a-598d-adca-496f572abba2
+		summarizeBy: none
+		sourceColumn: AgeBucketCode
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Age Bucket'
+		dataType: string
+		lineageTag: 2da28993-3479-5ae4-85d3-b6d20b95e578
+		summarizeBy: none
+		sourceColumn: AgeBucket
+		sortByColumn: 'Age Bucket Code'
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Min Days'
+		dataType: int64
+		isHidden
+		lineageTag: 0a86ba58-ae84-5430-a853-f71ec017a740
+		summarizeBy: none
+		sourceColumn: MinDays
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Max Days'
+		dataType: int64
+		isHidden
+		lineageTag: 868a375c-ecf9-5cd3-98a5-5fd89e8bbb91
+		summarizeBy: none
+		sourceColumn: MaxDays
+
+		annotation SummarizationSetBy = Explicit
+
+	partition 'Age Bucket' = m
+		mode: import
+		queryGroup: Dimensions
+		source =
+				let
+				    Source = Sql.Database ( Server, Database ),
+				    Data = Source{[Schema = "rpt", Item = "vw_AgeBucket"]}[Data],
+				    Typed = Table.TransformColumnTypes ( Data, {{"AgeBucketCode", Int64.Type}, {"MinDays", Int64.Type}, {"MaxDays", Int64.Type}} )
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table

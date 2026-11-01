@@ -1,0 +1,129 @@
+{
+  "name": "kpiParameters",
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "queryRef": "KPI Parameter.Parameter Code",
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "KPI Parameter"
+                    }
+                  },
+                  "Property": "Parameter Code"
+                }
+              },
+              "nativeQueryRef": "Parameter Code"
+            },
+            {
+              "queryRef": "KPI Parameter.Parameter Value",
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "KPI Parameter"
+                    }
+                  },
+                  "Property": "Parameter Value"
+                }
+              },
+              "nativeQueryRef": "Parameter Value"
+            },
+            {
+              "queryRef": "KPI Parameter.Unit",
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "KPI Parameter"
+                    }
+                  },
+                  "Property": "Unit"
+                }
+              },
+              "nativeQueryRef": "Unit"
+            },
+            {
+              "queryRef": "KPI Parameter.Parameter Description",
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "KPI Parameter"
+                    }
+                  },
+                  "Property": "Parameter Description"
+                }
+              },
+              "nativeQueryRef": "Parameter Description"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {},
+    "drillFilterOtherVisuals": true,
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'KPI parameters used by the last processing run'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Table of KPI parameters used by the processing run'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "position": {
+    "x": 648,
+    "y": 220,
+    "width": 608,
+    "height": 228,
+    "z": 0,
+    "tabOrder": 0
+  },
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json"
+}

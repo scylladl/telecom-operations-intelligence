@@ -1,0 +1,55 @@
+/// Compares any measure with the previous month and the same month last year (FR-01). Changes are relative for counts and hours, and in percentage points for rates.
+table 'Time Comparison'
+	lineageTag: f3993092-a2ce-5c1f-969b-f86ca7b96716
+
+	calculationGroup
+		precedence: 10
+
+		calculationItem Current = SELECTEDMEASURE ()
+
+		calculationItem 'Previous Month' = CALCULATE ( SELECTEDMEASURE (), DATEADD ( 'Date'[Date], -1, MONTH ) )
+
+		calculationItem 'vs Previous Month' =
+				VAR CurrentValue = SELECTEDMEASURE ()
+				VAR PriorValue = CALCULATE ( SELECTEDMEASURE (), DATEADD ( 'Date'[Date], -1, MONTH ) )
+				RETURN
+				    IF (
+				        NOT ISBLANK ( CurrentValue ) && NOT ISBLANK ( PriorValue ),
+				        IF ( ISSELECTEDMEASURE ( [SLA Compliance %], [Repeat Rate %] ), ( CurrentValue - PriorValue ) * 100, DIVIDE ( CurrentValue - PriorValue, PriorValue ) )
+				    )
+
+			formatStringDefinition = IF ( ISSELECTEDMEASURE ( [SLA Compliance %], [Repeat Rate %] ), "+0.0 pp;-0.0 pp;0.0 pp", "+0.0%;-0.0%;0.0%" )
+
+		calculationItem 'Same Month Last Year' = CALCULATE ( SELECTEDMEASURE (), SAMEPERIODLASTYEAR ( 'Date'[Date] ) )
+
+		calculationItem 'vs Last Year' =
+				VAR CurrentValue = SELECTEDMEASURE ()
+				VAR PriorValue = CALCULATE ( SELECTEDMEASURE (), SAMEPERIODLASTYEAR ( 'Date'[Date] ) )
+				RETURN
+				    IF (
+				        NOT ISBLANK ( CurrentValue ) && NOT ISBLANK ( PriorValue ),
+				        IF ( ISSELECTEDMEASURE ( [SLA Compliance %], [Repeat Rate %] ), ( CurrentValue - PriorValue ) * 100, DIVIDE ( CurrentValue - PriorValue, PriorValue ) )
+				    )
+
+			formatStringDefinition = IF ( ISSELECTEDMEASURE ( [SLA Compliance %], [Repeat Rate %] ), "+0.0 pp;-0.0 pp;0.0 pp", "+0.0%;-0.0%;0.0%" )
+
+	column Comparison
+		dataType: string
+		lineageTag: 29325e07-cf70-5a48-80c8-5f7eba6d10e2
+		summarizeBy: none
+		sourceColumn: Name
+		sortByColumn: Ordinal
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ordinal
+		dataType: int64
+		isHidden
+		lineageTag: 65eda126-6e11-5baf-8591-0eeb62e96a70
+		summarizeBy: none
+		sourceColumn: Ordinal
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Time Comparison' = calculationGroup
+		mode: import

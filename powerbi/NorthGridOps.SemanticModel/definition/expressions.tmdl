@@ -1,0 +1,11 @@
+expression Server = "localhost" meta [IsParameterQuery = true, Type = "Text", IsParameterQueryRequired = true]
+	lineageTag: 5ccf3595-31a5-50a6-b5b1-63c2dd94e238
+	queryGroup: Parameters
+
+	annotation PBI_ResultType = Text
+
+expression Database = "NorthGridOps" meta [IsParameterQuery = true, Type = "Text", IsParameterQueryRequired = true]
+	lineageTag: 27967603-5753-5d74-bac0-39889901abe2
+	queryGroup: Parameters
+
+	annotation PBI_ResultType = Text

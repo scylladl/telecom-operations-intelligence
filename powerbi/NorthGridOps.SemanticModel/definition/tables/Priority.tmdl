@@ -1,0 +1,42 @@
+/// Ticket priority P1 (total outage) to P4.
+table Priority
+	lineageTag: 2be28734-2399-5cec-9bf3-2840f8a33e89
+
+	column 'Priority Code'
+		dataType: string
+		lineageTag: 8e10bf67-7304-5a67-a3f2-7848b4b88601
+		summarizeBy: none
+		sourceColumn: PriorityCode
+
+		annotation SummarizationSetBy = Explicit
+
+	column Priority
+		dataType: string
+		lineageTag: b88673d3-33f5-5ccc-8b00-8030c1575fe5
+		summarizeBy: none
+		sourceColumn: Priority
+		sortByColumn: 'Priority Sort'
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Priority Sort'
+		dataType: int64
+		isHidden
+		lineageTag: f5c37d21-b116-5159-bb75-3e2ca9797aca
+		summarizeBy: none
+		sourceColumn: SortOrder
+
+		annotation SummarizationSetBy = Explicit
+
+	partition Priority = m
+		mode: import
+		queryGroup: Dimensions
+		source =
+				let
+				    Source = Sql.Database ( Server, Database ),
+				    Data = Source{[Schema = "rpt", Item = "vw_Priority"]}[Data],
+				    Typed = Table.TransformColumnTypes ( Data, {{"SortOrder", Int64.Type}} )
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table

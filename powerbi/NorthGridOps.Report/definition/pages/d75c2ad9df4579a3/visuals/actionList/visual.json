@@ -1,0 +1,241 @@
+{
+  "name": "actionList",
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "queryRef": "Improvement Action.Action Id",
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Improvement Action"
+                    }
+                  },
+                  "Property": "Action Id"
+                }
+              },
+              "nativeQueryRef": "Action Id"
+            },
+            {
+              "queryRef": "Action Type.Action Type",
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Action Type"
+                    }
+                  },
+                  "Property": "Action Type"
+                }
+              },
+              "nativeQueryRef": "Action Type"
+            },
+            {
+              "queryRef": "Circuit.Circuit Id",
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Circuit"
+                    }
+                  },
+                  "Property": "Circuit Id"
+                }
+              },
+              "nativeQueryRef": "Circuit Id"
+            },
+            {
+              "queryRef": "Circuit.Region",
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Circuit"
+                    }
+                  },
+                  "Property": "Region"
+                }
+              },
+              "nativeQueryRef": "Region"
+            },
+            {
+              "queryRef": "Improvement Action.Start Date",
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Improvement Action"
+                    }
+                  },
+                  "Property": "Start Date"
+                }
+              },
+              "nativeQueryRef": "Start Date"
+            },
+            {
+              "queryRef": "Improvement Action.Completion Date",
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Improvement Action"
+                    }
+                  },
+                  "Property": "Completion Date"
+                }
+              },
+              "nativeQueryRef": "Completion Date"
+            },
+            {
+              "queryRef": "Improvement Action.Incidents Before",
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Improvement Action"
+                    }
+                  },
+                  "Property": "Incidents Before"
+                }
+              },
+              "nativeQueryRef": "Incidents Before"
+            },
+            {
+              "queryRef": "Improvement Action.Incidents After",
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Improvement Action"
+                    }
+                  },
+                  "Property": "Incidents After"
+                }
+              },
+              "nativeQueryRef": "Incidents After"
+            },
+            {
+              "queryRef": "Improvement Action.Control Circuits",
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Improvement Action"
+                    }
+                  },
+                  "Property": "Control Circuits"
+                }
+              },
+              "nativeQueryRef": "Control Circuits"
+            },
+            {
+              "queryRef": "Improvement Action.Control Before",
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Improvement Action"
+                    }
+                  },
+                  "Property": "Control Before"
+                }
+              },
+              "nativeQueryRef": "Control Before"
+            },
+            {
+              "queryRef": "Improvement Action.Control After",
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Improvement Action"
+                    }
+                  },
+                  "Property": "Control After"
+                }
+              },
+              "nativeQueryRef": "Control After"
+            },
+            {
+              "queryRef": "Improvement Action.Evaluation Status",
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Improvement Action"
+                    }
+                  },
+                  "Property": "Evaluation Status"
+                }
+              },
+              "nativeQueryRef": "Evaluation Status"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {},
+    "drillFilterOtherVisuals": true,
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Improvement actions with before and after incidents'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Table of improvement actions with incidents before and after and the control group values'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "position": {
+    "x": 24,
+    "y": 464,
+    "width": 1232,
+    "height": 232,
+    "z": 0,
+    "tabOrder": 0
+  },
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json"
+}

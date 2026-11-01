@@ -1,0 +1,170 @@
+/// Customer circuits from the network inventory, with customer and tier. Includes inferred circuits referenced by tickets but missing from the inventory.
+table Circuit
+	lineageTag: 05880d25-9ba9-5c30-bd2c-9e8a2f547c60
+
+	column 'Circuit Key'
+		dataType: int64
+		isHidden
+		lineageTag: c5671ed7-a17f-5926-bd3f-b31dc002dfbe
+		summarizeBy: none
+		sourceColumn: CircuitKey
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Circuit Id'
+		dataType: string
+		lineageTag: 3b567024-4d46-5daa-9c6c-f854ad1eec15
+		summarizeBy: none
+		sourceColumn: CircuitId
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Technology Code'
+		dataType: string
+		isHidden
+		lineageTag: f7546529-1e32-57d4-98a6-a48a2a23e489
+		summarizeBy: none
+		sourceColumn: TechnologyCode
+
+		annotation SummarizationSetBy = Explicit
+
+	column Technology
+		dataType: string
+		lineageTag: be3ea5d5-958f-5be4-ad85-5e7c42e477f6
+		summarizeBy: none
+		sourceColumn: Technology
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Region Code'
+		dataType: string
+		isHidden
+		lineageTag: 26d6eca3-1511-5a3b-a680-bd888155eb43
+		summarizeBy: none
+		sourceColumn: RegionCode
+
+		annotation SummarizationSetBy = Explicit
+
+	column Region
+		dataType: string
+		lineageTag: dcb93feb-802c-5a93-bc21-8ffd9b745a9e
+		summarizeBy: none
+		sourceColumn: Region
+
+		annotation SummarizationSetBy = Explicit
+
+	column Province
+		dataType: string
+		lineageTag: b704838a-19f5-5428-a979-ccb7ac8e5c9f
+		summarizeBy: none
+		sourceColumn: Province
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Install Date'
+		dataType: dateTime
+		formatString: dd mmm yyyy
+		lineageTag: f27349cc-0b61-59e6-b829-122869b94109
+		summarizeBy: none
+		sourceColumn: InstallDate
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Decommission Date'
+		dataType: dateTime
+		formatString: dd mmm yyyy
+		lineageTag: af46776f-357c-5f36-9c81-2c5ccbe481a5
+		summarizeBy: none
+		sourceColumn: DecommissionDate
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Customer Id'
+		dataType: int64
+		formatString: 0
+		lineageTag: d25ab5b6-7aec-5b39-be9d-be3bbad819fa
+		summarizeBy: none
+		sourceColumn: CustomerId
+
+		annotation SummarizationSetBy = Explicit
+
+	column Customer
+		dataType: string
+		lineageTag: 4057078c-0773-57e5-bfc4-2d9dc3ce150e
+		summarizeBy: none
+		sourceColumn: CustomerName
+
+		annotation SummarizationSetBy = Explicit
+
+	column Segment
+		dataType: string
+		lineageTag: a8033fef-1a5f-5420-a9a2-a03c256fb834
+		summarizeBy: none
+		sourceColumn: Segment
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Tier Code'
+		dataType: string
+		isHidden
+		lineageTag: 69728367-0e0f-5ed4-b71d-e5b2e3d014b6
+		summarizeBy: none
+		sourceColumn: TierCode
+
+		annotation SummarizationSetBy = Explicit
+
+	column Tier
+		dataType: string
+		lineageTag: 0fba80fe-cbcc-5822-b91d-8428dc62a74e
+		summarizeBy: none
+		sourceColumn: Tier
+		sortByColumn: 'Tier Sort'
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Tier Sort'
+		dataType: int64
+		isHidden
+		lineageTag: 576cd914-8c69-5366-848b-8d55419e8d4a
+		summarizeBy: none
+		sourceColumn: TierSort
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Account Manager'
+		dataType: string
+		lineageTag: 5efc01ec-55ab-5250-860c-a6b34ee23ff3
+		summarizeBy: none
+		sourceColumn: AccountManager
+
+		annotation SummarizationSetBy = Explicit
+
+	/// TRUE when the circuit appears on tickets or actions but not in the network inventory.
+	column 'Is Inferred'
+		dataType: boolean
+		lineageTag: dc8805ec-9471-5a20-96af-1a4d3390b431
+		summarizeBy: none
+		sourceColumn: IsInferred
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Has Improvement Action'
+		dataType: boolean
+		lineageTag: a92c2eeb-41c1-5c6d-b2ec-2540477b1dbc
+		summarizeBy: none
+		sourceColumn: HasImprovementAction
+
+		annotation SummarizationSetBy = Explicit
+
+	partition Circuit = m
+		mode: import
+		queryGroup: Dimensions
+		source =
+				let
+				    Source = Sql.Database ( Server, Database ),
+				    Data = Source{[Schema = "rpt", Item = "vw_Circuit"]}[Data],
+				    Typed = Table.TransformColumnTypes ( Data, {{"CircuitKey", Int64.Type}, {"CustomerId", Int64.Type}, {"TierSort", Int64.Type}} )
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table

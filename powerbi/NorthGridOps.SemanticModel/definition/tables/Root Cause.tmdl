@@ -1,0 +1,51 @@
+/// Root-cause categories. DPC marks duplicate tickets (CR-001) and never counts in a KPI.
+table 'Root Cause'
+	lineageTag: fb3ecb90-1169-5222-bd19-69f90d790d95
+
+	column 'Root Cause Code'
+		dataType: string
+		lineageTag: 3bebee19-1917-56cc-896d-7770252695dd
+		summarizeBy: none
+		sourceColumn: RootCauseCode
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Root Cause'
+		dataType: string
+		lineageTag: 1015f37b-0c10-5edb-bd47-54fa4babc6e8
+		summarizeBy: none
+		sourceColumn: RootCause
+		sortByColumn: 'Root Cause Sort'
+
+		annotation SummarizationSetBy = Explicit
+
+	/// Customer-premises causes are excluded from SLA compliance.
+	column 'Is Customer Attributable'
+		dataType: boolean
+		lineageTag: c18824ea-1846-5109-9f8a-219052d42f7e
+		summarizeBy: none
+		sourceColumn: IsCustomerAttributable
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Root Cause Sort'
+		dataType: int64
+		isHidden
+		lineageTag: fc36dd48-31d4-5d01-8ac3-ba8ea7567e71
+		summarizeBy: none
+		sourceColumn: SortOrder
+
+		annotation SummarizationSetBy = Explicit
+
+	partition 'Root Cause' = m
+		mode: import
+		queryGroup: Dimensions
+		source =
+				let
+				    Source = Sql.Database ( Server, Database ),
+				    Data = Source{[Schema = "rpt", Item = "vw_RootCause"]}[Data],
+				    Typed = Table.TransformColumnTypes ( Data, {{"SortOrder", Int64.Type}} )
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table

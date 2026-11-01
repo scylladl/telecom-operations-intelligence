@@ -1,0 +1,9 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "01fcfcaaf2b70ec3",
+  "displayName": "Region Tooltip",
+  "width": 320,
+  "height": 240,
+  "displayOption": "ActualSize",
+  "type": "Tooltip"
+}

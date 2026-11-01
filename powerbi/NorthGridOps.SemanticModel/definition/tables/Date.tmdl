@@ -1,0 +1,126 @@
+/// Calendar of the data period, one row per day (marked as date table).
+table Date
+	lineageTag: ecd50c95-14e7-5f1b-8f53-b95a5df68886
+	dataCategory: Time
+
+	column 'Date Key'
+		dataType: int64
+		isHidden
+		lineageTag: 636718d3-f916-5d52-95f3-43e17feb9905
+		summarizeBy: none
+		sourceColumn: DateKey
+
+		annotation SummarizationSetBy = Explicit
+
+	column Date
+		dataType: dateTime
+		isKey
+		formatString: dd mmm yyyy
+		lineageTag: aeefac44-eec4-5b26-acdb-99f58e4acad9
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Explicit
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: 04512b31-3cd0-5517-aa01-d88ea455b372
+		summarizeBy: none
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Explicit
+
+	column Quarter
+		dataType: string
+		lineageTag: 281615fa-df25-5035-a2ee-34aed573895c
+		summarizeBy: none
+		sourceColumn: Quarter
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Month Number'
+		dataType: int64
+		isHidden
+		lineageTag: 05335a1f-6519-5087-84ec-9fb9f76ddccf
+		summarizeBy: none
+		sourceColumn: MonthNumber
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Month Name'
+		dataType: string
+		lineageTag: 81d9af75-edb5-5cb0-9a91-e8dd06f32ec0
+		summarizeBy: none
+		sourceColumn: MonthName
+		sortByColumn: 'Month Number'
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Year Month'
+		dataType: string
+		lineageTag: bf6b9abd-de2a-5ef4-ad92-16c529cd2e65
+		summarizeBy: none
+		sourceColumn: YearMonth
+
+		annotation SummarizationSetBy = Explicit
+
+	/// Month as 'Mar 2025'; the month slicer of every page.
+	column Month
+		dataType: string
+		lineageTag: 76230d8f-7467-5ecf-ae38-4cd249e0278b
+		summarizeBy: none
+		sourceColumn: MonthLabel
+		sortByColumn: 'Month Index'
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Month Start'
+		dataType: dateTime
+		formatString: dd mmm yyyy
+		lineageTag: 47950977-5887-5217-b933-2095bbe949dd
+		summarizeBy: none
+		sourceColumn: MonthStart
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Month End'
+		dataType: dateTime
+		formatString: dd mmm yyyy
+		lineageTag: 908c651f-4f6f-570d-87be-e863a7a74c0f
+		summarizeBy: none
+		sourceColumn: MonthEnd
+
+		annotation SummarizationSetBy = Explicit
+
+	/// Months since the first month of data; used for sorting and month offsets.
+	column 'Month Index'
+		dataType: int64
+		isHidden
+		lineageTag: 2bc9fcb0-0e7d-52ce-b816-f6d7a61db2e8
+		summarizeBy: none
+		sourceColumn: MonthIndex
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Is Month End'
+		dataType: boolean
+		isHidden
+		lineageTag: e9cde8db-f0c8-57bd-b755-3c5f55414c82
+		summarizeBy: none
+		sourceColumn: IsMonthEnd
+
+		annotation SummarizationSetBy = Explicit
+
+	partition Date = m
+		mode: import
+		queryGroup: Dimensions
+		source =
+				let
+				    Source = Sql.Database ( Server, Database ),
+				    Data = Source{[Schema = "rpt", Item = "vw_Date"]}[Data],
+				    Typed = Table.TransformColumnTypes ( Data, {{"Year", Int64.Type}, {"MonthNumber", Int64.Type}, {"MonthIndex", Int64.Type}} )
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table

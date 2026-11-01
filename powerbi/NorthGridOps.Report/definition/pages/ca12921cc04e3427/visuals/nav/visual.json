@@ -1,0 +1,20 @@
+{
+  "name": "nav",
+  "visual": {
+    "visualType": "pageNavigator",
+    "query": {
+      "queryState": {}
+    },
+    "objects": {},
+    "drillFilterOtherVisuals": true
+  },
+  "position": {
+    "x": 460,
+    "y": 12,
+    "width": 796,
+    "height": 36,
+    "z": 0,
+    "tabOrder": 0
+  },
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json"
+}

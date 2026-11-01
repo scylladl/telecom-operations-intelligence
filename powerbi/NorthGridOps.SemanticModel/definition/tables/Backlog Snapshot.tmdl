@@ -1,0 +1,69 @@
+/// K7/K8: one row per counted ticket not yet restored at the end of each day.
+table 'Backlog Snapshot'
+	lineageTag: 2ebf2bea-3bc9-555e-a5c8-6b6569a5d5a9
+
+	column 'Snapshot Date Key'
+		dataType: int64
+		isHidden
+		lineageTag: 63c43daa-9279-5dbe-9120-0b4e8ef662b1
+		summarizeBy: none
+		sourceColumn: SnapshotDateKey
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Ticket Id'
+		dataType: string
+		lineageTag: c7070d27-e865-5b19-8ac7-d8db015c0799
+		summarizeBy: none
+		sourceColumn: TicketId
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Circuit Key'
+		dataType: int64
+		isHidden
+		lineageTag: 2c63df1f-b966-55e0-9f18-ac233bdddbad
+		summarizeBy: none
+		sourceColumn: CircuitKey
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Priority Code'
+		dataType: string
+		isHidden
+		lineageTag: ce06b245-c967-5da5-87a1-33e9b39654f1
+		summarizeBy: none
+		sourceColumn: PriorityCode
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Age Days'
+		dataType: int64
+		formatString: #,##0
+		lineageTag: 76b2657b-728f-5be0-b9f1-ab3407c6210a
+		summarizeBy: none
+		sourceColumn: AgeDays
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Age Bucket Code'
+		dataType: int64
+		isHidden
+		lineageTag: 9c75a5e6-fccb-57b9-854e-ba793a76ed5a
+		summarizeBy: none
+		sourceColumn: AgeBucketCode
+
+		annotation SummarizationSetBy = Explicit
+
+	partition 'Backlog Snapshot' = m
+		mode: import
+		queryGroup: Facts
+		source =
+				let
+				    Source = Sql.Database ( Server, Database ),
+				    Data = Source{[Schema = "rpt", Item = "vw_BacklogDaily"]}[Data],
+				    Typed = Table.TransformColumnTypes ( Data, {{"SnapshotDateKey", Int64.Type}, {"CircuitKey", Int64.Type}, {"AgeDays", Int64.Type}, {"AgeBucketCode", Int64.Type}} )
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table

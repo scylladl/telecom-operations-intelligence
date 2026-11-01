@@ -1,0 +1,35 @@
+/// Disconnected month axis for 13-month trend visuals, used with the Trend Window calculation group.
+table 'Trend Month'
+	lineageTag: 508f3d04-48ca-5fd5-acf1-897586195a6d
+
+	column 'Trend Month Index'
+		dataType: int64
+		isHidden
+		lineageTag: 4624a8dd-3758-53f7-b1ab-ee5d67477589
+		summarizeBy: none
+		sourceColumn: MonthIndex
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Trend Month'
+		dataType: string
+		lineageTag: 08117cc5-c4b5-5a45-bf1b-f43c469e11b4
+		summarizeBy: none
+		sourceColumn: MonthLabel
+		sortByColumn: 'Trend Month Index'
+
+		annotation SummarizationSetBy = Explicit
+
+	partition 'Trend Month' = m
+		mode: import
+		queryGroup: Support
+		source =
+				let
+				    Source = Sql.Database ( Server, Database ),
+				    Dates = Source{[Schema = "rpt", Item = "vw_Date"]}[Data],
+				    Months = Table.Distinct ( Table.SelectColumns ( Dates, {"MonthIndex", "MonthLabel"} ) ),
+				    Typed = Table.TransformColumnTypes ( Months, {{"MonthIndex", Int64.Type}} )
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table

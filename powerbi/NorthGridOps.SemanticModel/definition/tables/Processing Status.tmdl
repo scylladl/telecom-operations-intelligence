@@ -1,0 +1,68 @@
+/// Last successful SQL processing run and the status of the latest run.
+table 'Processing Status'
+	lineageTag: 6a9abd04-16bc-565c-a009-cf81f0c99740
+
+	column 'Last Success Refresh Id'
+		dataType: int64
+		isHidden
+		lineageTag: 1c06f1be-6ad8-5ec2-a7ab-6a58154220a1
+		summarizeBy: none
+		sourceColumn: LastSuccessRefreshId
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Last Success At'
+		dataType: dateTime
+		formatString: dd mmm yyyy hh:nn
+		lineageTag: 4eb45e33-d425-51ff-846b-cec3671b49ee
+		summarizeBy: none
+		sourceColumn: LastSuccessAt
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Data As Of Date'
+		dataType: dateTime
+		formatString: dd mmm yyyy
+		lineageTag: 58321a38-6a1e-51e7-b229-6bb9cccc9e96
+		summarizeBy: none
+		sourceColumn: DataAsOfDate
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Last Run Status'
+		dataType: string
+		lineageTag: f7a5ec66-7c4d-5f19-9780-957995fc4174
+		summarizeBy: none
+		sourceColumn: LastRunStatus
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Last Run Started At'
+		dataType: dateTime
+		formatString: dd mmm yyyy hh:nn
+		lineageTag: 32c10062-bef6-5958-a3fc-df4f91f4d5e7
+		summarizeBy: none
+		sourceColumn: LastRunStartedAt
+
+		annotation SummarizationSetBy = Explicit
+
+	column 'Last Run Message'
+		dataType: string
+		lineageTag: 3ea17483-ae2f-5a1c-9e7f-7f264cdf1c68
+		summarizeBy: none
+		sourceColumn: LastRunMessage
+
+		annotation SummarizationSetBy = Explicit
+
+	partition 'Processing Status' = m
+		mode: import
+		queryGroup: Support
+		source =
+				let
+				    Source = Sql.Database ( Server, Database ),
+				    Data = Source{[Schema = "rpt", Item = "vw_ProcessingStatus"]}[Data],
+				    Typed = Table.TransformColumnTypes ( Data, {{"LastSuccessRefreshId", Int64.Type}} )
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table

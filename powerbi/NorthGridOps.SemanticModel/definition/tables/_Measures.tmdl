@@ -1,0 +1,285 @@
+/// Home of all report measures. KPI definitions: docs/04-kpi-dictionary.md.
+table _Measures
+	lineageTag: 24e446cb-3bbf-50f7-be4d-f2650986b318
+
+	/// K1. Valid tickets opened in the period (cancelled and duplicate tickets excluded). Uses the opened date.
+	measure Incidents = SUM ( 'Incident'[Is Counted] )
+		formatString: #,##0
+		displayFolder: 1. Volume
+		lineageTag: 8d9a603d-e8a8-500b-84b5-74ca7c41e6e5
+
+	/// Circuits in service at the end of the period (installed on or before the last date in context and not decommissioned by then). Inferred circuits are excluded.
+	measure 'Active Circuits' =
+			VAR PeriodEnd = MAX ( 'Date'[Date] )
+			RETURN
+			    CALCULATE (
+			        COUNTROWS ( 'Circuit' ),
+			        KEEPFILTERS ( 'Circuit'[Is Inferred] = FALSE () ),
+			        KEEPFILTERS ( 'Circuit'[Install Date] <= PeriodEnd ),
+			        KEEPFILTERS (
+			            FILTER (
+			                ALL ( 'Circuit'[Decommission Date] ),
+			                ISBLANK ( 'Circuit'[Decommission Date] ) || 'Circuit'[Decommission Date] > PeriodEnd
+			            )
+			        )
+			    )
+		formatString: #,##0
+		displayFolder: 1. Volume
+		lineageTag: 8c9e4dbc-47ad-5a4c-b933-9b0448aae93e
+
+	/// K2. Incidents divided by the circuits active at the end of the period, times 100.
+	measure 'Incidents per 100 Circuits' = DIVIDE ( [Incidents], [Active Circuits] ) * 100
+		formatString: #,##0.00
+		displayFolder: 1. Volume
+		lineageTag: 96db4e62-1b64-575e-a79b-3361e4d20b21
+
+	/// K3 denominator. Valid tickets restored in the period with valid timestamps. Uses the restored date.
+	measure 'Restored Tickets' = CALCULATE ( SUM ( 'Incident'[Is Restored] ), USERELATIONSHIP ( 'Incident'[Restored Date Key], 'Date'[Date Key] ) )
+		formatString: #,##0
+		displayFolder: 2. Restoration and SLA
+		lineageTag: 6b0d7e1f-1f50-55c9-ae5b-dbfb3d305d07
+
+	/// K3 numerator. Calendar hours from opened to restored, restored date.
+	measure 'Restoration Hours' = CALCULATE ( SUM ( 'Incident'[Restore Hours] ), USERELATIONSHIP ( 'Incident'[Restored Date Key], 'Date'[Date Key] ) )
+		formatString: #,##0
+		displayFolder: 2. Restoration and SLA
+		lineageTag: 4d645bd5-3e6b-5c70-881a-3bbea68d1150
+
+	/// K3. Mean time to restore in calendar hours, by restored date.
+	measure 'MTTR (h)' = DIVIDE ( [Restoration Hours], [Restored Tickets] )
+		formatString: #,##0.0
+		displayFolder: 2. Restoration and SLA
+		lineageTag: 61876860-7e5e-560f-9683-6a54d27424ab
+
+	/// K4 denominator. Restored tickets with an SLA target, excluding customer-premises causes.
+	measure 'SLA In-Scope Tickets' = CALCULATE ( SUM ( 'Incident'[Is SLA In Scope] ), USERELATIONSHIP ( 'Incident'[Restored Date Key], 'Date'[Date Key] ) )
+		formatString: #,##0
+		displayFolder: 2. Restoration and SLA
+		lineageTag: b9ab0f71-2e6c-56a5-a9ce-4edebe58b7f5
+
+	/// K4 numerator. In-scope tickets restored within the tier and priority target.
+	measure 'SLA Met Tickets' = CALCULATE ( SUM ( 'Incident'[Is SLA Met] ), USERELATIONSHIP ( 'Incident'[Restored Date Key], 'Date'[Date Key] ) )
+		formatString: #,##0
+		displayFolder: 2. Restoration and SLA
+		lineageTag: aa06845a-1bbf-5dd5-8971-b3a4990e7276
+
+	/// In-scope tickets restored after the target.
+	measure 'SLA Breaches' = [SLA In-Scope Tickets] - [SLA Met Tickets]
+		formatString: #,##0
+		displayFolder: 2. Restoration and SLA
+		lineageTag: aabf66ce-fa91-5114-9515-35bb5676fe49
+
+	/// K4. SLA met tickets divided by SLA in-scope tickets, by restored date. Correct under any filter because both parts are summed before dividing.
+	measure 'SLA Compliance %' = DIVIDE ( [SLA Met Tickets], [SLA In-Scope Tickets] )
+		formatString: 0.0%
+		displayFolder: 2. Restoration and SLA
+		lineageTag: 386ea72c-2d7a-5955-8240-3fc8a532a1a6
+
+	/// Largest restoration delay beyond the SLA target; used to rank the worst breaches.
+	measure 'Max Hours Over Target' = CALCULATE ( MAX ( 'Incident'[Hours Over Target] ), USERELATIONSHIP ( 'Incident'[Restored Date Key], 'Date'[Date Key] ), KEEPFILTERS ( 'Incident'[Hours Over Target] > 0 ) )
+		formatString: #,##0.0
+		displayFolder: 2. Restoration and SLA
+		lineageTag: 542806fa-617b-5312-82f2-8304f4d77d4a
+
+	/// K5 numerator. Valid tickets whose circuit had another valid ticket restored within the repeat window before this one opened.
+	measure 'Repeat Incidents' = SUM ( 'Incident'[Is Repeat] )
+		formatString: #,##0
+		displayFolder: 3. Repeat and Chronic
+		lineageTag: ba6e84af-bdf8-56ae-ab68-ded76539d410
+
+	/// K5. Repeat incidents divided by incidents, by opened date.
+	measure 'Repeat Rate %' = DIVIDE ( [Repeat Incidents], [Incidents] )
+		formatString: 0.0%
+		displayFolder: 3. Repeat and Chronic
+		lineageTag: fa8f614e-f473-51b4-981b-29b16daf821a
+
+	/// K6. Circuits chronic at the end of the last day in context (snapshot, not additive over time).
+	measure 'Chronic Circuits' =
+			VAR SnapshotDate = MAX ( 'Date'[Date] )
+			RETURN
+			    CALCULATE ( COUNTROWS ( 'Chronic Snapshot' ), REMOVEFILTERS ( 'Date' ), 'Date'[Date] = SnapshotDate )
+		formatString: #,##0
+		displayFolder: 3. Repeat and Chronic
+		lineageTag: e22bd4d3-1e81-5ff9-911f-c54de0dbfbe7
+
+	/// Tickets inside the chronic window for the circuit, at the end of the last day in context.
+	measure 'Tickets In Chronic Window' =
+			VAR SnapshotDate = MAX ( 'Date'[Date] )
+			RETURN
+			    CALCULATE ( SUM ( 'Chronic Snapshot'[Tickets In Window] ), REMOVEFILTERS ( 'Date' ), 'Date'[Date] = SnapshotDate )
+		formatString: #,##0
+		displayFolder: 3. Repeat and Chronic
+		lineageTag: e7eccc04-a159-53e6-ad61-f12f9ae0b280
+
+	/// Opening time of the most recent ticket inside the chronic window.
+	measure 'Last Incident Opened' =
+			VAR SnapshotDate = MAX ( 'Date'[Date] )
+			RETURN
+			    CALCULATE ( MAX ( 'Chronic Snapshot'[Last Opened At] ), REMOVEFILTERS ( 'Date' ), 'Date'[Date] = SnapshotDate )
+		formatString: dd mmm yyyy hh:nn
+		displayFolder: 3. Repeat and Chronic
+		lineageTag: 0d95f334-af13-56d1-9133-3a13bbc6e2aa
+
+	/// K7. Valid tickets opened and not yet restored at the end of the last day in context.
+	measure 'Open Backlog' =
+			VAR SnapshotDate = MAX ( 'Date'[Date] )
+			RETURN
+			    CALCULATE ( COUNTROWS ( 'Backlog Snapshot' ), REMOVEFILTERS ( 'Date' ), 'Date'[Date] = SnapshotDate )
+		formatString: #,##0
+		displayFolder: 4. Backlog
+		lineageTag: a4765e12-700d-52d1-bf71-5ce2b7e384a7
+
+	/// Average of the daily open backlog over the days in context.
+	measure 'Average Backlog' = AVERAGEX ( VALUES ( 'Date'[Date] ), [Open Backlog] )
+		formatString: #,##0.0
+		displayFolder: 4. Backlog
+		lineageTag: 68b7d165-4f2a-5235-b851-3bf5da39b8d4
+
+	/// Days open of the oldest ticket in context, at the end of the last day in context.
+	measure 'Backlog Age (days)' =
+			VAR SnapshotDate = MAX ( 'Date'[Date] )
+			RETURN
+			    CALCULATE ( MAX ( 'Backlog Snapshot'[Age Days] ), REMOVEFILTERS ( 'Date' ), 'Date'[Date] = SnapshotDate )
+		formatString: #,##0
+		displayFolder: 4. Backlog
+		lineageTag: c5c31c64-3f75-592c-bde8-6ae467faebd6
+
+	/// Share of the open backlog open for more than 30 days.
+	measure 'Backlog Over 30 Days %' = DIVIDE ( CALCULATE ( [Open Backlog], 'Age Bucket'[Age Bucket Code] = 5 ), [Open Backlog] )
+		formatString: 0.0%
+		displayFolder: 4. Backlog
+		lineageTag: e61be005-23d6-5d16-8e19-f0bcc2ea4ba3
+
+	/// K9. Completed actions with full before and after windows inside the data.
+	measure 'Actions Evaluated' = SUM ( 'Improvement Action'[Is Evaluable] )
+		formatString: #,##0
+		displayFolder: 5. Improvement Actions
+		lineageTag: 143f9216-658a-50af-98f4-66678a048215
+
+	/// Incidents on the circuit in the window before the action start.
+	measure 'Incidents Before Action' = SUM ( 'Improvement Action'[Incidents Before] )
+		formatString: #,##0
+		displayFolder: 5. Improvement Actions
+		lineageTag: 2bbe34b3-2671-50f2-b3d2-d74d82998579
+
+	/// Incidents on the circuit in the window after the action completion.
+	measure 'Incidents After Action' = SUM ( 'Improvement Action'[Incidents After] )
+		formatString: #,##0
+		displayFolder: 5. Improvement Actions
+		lineageTag: 7061ee80-14ec-59df-bca4-2e6ac3f70387
+
+	/// K9 as requested: change in incidents from before to after, for evaluated actions. Includes regression to the mean.
+	measure 'Incident Change %' = DIVIDE ( [Incidents After Action] - [Incidents Before Action], [Incidents Before Action] )
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: 5. Improvement Actions
+		lineageTag: 0864899f-e996-5e07-b3b1-ffc7d0083f55
+
+	/// Evaluated actions with at least one comparable untreated circuit (same technology, same incidents before).
+	measure 'Matched Actions' = SUM ( 'Improvement Action'[Has Control] )
+		formatString: #,##0
+		displayFolder: 5. Improvement Actions
+		lineageTag: 5d153eda-cfd7-51a3-ba5f-888fdb989f64
+
+	/// Incident change on treated circuits, matched actions only.
+	measure 'Treated Change % (Matched)' =
+			VAR Before = CALCULATE ( [Incidents Before Action], KEEPFILTERS ( 'Improvement Action'[Has Control] = 1 ) )
+			VAR After = CALCULATE ( [Incidents After Action], KEEPFILTERS ( 'Improvement Action'[Has Control] = 1 ) )
+			RETURN
+			    DIVIDE ( After - Before, Before )
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: 5. Improvement Actions
+		lineageTag: d8549510-f861-5e11-a1b7-3a6b6f52b5c9
+
+	/// Incident change on matched untreated circuits over the same dates: what happens without any action.
+	measure 'Control Change %' =
+			VAR Before = CALCULATE ( SUM ( 'Improvement Action'[Control Before] ), KEEPFILTERS ( 'Improvement Action'[Has Control] = 1 ) )
+			VAR After = CALCULATE ( SUM ( 'Improvement Action'[Control After] ), KEEPFILTERS ( 'Improvement Action'[Has Control] = 1 ) )
+			RETURN
+			    DIVIDE ( After - Before, Before )
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: 5. Improvement Actions
+		lineageTag: d26d0321-633f-5e35-89b2-3396dfd730f7
+
+	/// Treated change minus control change, in percentage points. Negative means the action reduced incidents beyond the natural decline.
+	measure 'Net Action Effect (pp)' = ( [Treated Change % (Matched)] - [Control Change %] ) * 100
+		formatString: +0.0;-0.0;0.0
+		displayFolder: 5. Improvement Actions
+		lineageTag: 325ca913-94b3-5c03-8303-bee2565e8c59
+
+	/// Tickets classified as duplicates (root cause DPC, CR-001), by opened date. Never counted in a KPI.
+	measure 'Duplicate Tickets' = CALCULATE ( COUNTROWS ( 'Incident' ), KEEPFILTERS ( 'Incident'[Incident Class] = "Duplicate" ) )
+		formatString: #,##0
+		displayFolder: 6. Data Quality
+		lineageTag: 9a70a4df-5afe-553e-be78-7d922005a82b
+
+	/// Cancelled tickets, by opened date.
+	measure 'Cancelled Tickets' = CALCULATE ( COUNTROWS ( 'Incident' ), KEEPFILTERS ( 'Incident'[Incident Class] = "Cancelled" ) )
+		formatString: #,##0
+		displayFolder: 6. Data Quality
+		lineageTag: a94f9303-5bb1-58d8-a187-3ed2e79e5309
+
+	/// Duplicates as a share of valid plus duplicate tickets: an indicator of service-desk process errors.
+	measure 'Duplicate Share %' = DIVIDE ( [Duplicate Tickets], [Duplicate Tickets] + [Incidents] )
+		formatString: 0.0%
+		displayFolder: 6. Data Quality
+		lineageTag: e2f7ebd0-b987-552e-b03b-1a028c8a25e2
+
+	/// Data quality checks that failed in the last run.
+	measure 'Failed Checks' = CALCULATE ( COUNTROWS ( 'Data Quality Check' ), 'Data Quality Check'[Result] = "Fail" ) + 0
+		formatString: #,##0
+		displayFolder: 6. Data Quality
+		lineageTag: c4830261-0721-569c-a76f-104a01530b5e
+
+	/// Text shown on every page: data date and SQL processing time (FR-09).
+	measure 'Data Status' =
+			VAR AsOf = MAX ( 'Processing Status'[Data As Of Date] )
+			VAR ProcessedAt = MAX ( 'Processing Status'[Last Success At] )
+			VAR LastRun = MAX ( 'Processing Status'[Last Run Status] )
+			RETURN
+			    "Data as of " & FORMAT ( AsOf, "dd mmm yyyy" )
+			        & "  |  Processed " & FORMAT ( ProcessedAt, "dd mmm yyyy hh:nn" )
+			        & IF ( LastRun = "Failed", "  |  Warning: the latest processing run failed", "" )
+			        & "  |  Simulated data" 
+		displayFolder: 7. Report
+		lineageTag: 8f717c1e-b7b4-5aeb-b706-6fe6102dc9cf
+
+	/// Text shown under every page title: the month, region, technology, tier and priority in context (report-level filters).
+	measure 'Filter Context' =
+			VAR MonthText =
+			    IF (
+			        HASONEVALUE ( 'Date'[Month] ),
+			        VALUES ( 'Date'[Month] ),
+			        IF ( ISFILTERED ( 'Date'[Month] ), "Several months", "All months" )
+			    )
+			VAR RegionText =
+			    IF ( ISFILTERED ( 'Circuit'[Region] ), CONCATENATEX ( VALUES ( 'Circuit'[Region] ), 'Circuit'[Region], ", ", 'Circuit'[Region] ), "All regions" )
+			VAR TechnologyText =
+			    IF ( ISFILTERED ( 'Circuit'[Technology] ), CONCATENATEX ( VALUES ( 'Circuit'[Technology] ), 'Circuit'[Technology], ", ", 'Circuit'[Technology] ), "All technologies" )
+			VAR TierText =
+			    IF ( ISFILTERED ( 'Circuit'[Tier] ), CONCATENATEX ( VALUES ( 'Circuit'[Tier] ), 'Circuit'[Tier], ", ", 'Circuit'[Tier Sort] ), "All tiers" )
+			VAR PriorityText =
+			    IF ( ISFILTERED ( 'Priority'[Priority Code] ), CONCATENATEX ( VALUES ( 'Priority'[Priority Code] ), 'Priority'[Priority Code], ", ", 'Priority'[Priority Code] ), "All priorities" )
+			RETURN
+			    MonthText & "  ·  " & RegionText & "  ·  " & TechnologyText & "  ·  " & TierText & "  ·  " & PriorityText
+		displayFolder: 7. Report
+		lineageTag: 8aa3a563-a9de-5b20-8a66-21c3c6b81c59
+
+	column Value
+		dataType: int64
+		isHidden
+		lineageTag: 4d3638ad-678d-572a-a010-c2cbd3dff67a
+		summarizeBy: none
+		sourceColumn: Value
+
+		annotation SummarizationSetBy = Explicit
+
+	partition _Measures = m
+		mode: import
+		queryGroup: Support
+		source =
+				let
+				    Source = #table ( type table [Value = Int64.Type], {} )
+				in
+				    Source
+
+	annotation PBI_ResultType = Table
