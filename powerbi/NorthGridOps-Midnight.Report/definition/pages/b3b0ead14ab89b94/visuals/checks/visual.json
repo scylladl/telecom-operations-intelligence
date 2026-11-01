@@ -61,20 +61,6 @@
                 }
               },
               "nativeQueryRef": "Result"
-            },
-            {
-              "queryRef": "Data Quality Check.Handling",
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "Data Quality Check"
-                    }
-                  },
-                  "Property": "Handling"
-                }
-              },
-              "nativeQueryRef": "Handling"
             }
           ]
         }

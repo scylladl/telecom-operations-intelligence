@@ -1,12 +1,12 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
-  "name": "b7417833cf981bbd",
+  "name": "2c88bebfaf1cd968",
   "position": {
     "x": 184,
     "y": 6,
     "width": 520,
     "height": 56,
-    "z": 1
+    "z": 0
   },
   "visual": {
     "visualType": "textbox",
@@ -18,7 +18,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Repeat Incidents and Chronic Circuits",
+                    "value": "Repeat & Chronic Circuits",
                     "textStyle": {
                       "fontSize": "24pt"
                     }

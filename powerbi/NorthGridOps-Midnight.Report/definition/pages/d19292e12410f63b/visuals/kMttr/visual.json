@@ -43,43 +43,13 @@
       }
     },
     "objects": {
-      "referenceLabel": [
-        {
-          "properties": {
-            "value": {
-              "expr": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "MTTR (h) PM"
-                }
-              }
-            }
-          },
-          "selector": {
-            "metadata": "_Measures.MTTR (h)",
-            "id": "field-635ae62d-13c7-4b7f-a362-c5a8843b1a4f",
-            "data": [
-              {
-                "dataViewWildcard": {
-                  "matchingOption": 0
-                }
-              }
-            ],
-            "order": 0
-          }
-        }
-      ],
       "referenceLabelTitle": [
         {
           "properties": {
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
             }
@@ -121,7 +91,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
             }
@@ -129,18 +99,6 @@
         },
         {
           "properties": {
-            "detailValue": {
-              "expr": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "MTTR (h) MoM"
-                }
-              }
-            },
             "detailFontColor": {
               "solid": {
                 "color": {
@@ -207,7 +165,7 @@
             "valueArea": {
               "expr": {
                 "Literal": {
-                  "Value": "60D"
+                  "Value": "70D"
                 }
               }
             }
@@ -223,13 +181,49 @@
             "valueFontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "10D"
+                  "Value": "14D"
+                }
+              }
+            },
+            "valueBold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             }
           },
           "selector": {
             "id": "default"
+          }
+        },
+        {
+          "properties": {
+            "valueFontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "_Measures"
+                        }
+                      },
+                      "Property": "MTTR (h) MoM Color"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "dataViewWildcard": {
+                  "matchingOption": 1
+                }
+              }
+            ]
           }
         }
       ],
@@ -246,6 +240,36 @@
           },
           "selector": {
             "id": "default"
+          }
+        }
+      ],
+      "referenceLabel": [
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "MTTR (h) MoM"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.MTTR (h)",
+            "id": "field-635ae62d-13c7-4b7f-a362-c5a8843b1a4f",
+            "data": [
+              {
+                "dataViewWildcard": {
+                  "matchingOption": 0
+                }
+              }
+            ],
+            "order": 0
           }
         }
       ]

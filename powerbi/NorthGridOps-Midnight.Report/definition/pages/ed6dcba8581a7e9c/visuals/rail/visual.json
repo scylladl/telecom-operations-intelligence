@@ -75,7 +75,7 @@
     "y": 0,
     "width": 168,
     "height": 720,
-    "z": 0,
+    "z": 1,
     "tabOrder": 0
   },
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json"

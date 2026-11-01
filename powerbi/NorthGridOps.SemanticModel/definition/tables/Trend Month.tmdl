@@ -20,6 +20,16 @@ table 'Trend Month'
 
 		annotation SummarizationSetBy = Explicit
 
+	/// Short month label ('Dec 24') for narrow trend axes.
+	column 'Trend Month Short'
+		dataType: string
+		lineageTag: 149860ed-9549-5a77-8d66-f95391a7a1ae
+		summarizeBy: none
+		sourceColumn: MonthShort
+		sortByColumn: 'Trend Month Index'
+
+		annotation SummarizationSetBy = Explicit
+
 	partition 'Trend Month' = m
 		mode: import
 		queryGroup: Support
@@ -28,7 +38,8 @@ table 'Trend Month'
 				    Source = Sql.Database ( Server, Database ),
 				    Dates = Source{[Schema = "rpt", Item = "vw_Date"]}[Data],
 				    Months = Table.Distinct ( Table.SelectColumns ( Dates, {"MonthIndex", "MonthLabel"} ) ),
-				    Typed = Table.TransformColumnTypes ( Months, {{"MonthIndex", Int64.Type}} )
+				    Short = Table.AddColumn ( Months, "MonthShort", each Text.Start ( [MonthLabel], 3 ) & " " & Text.End ( [MonthLabel], 2 ), type text ),
+				    Typed = Table.TransformColumnTypes ( Short, {{"MonthIndex", Int64.Type}} )
 				in
 				    Typed
 

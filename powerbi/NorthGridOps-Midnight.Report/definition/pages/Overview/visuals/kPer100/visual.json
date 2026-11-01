@@ -43,43 +43,13 @@
       }
     },
     "objects": {
-      "referenceLabel": [
-        {
-          "properties": {
-            "value": {
-              "expr": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Incidents per 100 Circuits PM"
-                }
-              }
-            }
-          },
-          "selector": {
-            "metadata": "_Measures.Incidents per 100 Circuits",
-            "id": "field-f3fba593-db31-4228-b5de-88bebb331248",
-            "data": [
-              {
-                "dataViewWildcard": {
-                  "matchingOption": 0
-                }
-              }
-            ],
-            "order": 0
-          }
-        }
-      ],
       "referenceLabelTitle": [
         {
           "properties": {
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
             }
@@ -121,7 +91,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
             }
@@ -129,18 +99,6 @@
         },
         {
           "properties": {
-            "detailValue": {
-              "expr": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Incidents per 100 Circuits MoM"
-                }
-              }
-            },
             "detailFontColor": {
               "solid": {
                 "color": {
@@ -207,7 +165,7 @@
             "valueArea": {
               "expr": {
                 "Literal": {
-                  "Value": "55D"
+                  "Value": "70D"
                 }
               }
             }
@@ -223,13 +181,49 @@
             "valueFontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "10D"
+                  "Value": "12D"
+                }
+              }
+            },
+            "valueBold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             }
           },
           "selector": {
             "id": "default"
+          }
+        },
+        {
+          "properties": {
+            "valueFontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "_Measures"
+                        }
+                      },
+                      "Property": "Incidents per 100 Circuits MoM Color"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "dataViewWildcard": {
+                  "matchingOption": 1
+                }
+              }
+            ]
           }
         }
       ],
@@ -239,13 +233,43 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "19D"
+                  "Value": "18D"
                 }
               }
             }
           },
           "selector": {
             "id": "default"
+          }
+        }
+      ],
+      "referenceLabel": [
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Incidents per 100 Circuits MoM"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.Incidents per 100 Circuits",
+            "id": "field-f3fba593-db31-4228-b5de-88bebb331248",
+            "data": [
+              {
+                "dataViewWildcard": {
+                  "matchingOption": 0
+                }
+              }
+            ],
+            "order": 0
           }
         }
       ]

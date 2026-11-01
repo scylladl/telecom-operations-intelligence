@@ -7,7 +7,7 @@
         "Category": {
           "projections": [
             {
-              "queryRef": "Trend Month.Trend Month",
+              "queryRef": "Trend Month.Trend Month Short",
               "field": {
                 "Column": {
                   "Expression": {
@@ -15,10 +15,10 @@
                       "Entity": "Trend Month"
                     }
                   },
-                  "Property": "Trend Month"
+                  "Property": "Trend Month Short"
                 }
               },
-              "nativeQueryRef": "Trend Month"
+              "nativeQueryRef": "Trend Month Short"
             }
           ]
         },
@@ -69,7 +69,7 @@
                     "Entity": "Trend Month"
                   }
                 },
-                "Property": "Trend Month"
+                "Property": "Trend Month Short"
               }
             },
             "direction": "Ascending"
@@ -92,7 +92,7 @@
             "columnCount": {
               "expr": {
                 "Literal": {
-                  "Value": "3D"
+                  "Value": "4D"
                 }
               }
             },
