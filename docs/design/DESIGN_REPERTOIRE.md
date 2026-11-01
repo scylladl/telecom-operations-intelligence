@@ -112,13 +112,19 @@ Taken from each report open in Power BI Desktop after its data was refreshed:
   shows all categories (the original's region chart hides one region this way).
 
 ### Known limitations of the variants
-- The month-over-month change line of the new cards (detail value, coloured teal/orange) is configured but is
-  not rendered by Power BI Desktop 2.159; the cards show the prior-month value, and the headline sentence of
-  each page gives the change. The colour measures are ready if a later Desktop version renders them.
+- **Change colour on new cards.** Midnight cards show the month-over-month change (`+8.7%`, `-0.3 pp`) as
+  their reference label, but not coloured: `pbir` writes conditional formatting on new cards with a generic
+  selector that Power BI ignores (tested on the reference value, the detail line and the accent bar), and the
+  project rules forbid editing the JSON by hand. The sign carries the direction; the colour measures
+  (`<KPI> MoM Color`) are ready. Editorial cards still show the prior-month value.
 - Editorial: the small multiples (SLA by region, repeat rate by technology) still show a thin horizontal scroll
-  bar per panel.
-- Midnight: in the five-card row, the SLA card can truncate the value to "62,5…" at 100% zoom.
-- Midnight: x-axis labels of the repeat-rate trend are rotated (13 labels in a half-width chart).
+  bar per panel. Midnight fixed it with a continuous axis on `Trend Month Index` (labels hidden); the same
+  change applies to Editorial.
+
+### Midnight refinement (second round)
+Month-over-month change on the KPI cards, short month labels (`Dec 24`) on every 13-month axis, brand block on
+the navigation rail, shorter Repeat title, full headlines, small multiples without scroll bars and without the
+"Unknown" technology, data quality table without horizontal scroll, all regions visible in the aging chart.
 
 ## Sources
 
